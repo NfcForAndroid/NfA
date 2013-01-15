@@ -39,9 +39,13 @@
                     android:path="/com.greennfc:ext"
                     android:scheme="vnd.android.nfc" />
             </intent-filter>
+             <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data  android:mimeType="text/plain" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
@@ -51,15 +55,7 @@
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
             </intent-filter>
-        </activity>        <activity
-            android:name=".read.StandardReadActivity"
-            android:label="GreenNfcStandard" 
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.nfc.action.TAG_DISCOVERED" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-            </intent-filter>        </activity>
+        </activity>       
     </application>
 
 </manifest>

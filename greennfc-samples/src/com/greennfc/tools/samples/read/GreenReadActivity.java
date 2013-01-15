@@ -30,8 +30,8 @@ public class GreenReadActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		nfcManager.resume(this);
 		nfcManager.initIntent();
+		nfcManager.resume(this);
 	}
 
 	@Override

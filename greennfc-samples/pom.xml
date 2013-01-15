@@ -18,11 +18,21 @@
 	</properties>
 
 	<dependencies>
+	    <!-- Green Nfc dependencies -->
 	    <dependency>
 	        <groupId>com.greennfc.tools</groupId>
 	        <artifactId>greennfc-core</artifactId>
 	        <version>${project.version}</version>
 	    </dependency>
+	    
+	    <!-- Other libs -->
+	    
+	    <dependency>
+			<groupId>com.actionbarsherlock</groupId>
+			<artifactId>actionbarsherlock</artifactId>
+			<version>${actionbarsherlock.version}</version>
+			<type>apklib</type>
+		</dependency>
 	</dependencies>  
 
 	<build>
