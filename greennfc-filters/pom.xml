@@ -7,9 +7,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>greennfc-core</artifactId>
-	<name>Green NFC - Core</name>
-	<description>Core project for nfc tools</description>
+	<artifactId>greennfc-filters</artifactId>
+	<name>Green NFC - Filters</name>
+	<description>Intetn Filters project for nfc tools</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -22,7 +22,14 @@
 			<artifactId>annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.greennfc.tools</groupId>
+			<artifactId>greennfc-core</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
+	
 	
 
 	<build>
