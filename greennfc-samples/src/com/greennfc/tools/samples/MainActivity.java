@@ -1,15 +1,20 @@
 package com.greennfc.tools.samples;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_main);
+		// Create the list fragment and add it as our sole content.
+		if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+			MainFragmentList list = new MainFragmentList();
+			getSupportFragmentManager().beginTransaction().add(android.R.id.content, list).commit();
+		}
 	}
 
 }

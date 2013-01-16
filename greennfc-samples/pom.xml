@@ -2,9 +2,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.greennfc.tools</groupId>
+  
+ <parent>
+		<groupId>com.greennfc.tools</groupId>
+		<artifactId>greennfc</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+  
   <artifactId>greennfc-samples</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
   <packaging>apk</packaging>
   <name>Green Nfc - Samples</name>
   <properties>
@@ -26,12 +31,29 @@
 	    </dependency>
 	    
 	    <!-- Other libs -->
-	    
+	    <dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+		  <groupId>com.google.android</groupId>
+		  <artifactId>support-v4</artifactId>
+			<version>${android-support.version}</version>
+		  <scope>provided</scope>
+		</dependency>
+		<dependency>
+	      <groupId>com.actionbarsherlock</groupId>
+	      <artifactId>actionbarsherlock</artifactId>
+	      <version>${actionbarsherlock.version}</version>
+	      <scope>provided</scope>
+		</dependency>
 	    <dependency>
 			<groupId>com.actionbarsherlock</groupId>
 			<artifactId>actionbarsherlock</artifactId>
 			<version>${actionbarsherlock.version}</version>
 			<type>apklib</type>
+     	    <scope>provided</scope>
 		</dependency>
 	</dependencies>  
 
