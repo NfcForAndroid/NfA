@@ -36,6 +36,8 @@
 			<artifactId>android</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- ABS -->
 		<dependency>
 	      <groupId>com.actionbarsherlock</groupId>
 	      <artifactId>actionbarsherlock</artifactId>
