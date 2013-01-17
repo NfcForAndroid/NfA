@@ -37,23 +37,17 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-		  <groupId>com.google.android</groupId>
-		  <artifactId>support-v4</artifactId>
-			<version>${android-support.version}</version>
-		  <scope>provided</scope>
-		</dependency>
-		<dependency>
 	      <groupId>com.actionbarsherlock</groupId>
 	      <artifactId>actionbarsherlock</artifactId>
 	      <version>${actionbarsherlock.version}</version>
-	      <scope>provided</scope>
+   		  <type>jar</type>
+    	  <scope>provided</scope>
 		</dependency>
 	    <dependency>
 			<groupId>com.actionbarsherlock</groupId>
 			<artifactId>actionbarsherlock</artifactId>
 			<version>${actionbarsherlock.version}</version>
 			<type>apklib</type>
-     	    <scope>provided</scope>
 		</dependency>
 	</dependencies>  
 
