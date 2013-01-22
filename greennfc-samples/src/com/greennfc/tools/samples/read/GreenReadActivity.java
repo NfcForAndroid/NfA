@@ -9,12 +9,14 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.greennfc.tools.GreenNfcFactory;
+import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
+import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.samples.R;
 
-public class GreenReadActivity extends SherlockFragmentActivity {
+public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
 
-	IGreenManager nfcManager = null;
+	IGreenManager<IGreenRecord> nfcManager = null;
 
 	TextView tag_content;
 
@@ -23,10 +25,11 @@ public class GreenReadActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_read);
 
+		tag_content = (TextView) findViewById(R.id.tag_content);
+
 		nfcManager = GreenNfcFactory.newManager();
 		nfcManager.register(this);
 
-		tag_content = (TextView) findViewById(R.id.tag_content);
 	}
 
 	@Override
@@ -38,13 +41,11 @@ public class GreenReadActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		nfcManager.initIntent();
 		nfcManager.resume(this);
 	}
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		tag_content.setText(R.string.reading_tag);
 		nfcManager.manageIntent(intent);
 	}
 
@@ -69,6 +70,17 @@ public class GreenReadActivity extends SherlockFragmentActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void recieveMessage(IGreenRecord reccord) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startRecieveMessage() {
+		tag_content.setText(R.string.reading_tag);
 	}
 
 }

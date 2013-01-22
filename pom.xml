@@ -67,6 +67,7 @@
 		
 		<!-- Base librairies elements -->
 		<module>greennfc-filters</module>
+		<module>greennfc-records</module>
 
 		<!-- extensions -->
 

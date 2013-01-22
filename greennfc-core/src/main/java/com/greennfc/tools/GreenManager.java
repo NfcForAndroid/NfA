@@ -15,11 +15,15 @@ import android.os.PatternMatcher;
 import android.util.Log;
 
 import com.greennfc.tools.api.IGreenIntentFilter;
+import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
+import com.greennfc.tools.api.IGreenRecord;
+import com.greennfc.tools.exception.NoActivityClassException;
 
-class GreenManager implements IGreenManager {
+class GreenManager implements IGreenManager<IGreenRecord> {
 
 	private Activity activity;
+	private IGreenIntentRecieve<IGreenRecord> recieve;
 
 	private NfcAdapter mAdapter;
 
@@ -36,9 +40,15 @@ class GreenManager implements IGreenManager {
 		}
 	};
 
-	public void register(Activity activity) {
-		this.activity = activity;
+	public void register(IGreenIntentRecieve<IGreenRecord> activity, IGreenIntentFilter... greenfilters) {
+		if (!(activity instanceof Activity)) {
+			throw new NoActivityClassException(activity.getClass());
+		}
+		this.recieve = activity;
+		this.activity = (Activity) activity;
 		mAdapter = NfcAdapter.getDefaultAdapter(this.activity);
+
+		initIntent(greenfilters);
 	}
 
 	public void pause(Activity activity) {
@@ -62,6 +72,7 @@ class GreenManager implements IGreenManager {
 	}
 
 	public void manageIntent(Intent intent) {
+		recieve.startRecieveMessage();
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
@@ -80,6 +91,7 @@ class GreenManager implements IGreenManager {
 						short tnf = record.getTnf();
 						byte[] type = record.getType();
 						String message = new String(record.getPayload());
+						recieve.recieveMessage(null);
 						Log.i(TAG, "Message : " + message);
 					}
 				}
@@ -88,7 +100,7 @@ class GreenManager implements IGreenManager {
 
 	}
 
-	public void initIntent(IGreenIntentFilter... filters) {
+	private void initIntent(IGreenIntentFilter... filters) {
 		pendingIntent = PendingIntent.getActivity(this.activity, 0, new Intent(this.activity, this.activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
 		int length = filters != null && filters.length > 0 ? filters.length : 1;

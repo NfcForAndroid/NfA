@@ -1,6 +1,7 @@
 package com.greennfc.tools;
 
 import com.greennfc.tools.api.IGreenManager;
+import com.greennfc.tools.api.IGreenRecord;
 
 /**
  * @author jefBinomed
@@ -17,8 +18,8 @@ public class GreenNfcFactory {
 		return instance;
 	}
 
-	public static IGreenManager newManager() {
-		return new GreenManager();
+	public static <Record extends IGreenRecord> IGreenManager<Record> newManager() {
+		return (IGreenManager<Record>) new GreenManager();
 	}
 
 }
