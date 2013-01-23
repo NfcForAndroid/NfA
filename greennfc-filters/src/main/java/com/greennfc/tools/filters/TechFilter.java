@@ -2,14 +2,9 @@ package com.greennfc.tools.filters;
 
 import android.nfc.NfcAdapter;
 
-import com.greennfc.tools.api.IGreenIntentFilter;
+public class TechFilter extends GreenFilterAdapter {
 
-public class TechFilter implements IGreenIntentFilter {
-
-	public String getType() {
-		return null;
-	}
-
+	@Override
 	public String getAction() {
 		return NfcAdapter.ACTION_TECH_DISCOVERED;
 	}

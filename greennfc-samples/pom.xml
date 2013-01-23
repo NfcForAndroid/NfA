@@ -29,6 +29,16 @@
 	        <artifactId>greennfc-core</artifactId>
 	        <version>${project.version}</version>
 	    </dependency>
+	    <dependency>
+	        <groupId>com.greennfc.tools</groupId>
+	        <artifactId>greennfc-filters</artifactId>
+	        <version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.greennfc.tools</groupId>
+	        <artifactId>greennfc-records</artifactId>
+	        <version>${project.version}</version>
+	    </dependency>
 	    
 	    <!-- Other libs -->
 	    <dependency>

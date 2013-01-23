@@ -1,31 +1,30 @@
-package com.greennfc.tools.records;
+package com.greennfc.tools.parser.wkt;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.Locale;
 
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
+import com.greennfc.tools.parser.NdefParser;
+import com.greennfc.tools.records.ndef.wkt.TextRecord;
 
-public class TextRecord implements IGreenRecord {
+public final class TextParser extends NdefParser {
 
-	private String message;
-
-	public String getMessage() {
-		return message;
+	protected TextParser() {
 	}
 
-	public static final Charset UTF8 = Charset.forName("UTF-8");
-	public static final Charset UTF16 = Charset.forName("UTF-16BE");
+	@Override
+	public IGreenRecord parseNdef(NdefRecord ndefRecord) {
 
-	public void decode(NdefRecord NdefRecord) {
-		byte[] payload = NdefRecord.getPayload();
+		byte[] payload = ndefRecord.getPayload();
 
 		ByteArrayInputStream bais = new ByteArrayInputStream(payload);
 
 		int status = bais.read();
-		byte languageCodeLength = (byte) (status & 0x1F);
+		byte languageCodeLength = (byte) (status & TextRecord.LANGUAGE_CODE_MASK);
 		byte[] bytes = new byte[languageCodeLength];
 		bais.read(bytes, 0, bytes.length);
 		String languageCode = new String(bytes);
@@ -34,14 +33,14 @@ public class TextRecord implements IGreenRecord {
 		bais.read(bytes, 0, bytes.length);
 		byte[] textData = bytes;
 		Charset textEncoding = ((status & 0x80) != 0) ? TextRecord.UTF16 : TextRecord.UTF8;
-
+		String message = null;
 		try {
 			message = new String(textData, textEncoding.name());
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
-		// TODO Auto-generated method stub
-
+		TextRecord textRecord = new TextRecord(message, textEncoding, new Locale(languageCode));
+		return textRecord;
 	}
 
 }

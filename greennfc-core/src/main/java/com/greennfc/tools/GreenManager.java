@@ -6,17 +6,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Parcelable;
-import android.os.PatternMatcher;
 import android.util.Log;
 
 import com.greennfc.tools.api.IGreenIntentFilter;
 import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
+import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.exception.NoActivityClassException;
 
@@ -24,6 +26,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 
 	private Activity activity;
 	private IGreenIntentRecieve<IGreenRecord> recieve;
+	private IGreenParser parser;
 
 	private NfcAdapter mAdapter;
 
@@ -40,11 +43,12 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 		}
 	};
 
-	public void register(IGreenIntentRecieve<IGreenRecord> activity, IGreenIntentFilter... greenfilters) {
+	public void register(IGreenIntentRecieve<IGreenRecord> activity, IGreenParser parser, IGreenIntentFilter... greenfilters) {
 		if (!(activity instanceof Activity)) {
 			throw new NoActivityClassException(activity.getClass());
 		}
 		this.recieve = activity;
+		this.parser = parser;
 		this.activity = (Activity) activity;
 		mAdapter = NfcAdapter.getDefaultAdapter(this.activity);
 
@@ -54,7 +58,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	public void pause(Activity activity) {
 		if (activity.equals(this.activity)) {
 			mAdapter.disableForegroundDispatch(this.activity);
-			for (IntentFilter filter : filters) {
+			for (int i = 0; i < filters.length; i++) {
 				this.activity.unregisterReceiver(reciever);
 			}
 		}
@@ -87,14 +91,14 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 					messages[i] = (NdefMessage) rawMsgs[i];
 					for (int j = 0; j < messages[i].getRecords().length; j++) {
 						record = messages[i].getRecords()[j];
-						byte[] id = record.getId();
-						short tnf = record.getTnf();
-						byte[] type = record.getType();
-						String message = new String(record.getPayload());
-						recieve.recieveMessage(null);
-						Log.i(TAG, "Message : " + message);
+						recieve.recieveMessage(parser.parseNdef(record));
 					}
 				}
+			}
+		} else {
+			Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+			if (tag != null) {
+				recieve.recieveMessage(parser.parseTag(tag));
 			}
 		}
 
@@ -111,9 +115,24 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 			for (IGreenIntentFilter filter : filters) {
 
 				ndefFilter = new IntentFilter(filter.getAction());
-				ndefFilter.addDataScheme("vnd.android.nfc");
-				ndefFilter.addDataAuthority("ext", null);
-				ndefFilter.addDataPath("/" + filter.getType(), PatternMatcher.PATTERN_LITERAL);
+				if (filter.getDataScheme() != null) {
+					ndefFilter.addDataScheme(filter.getDataScheme());
+				}
+				if (filter.getDataAuthorityHost() != null) {
+					ndefFilter.addDataAuthority(filter.getDataAuthorityHost(), filter.getDataAuthorityPort());
+				}
+				if (filter.getDataPath() != null) {
+
+					// ndefFilter.addDataPath("/" + filter.getDataType(), PatternMatcher.PATTERN_LITERAL);
+				}
+				if (filter.getDataType() != null) {
+					try {
+						ndefFilter.addDataType(filter.getDataType());
+					} catch (MalformedMimeTypeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 
 				this.filters[compt] = ndefFilter;
 				compt++;

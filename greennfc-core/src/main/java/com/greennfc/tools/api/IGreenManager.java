@@ -9,7 +9,7 @@ import android.content.Intent;
  */
 public interface IGreenManager<Record extends IGreenRecord> {
 
-	void register(IGreenIntentRecieve<Record> activity, IGreenIntentFilter... filters);
+	void register(IGreenIntentRecieve<Record> activity, IGreenParser parser, IGreenIntentFilter... filters);
 
 	void pause(Activity activity);
 
