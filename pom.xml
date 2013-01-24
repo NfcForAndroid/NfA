@@ -68,6 +68,9 @@
 		<!-- Base librairies elements -->
 		<module>greennfc-filters</module>
 		<module>greennfc-records</module>
+		<module>greennfc-parsers</module>
+		<module>greennfc-writers</module>
+		<module>greennfc-apklib</module>
 
 		<!-- extensions -->
 

@@ -2,12 +2,20 @@ package com.greennfc.tools.parser;
 
 import android.nfc.NdefRecord;
 
+import com.greennfc.tools.api.IGreenIntentFilter;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.parser.wkt.WellKnowTypeFactory;
+import com.greennfc.tools.filters.ndef.ext.ExternalNdefFilter;
+import com.greennfc.tools.filters.ndef.ext.TextExternalNdefFilter;
+import com.greennfc.tools.parser.exceptions.UnknowExtTypeException;
+import com.greennfc.tools.parser.ext.GreenParserExternalNdefFactory;
+import com.greennfc.tools.parser.wkt.GreenParserWellKnowTypeFactory;
 
 public class NdefParser extends GreenParserAdapter {
 
-	protected NdefParser() {
+	private IGreenIntentFilter[] filters;
+
+	protected NdefParser(IGreenIntentFilter... filters) {
+		this.filters = filters;
 	}
 
 	@Override
@@ -23,7 +31,6 @@ public class NdefParser extends GreenParserAdapter {
 		}
 		case NdefRecord.TNF_WELL_KNOWN: {
 			record = parseWellKnown(ndefRecord);
-
 			break;
 		}
 		case NdefRecord.TNF_MIME_MEDIA: {
@@ -37,8 +44,7 @@ public class NdefParser extends GreenParserAdapter {
 			break;
 		}
 		case NdefRecord.TNF_EXTERNAL_TYPE: {
-			// record = ExternalTypeRecord.parse(ndefRecord);
-
+			record = parseExt(ndefRecord);
 			break;
 		}
 		case NdefRecord.TNF_UNKNOWN: {
@@ -63,6 +69,39 @@ public class NdefParser extends GreenParserAdapter {
 		return record;
 	}
 
+	protected IGreenRecord parseExt(NdefRecord ndefRecord) {
+		if (this.filters == null || this.filters.length == 0) {
+			throw new UnknowExtTypeException("You don't have passed any filters to identify the current record.");
+		}
+		IGreenRecord record = null;
+		String path = null;
+		String type = null;
+		for (IGreenIntentFilter filter : filters) {
+			path = filter.getDataPath();
+			if (path != null) {
+				if (path.charAt(0) == '/') {
+					path = path.substring(1);
+				}
+				type = new String(ndefRecord.getType());
+				if (path.equals(type)) {
+					if (filter instanceof ExternalNdefFilter) {
+						record = GreenParserExternalNdefFactory.externalParser().parseNdef(ndefRecord);
+						break;
+					} else if (filter instanceof TextExternalNdefFilter) {
+						record = GreenParserExternalNdefFactory.externalTextParser().parseNdef(ndefRecord);
+						break;
+					}
+				}
+			}
+		}
+		if (record == null) {
+			type = new String(ndefRecord.getType());
+			throw new UnknowExtTypeException("type not found : " + type);
+
+		}
+		return record;
+	}
+
 	protected static IGreenRecord parseWellKnown(NdefRecord ndefRecord) {
 
 		// lame type search among supported types
@@ -79,7 +118,7 @@ public class NdefParser extends GreenParserAdapter {
 			}
 			case 'T': {
 
-				return WellKnowTypeFactory.textParser().parseNdef(ndefRecord);
+				return GreenParserWellKnowTypeFactory.textParser().parseNdef(ndefRecord);
 			}
 			case 't': {
 

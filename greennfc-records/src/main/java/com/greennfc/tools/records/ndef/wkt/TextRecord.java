@@ -18,7 +18,7 @@ public class TextRecord extends NdefRecord {
 
 	public TextRecord(String key, String text) {
 		this(text, UTF8, Locale.getDefault());
-		// setKey(key);
+		setKey(key);
 	}
 
 	public TextRecord(String text) {

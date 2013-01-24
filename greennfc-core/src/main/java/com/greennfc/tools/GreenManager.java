@@ -13,6 +13,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Parcelable;
+import android.os.PatternMatcher;
 import android.util.Log;
 
 import com.greennfc.tools.api.IGreenIntentFilter;
@@ -123,7 +124,8 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 				}
 				if (filter.getDataPath() != null) {
 
-					// ndefFilter.addDataPath("/" + filter.getDataType(), PatternMatcher.PATTERN_LITERAL);
+					ndefFilter.addDataPath(filter.getDataType().charAt(0) == '/' ? filter.getDataPath() : "/" + filter.getDataPath() //
+					, PatternMatcher.PATTERN_LITERAL);
 				}
 				if (filter.getDataType() != null) {
 					try {

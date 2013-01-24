@@ -12,7 +12,7 @@ import com.greennfc.tools.GreenNfcFactory;
 import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.filters.ndef.wkt.WellKnowTypeFilterFactory;
+import com.greennfc.tools.filters.ndef.wkt.GreenFilterWellKnowTypeFactory;
 import com.greennfc.tools.parser.GreenParserFactory;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
@@ -31,7 +31,9 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		tag_content = (TextView) findViewById(R.id.tag_content);
 
 		nfcManager = GreenNfcFactory.newManager();
-		nfcManager.register(this, GreenParserFactory.ndefParserInstance(), WellKnowTypeFilterFactory.textFilter());
+		nfcManager.register(this, GreenParserFactory.ndefParserInstance() //
+				, GreenFilterWellKnowTypeFactory.textFilter() //
+				);
 
 	}
 

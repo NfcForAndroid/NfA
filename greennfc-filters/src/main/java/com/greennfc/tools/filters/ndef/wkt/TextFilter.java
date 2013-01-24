@@ -1,6 +1,6 @@
 package com.greennfc.tools.filters.ndef.wkt;
 
-public class TextFilter extends WellKnowFilter {
+public final class TextFilter extends WellKnowFilter {
 
 	protected TextFilter() {
 	}

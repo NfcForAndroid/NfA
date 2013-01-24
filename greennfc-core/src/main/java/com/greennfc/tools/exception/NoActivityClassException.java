@@ -1,6 +1,6 @@
 package com.greennfc.tools.exception;
 
-public class NoActivityClassException extends RuntimeException {
+public class NoActivityClassException extends GreenNfcRuntimeException {
 
 	/**
 	 * 

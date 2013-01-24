@@ -31,12 +31,27 @@
 	    </dependency>
 	    <dependency>
 	        <groupId>com.greennfc.tools</groupId>
+	        <artifactId>greennfc-records</artifactId>
+	        <version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.greennfc.tools</groupId>
 	        <artifactId>greennfc-filters</artifactId>
 	        <version>${project.version}</version>
 	    </dependency>
 	    <dependency>
 	        <groupId>com.greennfc.tools</groupId>
-	        <artifactId>greennfc-records</artifactId>
+	        <artifactId>greennfc-parsers</artifactId>
+	        <version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.greennfc.tools</groupId>
+	        <artifactId>greennfc-writers</artifactId>
+	        <version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.greennfc.tools</groupId>
+	        <artifactId>greennfc-apklib</artifactId>
 	        <version>${project.version}</version>
 	    </dependency>
 	    
