@@ -1,4 +1,4 @@
-package com.greennfc.tools.samples.read;
+package com.greennfc.tools.samples.write;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +17,8 @@ import com.greennfc.tools.parser.GreenParserFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
-import com.greennfc.tools.samples.cst.GreenSampleCst;
 
-public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
+public class GreenWriteActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
 
 	IGreenManager<IGreenRecord> nfcManager = null;
 
@@ -35,8 +34,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		nfcManager = GreenNfcFactory.newManager();
 		nfcManager.register(this, //
 				GreenParserFactory.ndefParserInstance() //
-				, GreenFiltersFactory.wellKownFilters().textFilter() //
-				, GreenFiltersFactory.externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
+				, GreenFiltersFactory.baseFilters().ndefFilter() //
 				);
 
 	}

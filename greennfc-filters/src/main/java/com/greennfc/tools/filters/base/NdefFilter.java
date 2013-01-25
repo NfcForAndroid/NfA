@@ -1,10 +1,13 @@
-package com.greennfc.tools.filters.ndef;
+package com.greennfc.tools.filters.base;
 
 import android.nfc.NfcAdapter;
 
 import com.greennfc.tools.filters.GreenFilterAdapter;
 
-public abstract class NdefFilter extends GreenFilterAdapter {
+public class NdefFilter extends GreenFilterAdapter {
+
+	protected NdefFilter() {
+	}
 
 	@Override
 	public String getAction() {

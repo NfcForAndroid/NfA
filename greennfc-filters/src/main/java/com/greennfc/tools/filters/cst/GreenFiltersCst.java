@@ -1,4 +1,4 @@
-package com.greennfc.tools.filters;
+package com.greennfc.tools.filters.cst;
 
 public final class GreenFiltersCst {
 

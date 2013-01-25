@@ -57,7 +57,10 @@
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
             </intent-filter>
              -->
-        </activity>       
+        </activity>
+        <activity
+            android:name=".write.GreenWriteActivity"
+             />       
     </application>
 
 </manifest>

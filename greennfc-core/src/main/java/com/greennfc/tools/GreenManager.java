@@ -1,17 +1,19 @@
 package com.greennfc.tools;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
+import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.os.PatternMatcher;
 import android.util.Log;
@@ -21,13 +23,11 @@ import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.exception.NoActivityClassException;
+import com.greennfc.tools.api.IGreenWriter;
 
 class GreenManager implements IGreenManager<IGreenRecord> {
 
 	private Activity activity;
-	private IGreenIntentRecieve<IGreenRecord> recieve;
-	private IGreenParser parser;
 
 	private NfcAdapter mAdapter;
 
@@ -36,21 +36,16 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	private PendingIntent pendingIntent;
 	String[][] techs = { { Ndef.class.getName() } };
 
-	private BroadcastReceiver reciever = new BroadcastReceiver() {
+	// private BroadcastReceiver reciever = new BroadcastReceiver() {
+	//
+	// @Override
+	// public void onReceive(Context context, Intent intent) {
+	// manageIntent(intent);
+	// }
+	// };
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			manageIntent(intent);
-		}
-	};
-
-	public void register(IGreenIntentRecieve<IGreenRecord> activity, IGreenParser parser, IGreenIntentFilter... greenfilters) {
-		if (!(activity instanceof Activity)) {
-			throw new NoActivityClassException(activity.getClass());
-		}
-		this.recieve = activity;
-		this.parser = parser;
-		this.activity = (Activity) activity;
+	public void register(Activity activity, IGreenIntentFilter... greenfilters) {
+		this.activity = activity;
 		mAdapter = NfcAdapter.getDefaultAdapter(this.activity);
 
 		initIntent(greenfilters);
@@ -59,9 +54,9 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	public void pause(Activity activity) {
 		if (activity.equals(this.activity)) {
 			mAdapter.disableForegroundDispatch(this.activity);
-			for (int i = 0; i < filters.length; i++) {
-				this.activity.unregisterReceiver(reciever);
-			}
+			// for (int i = 0; i < filters.length; i++) {
+			// this.activity.unregisterReceiver(reciever);
+			// }
 		}
 
 	}
@@ -69,15 +64,14 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	public void resume(Activity activity) {
 		if (activity.equals(this.activity)) {
 			mAdapter.enableForegroundDispatch(this.activity, pendingIntent, filters, techs);
-			for (IntentFilter filter : filters) {
-				this.activity.registerReceiver(reciever, filter);
-			}
+			// for (IntentFilter filter : filters) {
+			// this.activity.registerReceiver(reciever, filter);
+			// }
 		}
 
 	}
 
-	public void manageIntent(Intent intent) {
-		recieve.startRecieveMessage();
+	public void manageIntent(final Intent intent, final IGreenIntentRecieve<IGreenRecord> recieve, final IGreenParser parser) {
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
@@ -102,6 +96,54 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 				recieve.recieveMessage(parser.parseTag(tag));
 			}
 		}
+
+	}
+
+	public void writeTag(final Intent intent, final IGreenWriter writer) {
+		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+		final Ndef ndef = Ndef.get(tag);
+		AsyncTask<Void, Void, String> taskWrite = new AsyncTask<Void, Void, String>() {
+
+			@Override
+			protected String doInBackground(Void... params) {
+				if (ndef == null) {
+					return null;
+				}
+				try {
+					ndef.connect();
+
+					try {
+						// ndef.writeNdefMessage(writer.getMessageRecord(record));
+					} catch (FormatException e) {
+						Log.e("Error : ", e.getMessage(), e);
+					}
+
+				} catch (IOException e) {
+					Log.e("Error : ", e.getMessage(), e);
+				} finally {
+					if (ndef != null) {
+						try {
+							ndef.close();
+						} catch (IOException e) {
+							Log.e("Error : ", e.getMessage(), e);
+						}
+					}
+				}
+				return "OK";
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (result == null) {
+
+					// writeMsg.setText("Write not OK !");
+				} else {
+					// writeMsg.setText("Write OK !");
+				}
+			}
+
+		};
+		taskWrite.execute();
 
 	}
 
@@ -143,7 +185,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 			ndefFilter = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
 			this.filters[0] = ndefFilter;
 		}
-		manageIntent(this.activity.getIntent());
+		// manageIntent(this.activity.getIntent());
 	}
 
 }
