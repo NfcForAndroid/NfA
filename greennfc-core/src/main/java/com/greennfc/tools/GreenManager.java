@@ -99,7 +99,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 
 	}
 
-	public void writeTag(final Intent intent, final IGreenWriter writer) {
+	public void writeTag(final Intent intent, final IGreenWriter writer, final IGreenRecord record) {
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 		final Ndef ndef = Ndef.get(tag);
 		AsyncTask<Void, Void, String> taskWrite = new AsyncTask<Void, Void, String>() {
@@ -113,7 +113,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 					ndef.connect();
 
 					try {
-						// ndef.writeNdefMessage(writer.getMessageRecord(record));
+						ndef.writeNdefMessage(writer.getMessageRecord(record));
 					} catch (FormatException e) {
 						Log.e("Error : ", e.getMessage(), e);
 					}
@@ -166,7 +166,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 				}
 				if (filter.getDataPath() != null) {
 
-					ndefFilter.addDataPath(filter.getDataType().charAt(0) == '/' ? filter.getDataPath() : "/" + filter.getDataPath() //
+					ndefFilter.addDataPath(filter.getDataPath().charAt(0) == '/' ? filter.getDataPath() : "/" + filter.getDataPath() //
 					, PatternMatcher.PATTERN_LITERAL);
 				}
 				if (filter.getDataType() != null) {

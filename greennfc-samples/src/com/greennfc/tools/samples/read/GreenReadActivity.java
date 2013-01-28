@@ -33,8 +33,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		tag_content = (TextView) findViewById(R.id.tag_content);
 
 		nfcManager = GreenNfcFactory.newManager();
-		nfcManager.register(this, //
-				GreenParserFactory.ndefParserInstance() //
+		nfcManager.register(this //
 				, GreenFiltersFactory.wellKownFilters().textFilter() //
 				, GreenFiltersFactory.externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
 				);
@@ -59,7 +58,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		 * Manadatory
 		 */
 		tag_content.setText(R.string.reading_tag);
-		nfcManager.manageIntent(intent);
+		nfcManager.manageIntent(intent, this, GreenParserFactory.ndefParserInstance());
 	}
 
 	/**

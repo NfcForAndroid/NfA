@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.greennfc.tools.samples.read.GreenReadActivity;
+import com.greennfc.tools.samples.write.GreenWriteActivity;
 
 public class MainFragmentList extends SherlockListFragment {
 
@@ -32,6 +33,9 @@ public class MainFragmentList extends SherlockListFragment {
 		switch (position) {
 		case 0:
 			startActivity(new Intent(getActivity(), GreenReadActivity.class));
+			break;
+		case 2:
+			startActivity(new Intent(getActivity(), GreenWriteActivity.class));
 			break;
 
 		default:

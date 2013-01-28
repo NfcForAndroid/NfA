@@ -13,10 +13,11 @@ import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.filters.GreenFiltersFactory;
-import com.greennfc.tools.parser.GreenParserFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
+import com.greennfc.tools.records.ndef.wkt.GreenWktRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
+import com.greennfc.tools.writers.ndef.wkt.GreenWriterWktFactory;
 
 public class GreenWriteActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
 
@@ -32,8 +33,7 @@ public class GreenWriteActivity extends SherlockFragmentActivity implements IGre
 		tag_content = (TextView) findViewById(R.id.tag_content);
 
 		nfcManager = GreenNfcFactory.newManager();
-		nfcManager.register(this, //
-				GreenParserFactory.ndefParserInstance() //
+		nfcManager.register(this //
 				, GreenFiltersFactory.baseFilters().ndefFilter() //
 				);
 
@@ -56,8 +56,8 @@ public class GreenWriteActivity extends SherlockFragmentActivity implements IGre
 		/*
 		 * Manadatory
 		 */
-		tag_content.setText(R.string.reading_tag);
-		nfcManager.manageIntent(intent);
+		tag_content.setText(R.string.writing_tag);
+		nfcManager.writeTag(intent, GreenWriterWktFactory.getInstance().getTextWriter(), GreenWktRecordFactory.getInstance().getTextRecord("un texte"));
 	}
 
 	/**

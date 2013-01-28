@@ -16,20 +16,20 @@ public class TextRecord extends NdefRecord {
 	private Charset encoding;
 	private Locale locale;
 
-	public TextRecord(String key, String text) {
+	protected TextRecord(String key, String text) {
 		this(text, UTF8, Locale.getDefault());
 		setKey(key);
 	}
 
-	public TextRecord(String text) {
+	protected TextRecord(String text) {
 		this(text, UTF8, Locale.getDefault());
 	}
 
-	public TextRecord(String text, Locale locale) {
+	protected TextRecord(String text, Locale locale) {
 		this(text, UTF8, locale);
 	}
 
-	public TextRecord(String text, Charset encoding, Locale locale) {
+	protected TextRecord(String text, Charset encoding, Locale locale) {
 		this.encoding = encoding;
 		this.text = text;
 		this.locale = locale;
