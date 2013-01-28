@@ -2,12 +2,12 @@ package com.greennfc.tools.filters.ndef.wkt;
 
 public class GreenFilterWellKnowTypeFactory {
 
-	private static GreenFilterWellKnowTypeFactory instance;
+	// private static GreenFilterWellKnowTypeFactory instance;
 
 	private TextFilter textFilter;
 	private UriFilter uriFilter;
 
-	private GreenFilterWellKnowTypeFactory() {
+	protected GreenFilterWellKnowTypeFactory() {
 	}
 
 	public synchronized TextFilter textFilter() {
@@ -24,11 +24,11 @@ public class GreenFilterWellKnowTypeFactory {
 		return uriFilter;
 	}
 
-	public static synchronized GreenFilterWellKnowTypeFactory getInstance() {
-		if (instance == null) {
-			instance = new GreenFilterWellKnowTypeFactory();
-		}
-		return instance;
-	}
+	// public static synchronized GreenFilterWellKnowTypeFactory getInstance() {
+	// if (instance == null) {
+	// instance = new GreenFilterWellKnowTypeFactory();
+	// }
+	// return instance;
+	// }
 
 }

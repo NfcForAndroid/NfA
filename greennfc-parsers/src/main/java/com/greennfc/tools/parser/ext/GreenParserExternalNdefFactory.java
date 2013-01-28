@@ -10,18 +10,18 @@ public final class GreenParserExternalNdefFactory {
 
 	}
 
-	private static final synchronized GreenParserExternalNdefFactory getInstance() {
+	public static final synchronized GreenParserExternalNdefFactory getInstance() {
 		if (instance == null) {
 			instance = new GreenParserExternalNdefFactory();
 		}
 		return instance;
 	}
 
-	public static IGreenParser externalParser() {
+	public IGreenParser externalParser() {
 		return new ExternalParser();
 	}
 
-	public static IGreenParser externalTextParser() {
+	public IGreenParser externalTextParser() {
 		return new TextExternalParser();
 	}
 

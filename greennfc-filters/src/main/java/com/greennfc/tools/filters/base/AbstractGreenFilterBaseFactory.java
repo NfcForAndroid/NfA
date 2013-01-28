@@ -1,14 +1,14 @@
 package com.greennfc.tools.filters.base;
 
-public class GreenFilterBaseFactory {
+public class AbstractGreenFilterBaseFactory {
 
-	private static GreenFilterBaseFactory instance;
+	// private static GreenFilterBaseFactory instance;
 
 	private NdefFilter ndefFilter;
 	private TagFilter tagFilter;
 	private TechFilter techFilter;
 
-	private GreenFilterBaseFactory() {
+	protected AbstractGreenFilterBaseFactory() {
 	}
 
 	public synchronized NdefFilter ndefFilter() {
@@ -32,11 +32,11 @@ public class GreenFilterBaseFactory {
 		return techFilter;
 	}
 
-	public static synchronized GreenFilterBaseFactory getInstance() {
-		if (instance == null) {
-			instance = new GreenFilterBaseFactory();
-		}
-		return instance;
-	}
+	// public static synchronized GreenFilterBaseFactory getInstance() {
+	// if (instance == null) {
+	// instance = new GreenFilterBaseFactory();
+	// }
+	// return instance;
+	// }
 
 }

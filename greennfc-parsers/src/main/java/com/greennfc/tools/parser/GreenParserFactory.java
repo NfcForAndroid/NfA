@@ -1,6 +1,7 @@
 package com.greennfc.tools.parser;
 
-import com.greennfc.tools.api.IGreenParser;
+import com.greennfc.tools.parser.ext.GreenParserExternalNdefFactory;
+import com.greennfc.tools.parser.wkt.GreenParserWellKnowTypeFactory;
 
 public final class GreenParserFactory {
 
@@ -12,33 +13,33 @@ public final class GreenParserFactory {
 	private GreenParserFactory() {
 	}
 
-	public synchronized NdefParser getNdefParser() {
+	public synchronized NdefParser ndefParser() {
 		if (ndefParser == null) {
 			ndefParser = new NdefParser();
 		}
 		return ndefParser;
 	}
 
-	public synchronized TagParser getTagParser() {
+	public synchronized TagParser tagParser() {
 		if (tagParser == null) {
 			tagParser = new TagParser();
 		}
 		return tagParser;
 	}
 
-	private static synchronized GreenParserFactory getInstance() {
+	public static synchronized GreenParserFactory getInstance() {
 		if (instance == null) {
 			instance = new GreenParserFactory();
 		}
 		return instance;
 	}
 
-	public static IGreenParser ndefParserInstance() {
-		return getInstance().getNdefParser();
+	public static GreenParserExternalNdefFactory externalFactory() {
+		return GreenParserExternalNdefFactory.getInstance();
 	}
 
-	public static IGreenParser tagParserInstance() {
-		return getInstance().getTagParser();
+	public static GreenParserWellKnowTypeFactory wellKnowTypeFactory() {
+		return GreenParserWellKnowTypeFactory.getInstance();
 	}
 
 }

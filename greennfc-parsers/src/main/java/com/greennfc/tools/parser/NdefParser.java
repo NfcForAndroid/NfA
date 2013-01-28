@@ -7,8 +7,6 @@ import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.filters.ndef.ext.ExternalNdefFilter;
 import com.greennfc.tools.filters.ndef.ext.TextExternalNdefFilter;
 import com.greennfc.tools.parser.exceptions.UnknowExtTypeException;
-import com.greennfc.tools.parser.ext.GreenParserExternalNdefFactory;
-import com.greennfc.tools.parser.wkt.GreenParserWellKnowTypeFactory;
 
 public class NdefParser extends GreenParserAdapter {
 
@@ -85,10 +83,10 @@ public class NdefParser extends GreenParserAdapter {
 				type = new String(ndefRecord.getType());
 				if (path.equals(type)) {
 					if (filter instanceof ExternalNdefFilter) {
-						record = GreenParserExternalNdefFactory.externalParser().parseNdef(ndefRecord);
+						record = GreenParserFactory.externalFactory().externalParser().parseNdef(ndefRecord);
 						break;
 					} else if (filter instanceof TextExternalNdefFilter) {
-						record = GreenParserExternalNdefFactory.externalTextParser().parseNdef(ndefRecord);
+						record = GreenParserFactory.externalFactory().externalTextParser().parseNdef(ndefRecord);
 						break;
 					}
 				}
@@ -118,7 +116,7 @@ public class NdefParser extends GreenParserAdapter {
 			}
 			case 'T': {
 
-				return GreenParserWellKnowTypeFactory.textParser().parseNdef(ndefRecord);
+				return GreenParserFactory.wellKnowTypeFactory().textParser().parseNdef(ndefRecord);
 			}
 			case 't': {
 

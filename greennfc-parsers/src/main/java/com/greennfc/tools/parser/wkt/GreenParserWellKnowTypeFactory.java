@@ -1,6 +1,5 @@
 package com.greennfc.tools.parser.wkt;
 
-import com.greennfc.tools.api.IGreenParser;
 
 public final class GreenParserWellKnowTypeFactory {
 
@@ -11,22 +10,18 @@ public final class GreenParserWellKnowTypeFactory {
 	private GreenParserWellKnowTypeFactory() {
 	}
 
-	public synchronized TextParser getTextParser() {
+	public synchronized TextParser textParser() {
 		if (textParser == null) {
 			textParser = new TextParser();
 		}
 		return textParser;
 	}
 
-	private static synchronized GreenParserWellKnowTypeFactory getInstance() {
+	public static synchronized GreenParserWellKnowTypeFactory getInstance() {
 		if (instance == null) {
 			instance = new GreenParserWellKnowTypeFactory();
 		}
 		return instance;
-	}
-
-	public static IGreenParser textParser() {
-		return getInstance().getTextParser();
 	}
 
 }

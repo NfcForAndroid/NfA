@@ -58,7 +58,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		 * Manadatory
 		 */
 		tag_content.setText(R.string.reading_tag);
-		nfcManager.manageIntent(intent, this, GreenParserFactory.ndefParserInstance());
+		nfcManager.manageIntent(intent, this, GreenParserFactory.getInstance().ndefParser());
 	}
 
 	/**

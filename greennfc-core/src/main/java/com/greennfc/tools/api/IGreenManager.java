@@ -17,6 +17,6 @@ public interface IGreenManager<Record extends IGreenRecord> {
 
 	void manageIntent(Intent intent, IGreenIntentRecieve<Record> recieve, IGreenParser parser);
 
-	void writeTag(Intent intent, IGreenWriter writer, Record record);
+	void writeTag(Intent intent, IGreenIntentWrite<Record> recieve, IGreenWriter writer, Record record);
 
 }

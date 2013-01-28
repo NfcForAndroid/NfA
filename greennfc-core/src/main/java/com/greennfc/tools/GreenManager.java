@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.greennfc.tools.api.IGreenIntentFilter;
 import com.greennfc.tools.api.IGreenIntentRecieve;
+import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
@@ -99,7 +100,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 
 	}
 
-	public void writeTag(final Intent intent, final IGreenWriter writer, final IGreenRecord record) {
+	public void writeTag(final Intent intent, final IGreenIntentWrite<IGreenRecord> recieve, final IGreenWriter writer, final IGreenRecord record) {
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 		final Ndef ndef = Ndef.get(tag);
 		AsyncTask<Void, Void, String> taskWrite = new AsyncTask<Void, Void, String>() {
@@ -134,12 +135,7 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 
 			@Override
 			protected void onPostExecute(String result) {
-				if (result == null) {
-
-					// writeMsg.setText("Write not OK !");
-				} else {
-					// writeMsg.setText("Write OK !");
-				}
+				recieve.messageWrite(result != null);
 			}
 
 		};

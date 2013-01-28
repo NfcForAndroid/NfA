@@ -16,7 +16,7 @@ public final class GreenWriterWktFactory {
 
 	private TextWriter textWriter;
 
-	public synchronized TextWriter getTextWriter() {
+	public synchronized TextWriter textWriter() {
 		if (textWriter == null) {
 			textWriter = new TextWriter();
 		}

@@ -10,16 +10,21 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.greennfc.tools.GreenNfcFactory;
 import com.greennfc.tools.api.IGreenIntentRecieve;
+import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.filters.GreenFiltersFactory;
+import com.greennfc.tools.records.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
-import com.greennfc.tools.records.ndef.wkt.GreenWktRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
-import com.greennfc.tools.writers.ndef.wkt.GreenWriterWktFactory;
+import com.greennfc.tools.writers.GreenWriterFactory;
 
-public class GreenWriteActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
+public class GreenWriteActivity //
+		extends SherlockFragmentActivity //
+		implements IGreenIntentRecieve<IGreenRecord> //
+		, IGreenIntentWrite<IGreenRecord> //
+{
 
 	IGreenManager<IGreenRecord> nfcManager = null;
 
@@ -57,7 +62,11 @@ public class GreenWriteActivity extends SherlockFragmentActivity implements IGre
 		 * Manadatory
 		 */
 		tag_content.setText(R.string.writing_tag);
-		nfcManager.writeTag(intent, GreenWriterWktFactory.getInstance().getTextWriter(), GreenWktRecordFactory.getInstance().getTextRecord("un texte"));
+		nfcManager.writeTag(intent //
+				, this //
+				, GreenWriterFactory.wellKnowTypeFactory().textWriter() //
+				, GreenRecordFactory.wellKnowTypeFactory().getTextRecord("un texte") //
+				);
 	}
 
 	/**
@@ -76,6 +85,12 @@ public class GreenWriteActivity extends SherlockFragmentActivity implements IGre
 		} else {
 			tag_content.setText(R.string.tag_content);
 		}
+
+	}
+
+	@Override
+	public void messageWrite(boolean ok) {
+		tag_content.setText(ok ? R.string.tag_write : R.string.tag_not_write);
 
 	}
 
@@ -101,4 +116,5 @@ public class GreenWriteActivity extends SherlockFragmentActivity implements IGre
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
 }
