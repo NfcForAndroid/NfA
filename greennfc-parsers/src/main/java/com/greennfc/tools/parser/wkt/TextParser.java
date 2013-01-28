@@ -8,8 +8,8 @@ import java.util.Locale;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.parser.NdefParser;
-import com.greennfc.tools.records.ndef.wkt.GreenWktRecordFactory;
+import com.greennfc.tools.parser.base.NdefParser;
+import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 
 public final class TextParser extends NdefParser {
@@ -40,7 +40,7 @@ public final class TextParser extends NdefParser {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
-		TextRecord textRecord = GreenWktRecordFactory.getInstance().getTextRecord(message, textEncoding, new Locale(languageCode));
+		TextRecord textRecord = GreenRecordFactory.wellKnowTypeFactory().getTextRecord(message, textEncoding, new Locale(languageCode));
 		return textRecord;
 	}
 

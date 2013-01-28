@@ -12,8 +12,8 @@ import com.greennfc.tools.GreenNfcFactory;
 import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.filters.GreenFiltersFactory;
-import com.greennfc.tools.parser.GreenParserFactory;
+import com.greennfc.tools.filters.factory.GreenFiltersFactory;
+import com.greennfc.tools.parser.factory.GreenParserFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
@@ -37,7 +37,6 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 				, GreenFiltersFactory.wellKownFilters().textFilter() //
 				, GreenFiltersFactory.externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
 				);
-
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		 * Manadatory
 		 */
 		tag_content.setText(R.string.reading_tag);
-		nfcManager.manageIntent(intent, this, GreenParserFactory.getInstance().ndefParser());
+		nfcManager.manageIntent(intent, this, GreenParserFactory.baseFactory().ndefParser());
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package com.greennfc.tools.parser;
+package com.greennfc.tools.parser.base;
 
 import android.nfc.Tag;
 

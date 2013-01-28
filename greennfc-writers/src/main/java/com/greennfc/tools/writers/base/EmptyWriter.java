@@ -1,4 +1,4 @@
-package com.greennfc.tools.writers;
+package com.greennfc.tools.writers.base;
 
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;

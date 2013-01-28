@@ -1,8 +1,9 @@
 package com.greennfc.tools.filters.base;
 
-public class AbstractGreenFilterBaseFactory {
+import com.greennfc.tools.api.IGreenIntentFilter;
+import com.greennfc.tools.filters.factory.IGreenFilterBaseFactory;
 
-	// private static GreenFilterBaseFactory instance;
+public abstract class AbstractGreenFilterBaseFactory implements IGreenFilterBaseFactory {
 
 	private NdefFilter ndefFilter;
 	private TagFilter tagFilter;
@@ -11,32 +12,25 @@ public class AbstractGreenFilterBaseFactory {
 	protected AbstractGreenFilterBaseFactory() {
 	}
 
-	public synchronized NdefFilter ndefFilter() {
+	public IGreenIntentFilter ndefFilter() {
 		if (ndefFilter == null) {
 			ndefFilter = new NdefFilter();
 		}
 		return ndefFilter;
 	}
 
-	public synchronized TagFilter tagFilter() {
+	public IGreenIntentFilter tagFilter() {
 		if (tagFilter == null) {
 			tagFilter = new TagFilter();
 		}
 		return tagFilter;
 	}
 
-	public synchronized TechFilter techFilter() {
+	public IGreenIntentFilter techFilter() {
 		if (techFilter == null) {
 			techFilter = new TechFilter();
 		}
 		return techFilter;
 	}
-
-	// public static synchronized GreenFilterBaseFactory getInstance() {
-	// if (instance == null) {
-	// instance = new GreenFilterBaseFactory();
-	// }
-	// return instance;
-	// }
 
 }

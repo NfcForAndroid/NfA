@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.parser.NdefParser;
+import com.greennfc.tools.parser.base.NdefParser;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.records.ndef.wkt.UriSchemeEnum;
 

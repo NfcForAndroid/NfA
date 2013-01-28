@@ -3,18 +3,11 @@ package com.greennfc.tools.records.ndef.wkt;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-public final class GreenWktRecordFactory {
+import com.greennfc.tools.records.factory.IGreenRecordWktFactory;
 
-	private static GreenWktRecordFactory instance;
+public abstract class AbstractGreenRecordWktFactory implements IGreenRecordWktFactory {
 
-	private GreenWktRecordFactory() {
-	}
-
-	public static final synchronized GreenWktRecordFactory getInstance() {
-		if (instance == null) {
-			instance = new GreenWktRecordFactory();
-		}
-		return instance;
+	protected AbstractGreenRecordWktFactory() {
 	}
 
 	public TextRecord getTextRecord(String text) {
