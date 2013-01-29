@@ -19,9 +19,9 @@ import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
 import com.greennfc.tools.samples.cst.GreenSampleCst;
 
-public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
+public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve {
 
-	IGreenManager<IGreenRecord> nfcManager = null;
+	IGreenManager nfcManager = null;
 
 	TextView tag_content;
 
@@ -37,6 +37,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 				, GreenFiltersFactory.wellKownFilters().textFilter() //
 				, GreenFiltersFactory.externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
 				);
+		nfcManager.manageIntent(getIntent(), this, GreenParserFactory.baseFactory().ndefParser());
 	}
 
 	@Override

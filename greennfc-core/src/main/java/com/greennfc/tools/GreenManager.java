@@ -26,7 +26,7 @@ import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.IGreenWriter;
 
-class GreenManager implements IGreenManager<IGreenRecord> {
+class GreenManager implements IGreenManager {
 
 	private Activity activity;
 
@@ -36,14 +36,6 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	private IntentFilter[] filters;
 	private PendingIntent pendingIntent;
 	String[][] techs = { { Ndef.class.getName() } };
-
-	// private BroadcastReceiver reciever = new BroadcastReceiver() {
-	//
-	// @Override
-	// public void onReceive(Context context, Intent intent) {
-	// manageIntent(intent);
-	// }
-	// };
 
 	public void register(Activity activity, IGreenIntentFilter... greenfilters) {
 		this.activity = activity;
@@ -55,9 +47,6 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	public void pause(Activity activity) {
 		if (activity.equals(this.activity)) {
 			mAdapter.disableForegroundDispatch(this.activity);
-			// for (int i = 0; i < filters.length; i++) {
-			// this.activity.unregisterReceiver(reciever);
-			// }
 		}
 
 	}
@@ -65,14 +54,11 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 	public void resume(Activity activity) {
 		if (activity.equals(this.activity)) {
 			mAdapter.enableForegroundDispatch(this.activity, pendingIntent, filters, techs);
-			// for (IntentFilter filter : filters) {
-			// this.activity.registerReceiver(reciever, filter);
-			// }
 		}
 
 	}
 
-	public void manageIntent(final Intent intent, final IGreenIntentRecieve<IGreenRecord> recieve, final IGreenParser parser) {
+	public void manageIntent(final Intent intent, final IGreenIntentRecieve recieve, final IGreenParser parser) {
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
@@ -100,47 +86,12 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 
 	}
 
-	public void writeTag(final Intent intent, final IGreenIntentWrite<IGreenRecord> recieve, final IGreenWriter writer, final IGreenRecord record) {
+	public <Record extends IGreenRecord> void writeTag(final Intent intent, final IGreenIntentWrite recieve, final IGreenWriter<Record> writer, final Record record) {
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 		final Ndef ndef = Ndef.get(tag);
-		AsyncTask<Void, Void, String> taskWrite = new AsyncTask<Void, Void, String>() {
-
-			@Override
-			protected String doInBackground(Void... params) {
-				if (ndef == null) {
-					return null;
-				}
-				try {
-					ndef.connect();
-
-					try {
-						ndef.writeNdefMessage(writer.getMessageRecord(record));
-					} catch (FormatException e) {
-						Log.e("Error : ", e.getMessage(), e);
-					}
-
-				} catch (IOException e) {
-					Log.e("Error : ", e.getMessage(), e);
-				} finally {
-					if (ndef != null) {
-						try {
-							ndef.close();
-						} catch (IOException e) {
-							Log.e("Error : ", e.getMessage(), e);
-						}
-					}
-				}
-				return "OK";
-			}
-
-			@Override
-			protected void onPostExecute(String result) {
-				recieve.messageWrite(result != null);
-			}
-
-		};
-		taskWrite.execute();
-
+		RecordAsynkTask<Record> recordTask = new RecordAsynkTask<Record>(ndef, recieve, writer, record);
+		EmptyAsynkTask<Record> emptyTask = new EmptyAsynkTask<Record>(ndef, recordTask, recieve);
+		emptyTask.execute();
 	}
 
 	private void initIntent(IGreenIntentFilter... filters) {
@@ -182,6 +133,113 @@ class GreenManager implements IGreenManager<IGreenRecord> {
 			this.filters[0] = ndefFilter;
 		}
 		// manageIntent(this.activity.getIntent());
+	}
+
+	class EmptyAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, String> {
+
+		private final Ndef ndef;
+		private final RecordAsynkTask<Record> taskWrite;
+		private final IGreenIntentWrite recieve;
+
+		public EmptyAsynkTask(Ndef ndef, RecordAsynkTask<Record> taskWrite, IGreenIntentWrite recieve) {
+			super();
+			this.ndef = ndef;
+			this.taskWrite = taskWrite;
+			this.recieve = recieve;
+		}
+
+		@Override
+		protected String doInBackground(Void... arg0) {
+			if (ndef == null) {
+				return null;
+			}
+			try {
+				ndef.connect();
+
+				try {
+					ndef.writeNdefMessage(new NdefMessage(new NdefRecord[] { new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null) }));
+				} catch (FormatException e) {
+					Log.e("Error : ", e.getMessage(), e);
+					return null;
+				}
+
+			} catch (IOException e) {
+				Log.e("Error : ", e.getMessage(), e);
+				return null;
+			} finally {
+				if (ndef != null) {
+					try {
+						ndef.close();
+					} catch (IOException e) {
+						Log.e("Error : ", e.getMessage(), e);
+						return null;
+					}
+				}
+			}
+			return "OK";
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result != null) {
+				taskWrite.execute();
+			}
+		}
+
+	}
+
+	class RecordAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, String> {
+
+		private final Ndef ndef;
+		private final IGreenIntentWrite recieve;
+		private final IGreenWriter<Record> writer;
+		private final Record record;
+
+		public RecordAsynkTask(Ndef ndef, IGreenIntentWrite recieve, IGreenWriter<Record> writer, Record record) {
+			super();
+			this.ndef = ndef;
+			this.recieve = recieve;
+			this.writer = writer;
+			this.record = record;
+		}
+
+		@Override
+		protected String doInBackground(Void... arg0) {
+			if (ndef == null) {
+				return null;
+			}
+			try {
+				ndef.connect();
+
+				try {
+					writer.init(record);
+					ndef.writeNdefMessage(writer.getMessageRecord());
+				} catch (FormatException e) {
+					Log.e("Error : ", e.getMessage(), e);
+					return null;
+				}
+
+			} catch (IOException e) {
+				Log.e("Error : ", e.getMessage(), e);
+				return null;
+			} finally {
+				if (ndef != null) {
+					try {
+						ndef.close();
+					} catch (IOException e) {
+						Log.e("Error : ", e.getMessage(), e);
+						return null;
+					}
+				}
+			}
+			return "OK";
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			recieve.messageWrite(result != null);
+		}
+
 	}
 
 }

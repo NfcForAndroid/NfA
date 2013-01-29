@@ -2,8 +2,12 @@ package com.greennfc.tools.api;
 
 import android.nfc.NdefMessage;
 
-public interface IGreenWriter {
+public interface IGreenWriter<Record extends IGreenRecord> {
 
-	NdefMessage getMessageRecord(IGreenRecord record);
+	void init(Record record);
+
+	NdefMessage getMessageRecord();
+
+	int getLength();
 
 }

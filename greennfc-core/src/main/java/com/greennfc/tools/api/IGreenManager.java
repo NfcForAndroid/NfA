@@ -7,7 +7,7 @@ import android.content.Intent;
  * @author jefBinomed
  * 
  */
-public interface IGreenManager<Record extends IGreenRecord> {
+public interface IGreenManager {
 
 	void register(Activity activity, IGreenIntentFilter... filters);
 
@@ -15,8 +15,8 @@ public interface IGreenManager<Record extends IGreenRecord> {
 
 	void resume(Activity activity);
 
-	void manageIntent(Intent intent, IGreenIntentRecieve<Record> recieve, IGreenParser parser);
+	void manageIntent(Intent intent, IGreenIntentRecieve recieve, IGreenParser parser);
 
-	void writeTag(Intent intent, IGreenIntentWrite<Record> recieve, IGreenWriter writer, Record record);
+	<Record extends IGreenRecord> void writeTag(Intent intent, IGreenIntentWrite recieve, IGreenWriter<Record> writer, Record record);
 
 }

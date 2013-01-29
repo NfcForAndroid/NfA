@@ -1,7 +1,7 @@
 package com.greennfc.tools.api;
 
-public interface IGreenIntentRecieve<Record extends IGreenRecord> {
+public interface IGreenIntentRecieve {
 
-	void recieveMessage(Record record);
+	<Record extends IGreenRecord> void recieveMessage(Record record);
 
 }

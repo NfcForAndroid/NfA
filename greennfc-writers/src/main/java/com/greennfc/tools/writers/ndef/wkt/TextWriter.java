@@ -3,53 +3,61 @@ package com.greennfc.tools.writers.ndef.wkt;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 
-import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.api.IGreenWriter;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
+import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
 
-public class TextWriter implements IGreenWriter {
+public class TextWriter extends AbstractNdefWriter<TextRecord> {
 
 	protected TextWriter() {
 	}
 
-	public NdefMessage getMessageRecord(IGreenRecord record) {
+	public NdefMessage getMessageRecord() {
 
+		NdefRecord ndefRecord = getNdefRecord();
+		NdefRecord[] records = new NdefRecord[] { ndefRecord };
+		NdefMessage msg = new NdefMessage(records);
+		return msg;
+	}
+
+	private NdefRecord getNdefRecord() {
 		if (!(record instanceof TextRecord)) {
 			throw new IllegalArgumentException("Expected TextRecord but got : " + record.getClass());
 		}
 
-		TextRecord txtRecord = (TextRecord) record;
-
-		if (!txtRecord.hasLocale()) {
+		if (!record.hasLocale()) {
 			throw new IllegalArgumentException("Expected locale");
 		}
 
-		if (!txtRecord.hasEncoding()) {
+		if (!record.hasEncoding()) {
 			throw new IllegalArgumentException("Expected encoding");
 		}
 
-		if (!txtRecord.hasText()) {
+		if (!record.hasText()) {
 			throw new IllegalArgumentException("Expected text");
 		}
 
-		byte[] languageData = (txtRecord.getLocale().getLanguage() + (txtRecord.getLocale().getCountry() == null || txtRecord.getLocale().getCountry().length() == 0 ? "" : ("-" + txtRecord.getLocale().getCountry()))).getBytes();
+		byte[] languageData = (record.getLocale().getLanguage() + (record.getLocale().getCountry() == null || record.getLocale().getCountry().length() == 0 ? "" : ("-" + record.getLocale().getCountry()))).getBytes();
 
 		if (languageData.length > TextRecord.LANGUAGE_CODE_MASK) {
 			throw new IllegalArgumentException("Expected language code length <= 32 bytes, not " + languageData.length + " bytes");
 		}
 
-		byte[] textData = txtRecord.getText().getBytes(txtRecord.getEncoding());
+		byte[] textData = record.getText().getBytes(record.getEncoding());
 		byte[] payload = new byte[1 + languageData.length + textData.length];
 
-		byte status = (byte) (languageData.length | (TextRecord.UTF16.equals(txtRecord.getEncoding()) ? 0x80 : 0x00));
+		byte status = (byte) (languageData.length | (TextRecord.UTF16.equals(record.getEncoding()) ? 0x80 : 0x00));
 		payload[0] = status;
 		System.arraycopy(languageData, 0, payload, 1, languageData.length);
 		System.arraycopy(textData, 0, payload, 1 + languageData.length, textData.length);
 
-		NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, txtRecord.getId(), payload);
-		NdefRecord[] records = new NdefRecord[] { ndefRecord };
-		NdefMessage msg = new NdefMessage(records);
-		return msg;
+		NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, record.getId(), payload);
+		return ndefRecord;
+	}
+
+	@Override
+	public int getLength() {
+		super.ndefRecord = getNdefRecord();
+		return super.getLength();
 	}
 
 }

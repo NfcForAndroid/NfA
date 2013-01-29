@@ -6,4 +6,9 @@
         <item name="write">Write</item>
         <item name="write_override">Write from override</item>
     </string-array>
+    <string-array name="type_tags">
+        <item name="empty">Empty</item>
+        <item name="text">Text</item>
+        <item name="uri">Uri</item>
+    </string-array>
 </resources>

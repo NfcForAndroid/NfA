@@ -1,6 +1,6 @@
 package com.greennfc.tools.api;
 
-public interface IGreenIntentWrite<Record extends IGreenRecord> {
+public interface IGreenIntentWrite {
 
 	void messageWrite(boolean ok);
 

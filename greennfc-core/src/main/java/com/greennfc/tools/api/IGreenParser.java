@@ -5,8 +5,8 @@ import android.nfc.Tag;
 
 public interface IGreenParser {
 
-	IGreenRecord parseNdef(NdefRecord record);
+	<Record extends IGreenRecord> Record parseNdef(NdefRecord record);
 
-	IGreenRecord parseTag(Tag tag);
+	<Record extends IGreenRecord> Record parseTag(Tag tag);
 
 }
