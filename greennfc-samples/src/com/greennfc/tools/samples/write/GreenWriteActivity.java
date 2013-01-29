@@ -13,12 +13,12 @@ import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.filters.GreenFiltersFactory;
-import com.greennfc.tools.records.GreenRecordFactory;
+import com.greennfc.tools.filters.factory.GreenFiltersFactory;
+import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
-import com.greennfc.tools.writers.GreenWriterFactory;
+import com.greennfc.tools.writers.factory.GreenWriterFactory;
 
 public class GreenWriteActivity //
 		extends SherlockFragmentActivity //

@@ -19,7 +19,7 @@ local.properties
 *.classpath
 *.project
 *.settings/
-greennfc-samples/project.properties
+
 
 
 # Maven project files

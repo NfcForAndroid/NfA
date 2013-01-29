@@ -1,4 +1,4 @@
-package com.greennfc.tools.records;
+package com.greennfc.tools.records.base;
 
 import com.greennfc.tools.api.IGreenRecord;
 

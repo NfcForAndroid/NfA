@@ -1,4 +1,4 @@
-package com.greennfc.tools.parser;
+package com.greennfc.tools.parser.base;
 
 import android.nfc.NdefRecord;
 
@@ -7,6 +7,7 @@ import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.filters.ndef.ext.ExternalNdefFilter;
 import com.greennfc.tools.filters.ndef.ext.TextExternalNdefFilter;
 import com.greennfc.tools.parser.exceptions.UnknowExtTypeException;
+import com.greennfc.tools.parser.factory.GreenParserFactory;
 
 public class NdefParser extends GreenParserAdapter {
 
