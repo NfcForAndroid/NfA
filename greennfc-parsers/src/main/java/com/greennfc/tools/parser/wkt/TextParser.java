@@ -40,7 +40,7 @@ public final class TextParser extends NdefParser {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
-		TextRecord textRecord = GreenRecordFactory.wellKnowTypeFactory().getTextRecord(message, textEncoding, new Locale(languageCode));
+		TextRecord textRecord = GreenRecordFactory.wellKnowTypeFactory().textRecordInstance(message, textEncoding, new Locale(languageCode));
 		return textRecord;
 	}
 

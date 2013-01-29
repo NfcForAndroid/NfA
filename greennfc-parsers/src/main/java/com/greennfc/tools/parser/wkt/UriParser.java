@@ -8,7 +8,7 @@ import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.parser.base.NdefParser;
-import com.greennfc.tools.records.ndef.wkt.UriRecord;
+import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.UriSchemeEnum;
 
 public final class UriParser extends NdefParser {
@@ -20,7 +20,7 @@ public final class UriParser extends NdefParser {
 	public IGreenRecord parseNdef(NdefRecord ndefRecord) {
 
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			return new UriRecord(ndefRecord.toUri());
+			return GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(ndefRecord.toUri());
 		} else {
 			byte[] payload = ndefRecord.getPayload();
 			if (payload.length < 2) {
@@ -35,7 +35,7 @@ public final class UriParser extends NdefParser {
 			}
 			String prefix = UriSchemeEnum.values()[prefixIndex].getScheme();
 			String suffix = new String(Arrays.copyOfRange(payload, 1, payload.length), Charset.forName("UTF-8"));
-			return new UriRecord(Uri.parse(prefix + suffix));
+			return GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(Uri.parse(prefix + suffix));
 		}
 	}
 

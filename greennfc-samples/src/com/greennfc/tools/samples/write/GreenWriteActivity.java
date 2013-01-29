@@ -107,9 +107,11 @@ public class GreenWriteActivity //
 			break;
 		case 1:
 			writer = (IGreenWriter<Record>) GreenWriterFactory.wellKnowTypeFactory().textWriter();
-			record = (Record) GreenRecordFactory.wellKnowTypeFactory().getTextRecord(text_content.getText().toString());
+			record = (Record) GreenRecordFactory.wellKnowTypeFactory().textRecordInstance(text_content.getText().toString());
 			break;
 		case 2:
+			writer = (IGreenWriter<Record>) GreenWriterFactory.wellKnowTypeFactory().uriWriter();
+			record = (Record) GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(text_content.getText().toString());
 
 			break;
 
