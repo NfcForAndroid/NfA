@@ -31,7 +31,7 @@ public class UriWriter extends AbstractNdefWriter<UriRecord> {
 		byte[] uriAsBytes = getUriAsBytes(uri);
 
 		int abbreviateIndex = getAbbreviateIndex(uri.toLowerCase());
-		int uriCopyOffset = UriSchemeEnum.values()[abbreviateIndex].getCode();
+		int uriCopyOffset = UriSchemeEnum.values()[abbreviateIndex].getScheme().length();
 		byte[] payload = new byte[uriAsBytes.length + 1 - uriCopyOffset];
 		payload[0] = (byte) abbreviateIndex;
 		System.arraycopy(uriAsBytes, uriCopyOffset, payload, 1, uriAsBytes.length - uriCopyOffset);
