@@ -7,4 +7,8 @@ public abstract class AbstractGreenRecordExtFactory implements IGreenRecordExtFa
 	protected AbstractGreenRecordExtFactory() {
 	}
 
+	public TextExternalRecord textExternalRecordInstance(String text) {
+		return new TextExternalRecord(text);
+	}
+
 }

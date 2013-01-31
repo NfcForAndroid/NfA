@@ -4,6 +4,7 @@ import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.parser.base.NdefParser;
+import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 
 public final class TextExternalParser extends NdefParser {
@@ -17,7 +18,7 @@ public final class TextExternalParser extends NdefParser {
 		byte[] payload = ndefRecord.getPayload();
 
 		String message = new String(payload);
-		TextExternalRecord textRecord = new TextExternalRecord(message);
+		TextExternalRecord textRecord = GreenRecordFactory.externalFactory().textExternalRecordInstance(message);
 		return textRecord;
 	}
 

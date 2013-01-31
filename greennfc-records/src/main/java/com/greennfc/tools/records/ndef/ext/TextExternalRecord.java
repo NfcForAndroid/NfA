@@ -2,12 +2,12 @@ package com.greennfc.tools.records.ndef.ext;
 
 public class TextExternalRecord extends ExternalRecord {
 
-	public TextExternalRecord(String key, String text) {
+	protected TextExternalRecord(String key, String text) {
 		this(text);
 		setKey(key);
 	}
 
-	public TextExternalRecord(String text) {
+	protected TextExternalRecord(String text) {
 		setDatas(text.getBytes());
 	}
 
