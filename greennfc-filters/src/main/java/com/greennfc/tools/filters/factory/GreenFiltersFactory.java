@@ -1,10 +1,13 @@
 package com.greennfc.tools.filters.factory;
 
+import com.greennfc.tools.api.IGreenIntentFilter;
 import com.greennfc.tools.filters.base.AbstractGreenFilterBaseFactory;
 import com.greennfc.tools.filters.ndef.ext.AbstractGreenFilterExtFactory;
 import com.greennfc.tools.filters.ndef.wkt.AbstractGreenFilterWktFactory;
 
 public final class GreenFiltersFactory {
+
+	public static IGreenIntentFilter TEXT_FILTER = wellKownFilters().textFilter();
 
 	private static GreenFiltersFactory instance;
 

@@ -34,7 +34,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 
 		nfcManager = GreenNfcFactory.newManager();
 		nfcManager.register(this //
-				, GreenFiltersFactory.wellKownFilters().textFilter() //
+				, GreenFiltersFactory.TEXT_FILTER //
 				, GreenFiltersFactory.externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
 				);
 		nfcManager.manageIntent(getIntent(), this, GreenParserFactory.baseFactory().ndefParser());
