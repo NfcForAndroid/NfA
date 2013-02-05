@@ -1,6 +1,7 @@
 package com.greennfc.tools.records.factory;
 
 import com.greennfc.tools.records.base.AbstractGreenRecordBaseFactory;
+import com.greennfc.tools.records.base.EmptyRecord;
 import com.greennfc.tools.records.ndef.AbstractGreenRecordNdefFacory;
 import com.greennfc.tools.records.ndef.ext.AbstractGreenRecordExtFactory;
 import com.greennfc.tools.records.ndef.wkt.AbstractGreenRecordWktFactory;
@@ -8,6 +9,8 @@ import com.greennfc.tools.records.ndef.wkt.AbstractGreenRecordWktFactory;
 public final class GreenRecordFactory {
 
 	private static GreenRecordFactory instance;
+
+	public static final EmptyRecord EMPTY_RECORD = baseFactory().emptyRecord();
 
 	private static final synchronized GreenRecordFactory getInstance() {
 		if (instance == null) {

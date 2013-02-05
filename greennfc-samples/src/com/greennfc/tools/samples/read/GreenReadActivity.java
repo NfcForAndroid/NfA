@@ -1,5 +1,9 @@
 package com.greennfc.tools.samples.read;
 
+import static com.greennfc.tools.api.beans.GreenRecieveBean.*;
+import static com.greennfc.tools.filters.factory.GreenFiltersFactory.*;
+import static com.greennfc.tools.parser.factory.GreenParserFactory.*;
+import static com.greennfc.tools.v14.GreenNfcFactory.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -8,20 +12,14 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.greennfc.tools.GreenNfcFactory;
 import com.greennfc.tools.api.IGreenIntentRecieve;
-import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.filters.factory.GreenFiltersFactory;
-import com.greennfc.tools.parser.factory.GreenParserFactory;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.samples.R;
 import com.greennfc.tools.samples.cst.GreenSampleCst;
 
-public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve {
-
-	IGreenManager nfcManager = null;
+public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
 
 	TextView tag_content;
 
@@ -32,24 +30,15 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 
 		tag_content = (TextView) findViewById(R.id.tag_content);
 
-		nfcManager = GreenNfcFactory.newManager();
-		nfcManager.register(this //
-				, GreenFiltersFactory.TEXT_FILTER //
-				, GreenFiltersFactory.externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
+		GREEN_NFC_MANAGER.register(this //
+				, recieveBeanConfigure() //
+						.intent(getIntent()) //
+						.intentRecieve(this) //
+						.parser(NDEF_PARSER) //
+						.build() //
+				, TEXT_FILTER //
+				, externalFilters().textExternalNdefFilter(GreenSampleCst.TYPE_EXTERNAL) //
 				);
-		nfcManager.manageIntent(getIntent(), this, GreenParserFactory.baseFactory().ndefParser());
-	}
-
-	@Override
-	protected void onPause() {
-		nfcManager.pause(this);
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		nfcManager.resume(this);
 	}
 
 	@Override
@@ -58,7 +47,11 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		 * Manadatory
 		 */
 		tag_content.setText(R.string.reading_tag);
-		nfcManager.manageIntent(intent, this, GreenParserFactory.baseFactory().ndefParser());
+		GREEN_NFC_MANAGER.manageIntent(recieveBeanConfigure() //
+				.intent(intent) //
+				.intentRecieve(this) //
+				.parser(NDEF_PARSER) //
+				.build());
 	}
 
 	/**

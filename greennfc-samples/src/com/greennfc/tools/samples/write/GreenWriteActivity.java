@@ -1,5 +1,9 @@
 package com.greennfc.tools.samples.write;
 
+import static com.greennfc.tools.filters.factory.GreenFiltersFactory.*;
+import static com.greennfc.tools.records.factory.GreenRecordFactory.*;
+import static com.greennfc.tools.v14.GreenNfcFactory.*;
+import static com.greennfc.tools.writers.factory.GreenWriterFactory.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,22 +16,16 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.greennfc.tools.GreenNfcFactory;
 import com.greennfc.tools.api.IGreenIntentWrite;
-import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.IGreenWriter;
-import com.greennfc.tools.filters.factory.GreenFiltersFactory;
 import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.samples.R;
-import com.greennfc.tools.writers.factory.GreenWriterFactory;
 
 public class GreenWriteActivity //
 		extends SherlockFragmentActivity //
 		implements IGreenIntentWrite //
 {
-
-	private IGreenManager nfcManager = null;
 
 	private TextView tag_content;
 	private Spinner type_tag;
@@ -69,23 +67,10 @@ public class GreenWriteActivity //
 			}
 		});
 
-		nfcManager = GreenNfcFactory.newManager();
-		nfcManager.register(this //
-				, GreenFiltersFactory.baseFilters().ndefFilter() //
+		GREEN_NFC_MANAGER.register(this //
+				, NDEF_FILTER //
 				);
 
-	}
-
-	@Override
-	protected void onPause() {
-		nfcManager.pause(this);
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		nfcManager.resume(this);
 	}
 
 	@Override
@@ -102,15 +87,15 @@ public class GreenWriteActivity //
 		Record record = null;
 		switch (type_tag.getSelectedItemPosition()) {
 		case 0:
-			writer = (IGreenWriter<Record>) GreenWriterFactory.baseFactory().emptyWriter();
-			record = (Record) GreenRecordFactory.baseFactory().emptyRecord();
+			writer = (IGreenWriter<Record>) EMPTY_WRITER;
+			record = (Record) EMPTY_RECORD;
 			break;
 		case 1:
-			writer = (IGreenWriter<Record>) GreenWriterFactory.wellKnowTypeFactory().textWriter();
+			writer = (IGreenWriter<Record>) TEXT_WRITER;
 			record = (Record) GreenRecordFactory.wellKnowTypeFactory().textRecordInstance(text_content.getText().toString());
 			break;
 		case 2:
-			writer = (IGreenWriter<Record>) GreenWriterFactory.wellKnowTypeFactory().uriWriter();
+			writer = (IGreenWriter<Record>) URI_WRITER;
 			record = (Record) GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(text_content.getText().toString());
 
 			break;
@@ -119,7 +104,7 @@ public class GreenWriteActivity //
 			break;
 		}
 
-		nfcManager.writeTag(intent, this, writer, record);
+		GREEN_NFC_MANAGER.writeTag(intent, this, writer, record);
 	}
 
 	/**

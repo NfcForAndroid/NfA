@@ -11,7 +11,7 @@ public class TextWriter extends AbstractNdefWriter<TextRecord> {
 	protected TextWriter() {
 	}
 
-	public NdefMessage getMessageRecord() {
+	public NdefMessage getNdefMessage() {
 
 		NdefRecord ndefRecord = getNdefRecord();
 		NdefRecord[] records = new NdefRecord[] { ndefRecord };
@@ -19,7 +19,7 @@ public class TextWriter extends AbstractNdefWriter<TextRecord> {
 		return msg;
 	}
 
-	private NdefRecord getNdefRecord() {
+	public NdefRecord getNdefRecord() {
 		if (!(record instanceof TextRecord)) {
 			throw new IllegalArgumentException("Expected TextRecord but got : " + record.getClass());
 		}

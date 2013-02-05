@@ -8,6 +8,10 @@ import com.greennfc.tools.filters.ndef.wkt.AbstractGreenFilterWktFactory;
 public final class GreenFiltersFactory {
 
 	public static IGreenIntentFilter TEXT_FILTER = wellKownFilters().textFilter();
+	public static IGreenIntentFilter URI_FILTER = wellKownFilters().uriFilter();
+	public static IGreenIntentFilter NDEF_FILTER = baseFilters().ndefFilter();
+	public static IGreenIntentFilter TAG_FILTER = baseFilters().tagFilter();
+	public static IGreenIntentFilter TECH_FILTER = baseFilters().techFilter();
 
 	private static GreenFiltersFactory instance;
 

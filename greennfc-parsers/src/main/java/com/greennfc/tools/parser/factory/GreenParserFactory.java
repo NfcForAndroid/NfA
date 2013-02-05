@@ -1,5 +1,6 @@
 package com.greennfc.tools.parser.factory;
 
+import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.parser.base.AbstractGreenParserBaseFactory;
 import com.greennfc.tools.parser.ext.AbstractGreenParserExtFactory;
 import com.greennfc.tools.parser.wkt.AbstractGreenParserWellKnowTypeFactory;
@@ -7,6 +8,12 @@ import com.greennfc.tools.parser.wkt.AbstractGreenParserWellKnowTypeFactory;
 public final class GreenParserFactory {
 
 	private static GreenParserFactory instance;
+
+	public static final IGreenParser NDEF_PARSER = baseFactory().ndefParser();
+	public static final IGreenParser TAG_PARSER = baseFactory().tagParser();
+	public static final IGreenParser TEXT_PARSER = wellKnowTypeFactory().textParser();
+	public static final IGreenParser EXTERNAL_PARSER = externalFactory().externalParser();
+	public static final IGreenParser EXTERNAL_TEXT_PARSER = externalFactory().externalTextParser();
 
 	private GreenParserFactory() {
 	}

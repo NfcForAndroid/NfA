@@ -15,8 +15,12 @@ public class EmptyWriter extends AbstractWriter<IGreenRecord> {
 		return 0;
 	}
 
-	public NdefMessage getMessageRecord() {
-		return new NdefMessage(new NdefRecord[] { new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null) });
+	public NdefMessage getNdefMessage() {
+		return new NdefMessage(new NdefRecord[] { getNdefRecord() });
+	}
+
+	public NdefRecord getNdefRecord() {
+		return new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null);
 	}
 
 }

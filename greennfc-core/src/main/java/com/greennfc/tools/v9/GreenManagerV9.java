@@ -1,4 +1,4 @@
-package com.greennfc.tools;
+package com.greennfc.tools.v9;
 
 import java.io.IOException;
 
@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.os.PatternMatcher;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.greennfc.tools.api.IGreenIntentFilter;
 import com.greennfc.tools.api.IGreenIntentRecieve;
@@ -25,40 +26,73 @@ import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.IGreenWriter;
+import com.greennfc.tools.api.beans.GreenRecieveBean;
 
-class GreenManager implements IGreenManager {
-
-	private Activity activity;
+class GreenManagerV9 implements IGreenManager {
 
 	private NfcAdapter mAdapter;
 
 	private static final String TAG = "NfcManager";
-	private IntentFilter[] filters;
-	private PendingIntent pendingIntent;
-	String[][] techs = { { Ndef.class.getName() } };
+	private SparseArray<IntentFilter[]> filtersArray = new SparseArray<IntentFilter[]>();
+	private SparseArray<PendingIntent> pendingIntentArray = new SparseArray<PendingIntent>();
+	private static final String[][] techs = { { Ndef.class.getName() } };
 
-	public void register(Activity activity, IGreenIntentFilter... greenfilters) {
-		this.activity = activity;
-		mAdapter = NfcAdapter.getDefaultAdapter(this.activity);
-
-		initIntent(greenfilters);
+	protected GreenManagerV9() {
+		super();
 	}
 
-	public void pause(Activity activity) {
-		if (activity.equals(this.activity)) {
-			mAdapter.disableForegroundDispatch(this.activity);
-		}
+	/*
+	 * 
+	 * LIFE CYCLE METHODS
+	 */
 
+	public void pause(Activity activity) {
+		mAdapter.disableForegroundDispatch(activity);
 	}
 
 	public void resume(Activity activity) {
-		if (activity.equals(this.activity)) {
-			mAdapter.enableForegroundDispatch(this.activity, pendingIntent, filters, techs);
+		if (filtersArray.indexOfKey(activity.getTaskId()) != -1) {
+			IntentFilter[] filters = filtersArray.get(activity.getTaskId());
+			PendingIntent pendingIntent = pendingIntentArray.get(activity.getTaskId());
+			mAdapter.enableForegroundDispatch(activity, pendingIntent, filters, techs);
 		}
 
 	}
 
-	public void manageIntent(final Intent intent, final IGreenIntentRecieve recieve, final IGreenParser parser) {
+	public void stop(Activity activity) {
+		filtersArray.delete(activity.getTaskId());
+		pendingIntentArray.delete(activity.getTaskId());
+	}
+
+	/*
+	 * 
+	 * INITS METHOD
+	 */
+
+	public void register(Activity activity, IGreenIntentFilter... filters) {
+		register(activity, null, filters);
+
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfig, IGreenIntentFilter... greenfilters) {
+		mAdapter = NfcAdapter.getDefaultAdapter(activity);
+
+		initIntent(activity, greenfilters);
+		if (recieveConfig != null) {
+			manageIntent(recieveConfig);
+		}
+	}
+
+	/*
+	 * 
+	 * APIS METHODS
+	 */
+
+	@SuppressWarnings("unchecked")
+	public <Record extends IGreenRecord> void manageIntent(GreenRecieveBean<Record> recieveConfig) {
+		final Intent intent = recieveConfig.getIntent();
+		final IGreenIntentRecieve<Record> recieve = recieveConfig.getGreenIntentRecieve();
+		final IGreenParser parser = recieveConfig.getGreenParser();
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
@@ -73,14 +107,14 @@ class GreenManager implements IGreenManager {
 					messages[i] = (NdefMessage) rawMsgs[i];
 					for (int j = 0; j < messages[i].getRecords().length; j++) {
 						record = messages[i].getRecords()[j];
-						recieve.recieveMessage(parser.parseNdef(record));
+						recieve.recieveMessage((Record) parser.parseNdef(record));
 					}
 				}
 			}
 		} else {
 			Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 			if (tag != null) {
-				recieve.recieveMessage(parser.parseTag(tag));
+				recieve.recieveMessage((Record) parser.parseTag(tag));
 			}
 		}
 
@@ -94,11 +128,11 @@ class GreenManager implements IGreenManager {
 		emptyTask.execute();
 	}
 
-	private void initIntent(IGreenIntentFilter... filters) {
-		pendingIntent = PendingIntent.getActivity(this.activity, 0, new Intent(this.activity, this.activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+	private void initIntent(Activity activity, IGreenIntentFilter... filters) {
+		PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
 		int length = filters != null && filters.length > 0 ? filters.length : 1;
-		this.filters = new IntentFilter[length];
+		IntentFilter[] intentFilters = new IntentFilter[length];
 		IntentFilter ndefFilter = null;
 		int compt = 0;
 		if (filters != null && filters.length > 0) {
@@ -125,15 +159,22 @@ class GreenManager implements IGreenManager {
 					}
 				}
 
-				this.filters[compt] = ndefFilter;
+				intentFilters[compt] = ndefFilter;
 				compt++;
 			}
 		} else {
 			ndefFilter = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-			this.filters[0] = ndefFilter;
+			intentFilters[0] = ndefFilter;
 		}
-		// manageIntent(this.activity.getIntent());
+
+		filtersArray.put(activity.getTaskId(), intentFilters);
+		pendingIntentArray.put(activity.getTaskId(), pendingIntent);
 	}
+
+	/*
+	 * 
+	 * ASYNTASKS FOR WRITE
+	 */
 
 	class EmptyAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, String> {
 
@@ -213,7 +254,7 @@ class GreenManager implements IGreenManager {
 
 				try {
 					writer.init(record);
-					ndef.writeNdefMessage(writer.getMessageRecord());
+					ndef.writeNdefMessage(writer.getMessageMessage());
 				} catch (FormatException e) {
 					Log.e("Error : ", e.getMessage(), e);
 					return null;

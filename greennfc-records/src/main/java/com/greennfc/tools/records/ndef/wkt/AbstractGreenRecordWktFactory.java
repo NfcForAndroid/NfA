@@ -36,4 +36,8 @@ public abstract class AbstractGreenRecordWktFactory implements IGreenRecordWktFa
 		return new UriRecord(uri);
 	}
 
+	public SmartPosterRecord smartPosterRecordInstance(TextRecord text, UriRecord uri) {
+		return new SmartPosterRecord(text, uri);
+	}
+
 }

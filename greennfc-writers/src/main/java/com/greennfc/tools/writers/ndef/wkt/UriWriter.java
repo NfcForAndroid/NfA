@@ -14,7 +14,7 @@ public class UriWriter extends AbstractNdefWriter<UriRecord> {
 	protected UriWriter() {
 	}
 
-	public NdefMessage getMessageRecord() {
+	public NdefMessage getNdefMessage() {
 
 		NdefRecord ndefRecord = getNdefRecord();
 		NdefRecord[] records = new NdefRecord[] { ndefRecord };
@@ -22,7 +22,7 @@ public class UriWriter extends AbstractNdefWriter<UriRecord> {
 		return msg;
 	}
 
-	private NdefRecord getNdefRecord() {
+	public NdefRecord getNdefRecord() {
 		if (!(record instanceof UriRecord)) {
 			throw new IllegalArgumentException("Expected UriRecord but got : " + record.getClass());
 		}
