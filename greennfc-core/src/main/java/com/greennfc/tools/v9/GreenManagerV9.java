@@ -27,6 +27,8 @@ import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.IGreenWriter;
 import com.greennfc.tools.api.beans.GreenRecieveBean;
+import com.greennfc.tools.exception.NoNdefServiceException;
+import com.greennfc.tools.exception.WriteException;
 
 class GreenManagerV9 implements IGreenManager {
 
@@ -96,12 +98,14 @@ class GreenManagerV9 implements IGreenManager {
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
+		boolean treat = false;
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action) //
-		) {
+				|| NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
 			Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 			NdefMessage[] messages;
 			NdefRecord record = null;
 			if (rawMsgs != null) {
+				treat = true;
 				messages = new NdefMessage[rawMsgs.length];
 				for (int i = 0; i < rawMsgs.length; i++) {
 					messages[i] = (NdefMessage) rawMsgs[i];
@@ -111,7 +115,9 @@ class GreenManagerV9 implements IGreenManager {
 					}
 				}
 			}
-		} else {
+		}
+
+		if (!treat) {
 			Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 			if (tag != null) {
 				recieve.recieveMessage((Record) parser.parseTag(tag));
@@ -176,7 +182,7 @@ class GreenManagerV9 implements IGreenManager {
 	 * ASYNTASKS FOR WRITE
 	 */
 
-	class EmptyAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, String> {
+	class EmptyAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, Exception> {
 
 		private final Ndef ndef;
 		private final RecordAsynkTask<Record> taskWrite;
@@ -190,9 +196,9 @@ class GreenManagerV9 implements IGreenManager {
 		}
 
 		@Override
-		protected String doInBackground(Void... arg0) {
+		protected Exception doInBackground(Void... arg0) {
 			if (ndef == null) {
-				return null;
+				return new NoNdefServiceException("The tag has no Ndef capabilities");
 			}
 			try {
 				ndef.connect();
@@ -201,35 +207,37 @@ class GreenManagerV9 implements IGreenManager {
 					ndef.writeNdefMessage(new NdefMessage(new NdefRecord[] { new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null) }));
 				} catch (FormatException e) {
 					Log.e("Error : ", e.getMessage(), e);
-					return null;
+					return new WriteException(e);
 				}
 
 			} catch (IOException e) {
 				Log.e("Error : ", e.getMessage(), e);
-				return null;
+				return new WriteException(e);
 			} finally {
 				if (ndef != null) {
 					try {
 						ndef.close();
 					} catch (IOException e) {
 						Log.e("Error : ", e.getMessage(), e);
-						return null;
+						return new WriteException(e);
 					}
 				}
 			}
-			return "OK";
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
-			if (result != null) {
+		protected void onPostExecute(Exception result) {
+			if (result == null) {
 				taskWrite.execute();
+			} else {
+				recieve.messageWrite(false, result);
 			}
 		}
 
 	}
 
-	class RecordAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, String> {
+	class RecordAsynkTask<Record extends IGreenRecord> extends AsyncTask<Void, Void, Exception> {
 
 		private final Ndef ndef;
 		private final IGreenIntentWrite recieve;
@@ -245,40 +253,40 @@ class GreenManagerV9 implements IGreenManager {
 		}
 
 		@Override
-		protected String doInBackground(Void... arg0) {
+		protected Exception doInBackground(Void... arg0) {
 			if (ndef == null) {
-				return null;
+				return new NoNdefServiceException("The tag has no Ndef capabilities");
 			}
 			try {
 				ndef.connect();
 
 				try {
 					writer.init(record);
-					ndef.writeNdefMessage(writer.getMessageMessage());
+					ndef.writeNdefMessage(writer.getNdefMessage());
 				} catch (FormatException e) {
 					Log.e("Error : ", e.getMessage(), e);
-					return null;
+					return new WriteException(e);
 				}
 
 			} catch (IOException e) {
 				Log.e("Error : ", e.getMessage(), e);
-				return null;
+				return new WriteException(e);
 			} finally {
 				if (ndef != null) {
 					try {
 						ndef.close();
 					} catch (IOException e) {
 						Log.e("Error : ", e.getMessage(), e);
-						return null;
+						return new WriteException(e);
 					}
 				}
 			}
-			return "OK";
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
-			recieve.messageWrite(result != null);
+		protected void onPostExecute(Exception result) {
+			recieve.messageWrite(result == null, result);
 		}
 
 	}

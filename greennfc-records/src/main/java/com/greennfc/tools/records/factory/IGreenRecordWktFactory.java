@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.net.Uri;
 
 import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
+import com.greennfc.tools.records.ndef.wkt.SmartPosterRecordDatas;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 
@@ -23,6 +24,6 @@ public interface IGreenRecordWktFactory {
 
 	UriRecord uriRecordInstance(Uri uri);
 
-	SmartPosterRecord smartPosterRecordInstance(TextRecord text, UriRecord uri);
+	SmartPosterRecord smartPosterRecordInstance(SmartPosterRecordDatas smartPosterDatas);
 
 }

@@ -9,6 +9,8 @@ import com.greennfc.tools.exception.ParserException;
 import com.greennfc.tools.parser.base.NdefParser;
 import com.greennfc.tools.parser.factory.GreenParserFactory;
 import com.greennfc.tools.records.factory.GreenRecordFactory;
+import com.greennfc.tools.records.ndef.wkt.SmartPosterRecordDatas;
+import com.greennfc.tools.records.ndef.wkt.SmartPosterRecordDatas.SmartPosterRecordDatasBuilder;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 
@@ -22,9 +24,6 @@ public final class SmartPosterParser extends NdefParser {
 
 		byte[] payload = ndefRecord.getPayload();
 
-		TextRecord title = null;
-		UriRecord uri = null;
-
 		if (payload.length == 0) {
 			return null;
 		}
@@ -34,13 +33,14 @@ public final class SmartPosterParser extends NdefParser {
 		} catch (FormatException e) {
 			throw new ParserException(e);
 		}
+		SmartPosterRecordDatasBuilder smartPosterRecordDatas = SmartPosterRecordDatas.instance();
 		IGreenRecord record = null;
 		for (NdefRecord ndefRecordTmp : message.getRecords()) {
 			record = GreenParserFactory.baseFactory().ndefParser().parseNdef(ndefRecordTmp);
 			if (record instanceof UriRecord) {
-				uri = (UriRecord) record;
+				smartPosterRecordDatas.uri((UriRecord) record);
 			} else if (record instanceof TextRecord) {
-				title = (TextRecord) record;
+				smartPosterRecordDatas.title((TextRecord) record);
 			}
 			// else if (record instanceof ActionRecord) {
 			// smartPosterRecord.setAction((ActionRecord) record);
@@ -48,7 +48,6 @@ public final class SmartPosterParser extends NdefParser {
 			else {
 			}
 		}
-		return GreenRecordFactory.wellKnowTypeFactory().smartPosterRecordInstance(title, uri);
+		return GreenRecordFactory.wellKnowTypeFactory().smartPosterRecordInstance(smartPosterRecordDatas.build());
 	}
-
 }

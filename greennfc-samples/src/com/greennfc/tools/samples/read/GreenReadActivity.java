@@ -15,7 +15,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.greennfc.tools.api.IGreenIntentRecieve;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
+import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
+import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.samples.R;
 import com.greennfc.tools.samples.cst.GreenSampleCst;
 
@@ -67,6 +69,14 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		} else if (record instanceof TextExternalRecord) {
 			String message = ((TextExternalRecord) record).getMessage();
 			tag_content.setText(getString(R.string.tag_content) + message);
+		} else if (record instanceof UriRecord) {
+			String message = ((UriRecord) record).getUri().toString();
+			tag_content.setText(getString(R.string.tag_content) + message);
+		} else if (record instanceof SmartPosterRecord) {
+			SmartPosterRecord spRecord = ((SmartPosterRecord) record);
+			String uri = spRecord.getUri().getUri().toString();
+			String title = spRecord.getTitle() != null ? spRecord.getTitle().getText() : null;
+			tag_content.setText(getString(R.string.tag_content) + (title != null ? title + " : " : "") + uri);
 		} else {
 			tag_content.setText(R.string.tag_content);
 		}

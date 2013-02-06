@@ -26,21 +26,46 @@
         android:prompt="@array/type_tags"
         tools:listitem="@android:layout/simple_spinner_item" />
     
-    <EditText
-        android:id="@+id/RecieveMsg"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/uri_prefix"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/spinnerType"
+        android:entries="@array/uri_types"
+        android:prompt="@array/uri_types"
+        tools:listitem="@android:layout/simple_spinner_item"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/tag_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/uri_prefix"
+        android:layout_below="@+id/spinnerType"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/content_bis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tag_content"
+        android:hint="@string/hint_smartposter"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <TextView
-        android:id="@+id/tag_content"
+        android:id="@+id/msg_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/wating_tag"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/msg_feedback_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tag_content"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

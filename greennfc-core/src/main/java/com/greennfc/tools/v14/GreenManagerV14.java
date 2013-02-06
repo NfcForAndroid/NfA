@@ -16,6 +16,8 @@ import com.greennfc.tools.api.beans.GreenRecieveBean;
 
 class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 
+	private static final String TAG = "GreenManagerV14";
+
 	protected GreenManagerV14() {
 		super();
 	}
@@ -58,7 +60,8 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 	}
 
 	public void onActivityDestroyed(Activity activity) {
-		// Nothing to do
+		activity.getApplication().unregisterActivityLifecycleCallbacks(this);
+		stop(activity);
 	}
 
 	public void onActivityPaused(Activity activity) {
@@ -80,8 +83,7 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 	}
 
 	public void onActivityStopped(Activity activity) {
-		activity.getApplication().unregisterActivityLifecycleCallbacks(this);
-		stop(activity);
+		// nothing to do
 
 	}
 

@@ -11,9 +11,13 @@ public final class GreenParserFactory {
 
 	public static final IGreenParser NDEF_PARSER = baseFactory().ndefParser();
 	public static final IGreenParser TAG_PARSER = baseFactory().tagParser();
-	public static final IGreenParser TEXT_PARSER = wellKnowTypeFactory().textParser();
+
 	public static final IGreenParser EXTERNAL_PARSER = externalFactory().externalParser();
 	public static final IGreenParser EXTERNAL_TEXT_PARSER = externalFactory().externalTextParser();
+
+	public static final IGreenParser TEXT_PARSER = wellKnowTypeFactory().textParser();
+	public static final IGreenParser URI_PARSER = wellKnowTypeFactory().uriParser();
+	public static final IGreenParser SMART_POSTER_PARSER = wellKnowTypeFactory().smartPosterParser();
 
 	private GreenParserFactory() {
 	}

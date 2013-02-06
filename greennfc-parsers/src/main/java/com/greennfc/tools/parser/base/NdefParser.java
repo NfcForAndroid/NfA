@@ -1,5 +1,6 @@
 package com.greennfc.tools.parser.base;
 
+import static com.greennfc.tools.parser.factory.GreenParserFactory.*;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenIntentFilter;
@@ -7,7 +8,6 @@ import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.filters.ndef.ext.ExternalNdefFilter;
 import com.greennfc.tools.filters.ndef.ext.TextExternalNdefFilter;
 import com.greennfc.tools.parser.exceptions.UnknowExtTypeException;
-import com.greennfc.tools.parser.factory.GreenParserFactory;
 
 public class NdefParser extends GreenParserAdapter {
 
@@ -84,10 +84,10 @@ public class NdefParser extends GreenParserAdapter {
 				type = new String(ndefRecord.getType());
 				if (path.equals(type)) {
 					if (filter instanceof ExternalNdefFilter) {
-						record = GreenParserFactory.externalFactory().externalParser().parseNdef(ndefRecord);
+						record = EXTERNAL_PARSER.parseNdef(ndefRecord);
 						break;
 					} else if (filter instanceof TextExternalNdefFilter) {
-						record = GreenParserFactory.externalFactory().externalTextParser().parseNdef(ndefRecord);
+						record = EXTERNAL_TEXT_PARSER.parseNdef(ndefRecord);
 						break;
 					}
 				}
@@ -113,11 +113,11 @@ public class NdefParser extends GreenParserAdapter {
 			// gcaction a
 			switch (type[0]) {
 			case 'U': {
-				return null;// UriRecord.parseNdefRecord(ndefRecord);
+				return URI_PARSER.parseNdef(ndefRecord);
 			}
 			case 'T': {
 
-				return GreenParserFactory.wellKnowTypeFactory().textParser().parseNdef(ndefRecord);
+				return TEXT_PARSER.parseNdef(ndefRecord);
 			}
 			case 't': {
 
@@ -146,7 +146,7 @@ public class NdefParser extends GreenParserAdapter {
 			switch (type[0]) {
 			case 'S': {
 				if (type[1] == 'p') {
-					return null;// SmartPosterRecord.parseNdefRecord(ndefRecord);
+					return SMART_POSTER_PARSER.parseNdef(ndefRecord);
 				}
 				break;
 			}

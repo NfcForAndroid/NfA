@@ -10,7 +10,7 @@
 	<artifactId>greennfc-apklib</artifactId>
 	<name>Green NFC - ApkLib</name>
 	<description>Green nfc module for management of abstract classes</description>
-	<packaging>jar</packaging>
+	<packaging>apklib</packaging>
 
 	<dependencies>
 		<dependency>
@@ -58,6 +58,14 @@
 
 	<build>
 		<plugins>
+		    <plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>

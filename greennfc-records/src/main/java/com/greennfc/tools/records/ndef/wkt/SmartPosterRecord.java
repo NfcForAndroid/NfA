@@ -7,12 +7,9 @@ public class SmartPosterRecord extends NdefRecord {
 	private TextRecord title;
 	private UriRecord uri;
 
-	protected SmartPosterRecord(TextRecord title, UriRecord uri) {
-		this.title = title;
-		this.uri = uri;
-	}
-
-	public SmartPosterRecord() {
+	protected SmartPosterRecord(SmartPosterRecordDatas datas) {
+		this.title = datas.getTitle();
+		this.uri = datas.getUri();
 	}
 
 	public TextRecord getTitle() {

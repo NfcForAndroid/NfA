@@ -36,7 +36,7 @@ public class UriWriter extends AbstractNdefWriter<UriRecord> {
 		payload[0] = (byte) abbreviateIndex;
 		System.arraycopy(uriAsBytes, uriCopyOffset, payload, 1, uriAsBytes.length - uriCopyOffset);
 
-		NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_ABSOLUTE_URI, NdefRecord.RTD_URI, record.getId(), payload);
+		NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, record.getId(), payload);
 
 		return ndefRecord;
 

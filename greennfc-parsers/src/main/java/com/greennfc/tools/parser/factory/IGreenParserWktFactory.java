@@ -6,4 +6,8 @@ public interface IGreenParserWktFactory {
 
 	IGreenParser textParser();
 
+	IGreenParser uriParser();
+
+	IGreenParser smartPosterParser();
+
 }

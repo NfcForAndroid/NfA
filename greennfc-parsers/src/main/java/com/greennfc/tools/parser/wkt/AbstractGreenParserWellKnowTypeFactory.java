@@ -6,6 +6,8 @@ import com.greennfc.tools.parser.factory.IGreenParserWktFactory;
 public abstract class AbstractGreenParserWellKnowTypeFactory implements IGreenParserWktFactory {
 
 	private TextParser textParser;
+	private UriParser uriParser;
+	private SmartPosterParser smartPosterParser;
 
 	protected AbstractGreenParserWellKnowTypeFactory() {
 	}
@@ -15,6 +17,20 @@ public abstract class AbstractGreenParserWellKnowTypeFactory implements IGreenPa
 			textParser = new TextParser();
 		}
 		return textParser;
+	}
+
+	public IGreenParser uriParser() {
+		if (uriParser == null) {
+			uriParser = new UriParser();
+		}
+		return uriParser;
+	}
+
+	public IGreenParser smartPosterParser() {
+		if (smartPosterParser == null) {
+			smartPosterParser = new SmartPosterParser();
+		}
+		return smartPosterParser;
 	}
 
 }

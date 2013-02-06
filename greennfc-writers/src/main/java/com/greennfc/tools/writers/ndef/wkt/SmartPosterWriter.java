@@ -33,7 +33,7 @@ public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
 		assert uriRecord != null : "The uri record could not be null on a smartposter";
 
 		NdefRecord[] recordsArray = null;
-		if (textRecord != null) {
+		if (textRecord == null) {
 
 			IGreenWriter<UriRecord> uriWriter = GreenWriterFactory.wellKnowTypeFactory().uriWriter();
 			uriWriter.init(uriRecord);

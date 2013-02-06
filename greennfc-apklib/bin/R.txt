@@ -1,0 +1,2 @@
+int array uri_types 0x7f030000
+int xml filter_nfc 0x7f020000

@@ -20,6 +20,7 @@ import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.IGreenWriter;
 import com.greennfc.tools.records.factory.GreenRecordFactory;
+import com.greennfc.tools.records.ndef.wkt.SmartPosterRecordDatas;
 import com.greennfc.tools.samples.R;
 
 public class GreenWriteActivity //
@@ -27,33 +28,59 @@ public class GreenWriteActivity //
 		implements IGreenIntentWrite //
 {
 
-	private TextView tag_content;
-	private Spinner type_tag;
-	private EditText text_content;
+	private TextView msg_feedback, msg_feedback_error;
+	private Spinner type_tag, uri_prefix;
+	private EditText tag_content, content_bis;
+
+	private static final int TAG_EMPTY = 0;
+	private static final int TAG_TEXT = 1;
+	private static final int TAG_URI = 2;
+	private static final int TAG_SMART_POSTER = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_write);
 
-		tag_content = (TextView) findViewById(R.id.tag_content);
+		msg_feedback = (TextView) findViewById(R.id.msg_feedback);
+		msg_feedback_error = (TextView) findViewById(R.id.msg_feedback_error);
 		type_tag = (Spinner) findViewById(R.id.spinnerType);
-		text_content = (EditText) findViewById(R.id.RecieveMsg);
-		text_content.setEnabled(false);
+		uri_prefix = (Spinner) findViewById(R.id.uri_prefix);
+		tag_content = (EditText) findViewById(R.id.tag_content);
+		content_bis = (EditText) findViewById(R.id.content_bis);
+		tag_content.setEnabled(false);
+		uri_prefix.setVisibility(View.GONE);
+		content_bis.setVisibility(View.GONE);
+		msg_feedback_error.setVisibility(View.GONE);
 
 		type_tag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> root, View view, int pos, long arg3) {
 				switch (pos) {
-				case 0:
-					text_content.setEnabled(false);
+				case TAG_EMPTY:
+					tag_content.setEnabled(false);
+					tag_content.setHint("");
+					content_bis.setVisibility(View.GONE);
+					uri_prefix.setVisibility(View.GONE);
 					break;
-				case 1:
-					text_content.setEnabled(true);
+				case TAG_TEXT:
+					tag_content.setEnabled(true);
+					tag_content.setHint(R.string.type_text);
+					content_bis.setVisibility(View.GONE);
+					uri_prefix.setVisibility(View.GONE);
 					break;
-				case 2:
-					text_content.setEnabled(true);
+				case TAG_URI:
+					tag_content.setEnabled(true);
+					tag_content.setHint(R.string.type_uri);
+					content_bis.setVisibility(View.GONE);
+					uri_prefix.setVisibility(View.VISIBLE);
+					break;
+				case TAG_SMART_POSTER:
+					tag_content.setEnabled(true);
+					tag_content.setHint(R.string.type_uri);
+					content_bis.setVisibility(View.VISIBLE);
+					uri_prefix.setVisibility(View.VISIBLE);
 					break;
 
 				default:
@@ -78,28 +105,48 @@ public class GreenWriteActivity //
 		/*
 		 * Manadatory
 		 */
-		tag_content.setText(R.string.writing_tag);
+		msg_feedback.setText(R.string.writing_tag);
 		write(intent);
 	}
 
+	@SuppressWarnings("unchecked")
 	private <Record extends IGreenRecord> void write(Intent intent) {
 		IGreenWriter<Record> writer = null;
 		Record record = null;
 		switch (type_tag.getSelectedItemPosition()) {
-		case 0:
+		case TAG_EMPTY: {
 			writer = (IGreenWriter<Record>) EMPTY_WRITER;
 			record = (Record) EMPTY_RECORD;
 			break;
-		case 1:
+		}
+		case TAG_TEXT: {
 			writer = (IGreenWriter<Record>) TEXT_WRITER;
-			record = (Record) GreenRecordFactory.wellKnowTypeFactory().textRecordInstance(text_content.getText().toString());
+			record = (Record) GreenRecordFactory.wellKnowTypeFactory().textRecordInstance(tag_content.getText().toString());
 			break;
-		case 2:
+		}
+		case TAG_URI: {
 			writer = (IGreenWriter<Record>) URI_WRITER;
-			record = (Record) GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(text_content.getText().toString());
+			String uriPrefix = this.uri_prefix.getSelectedItem().toString();
+			String uri = uriPrefix.length() > 0 ? uriPrefix + tag_content.getText().toString() : tag_content.getText().toString();
+			record = (Record) GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(uri);
 
 			break;
+		}
+		case TAG_SMART_POSTER: {
+			writer = (IGreenWriter<Record>) SMART_POSTER_WRITER;
+			String uriSmartPoster = tag_content.getText().toString();
+			String titleSmartPoster = content_bis.getText().toString();
+			String uriPrefix = this.uri_prefix.getSelectedItem().toString();
+			String uri = uriPrefix.length() > 0 ? uriPrefix + uriSmartPoster : uriSmartPoster;
+			record = (Record) GreenRecordFactory.wellKnowTypeFactory().smartPosterRecordInstance( //
+					SmartPosterRecordDatas.instance() //
+							.uri(GreenRecordFactory.wellKnowTypeFactory().uriRecordInstance(uri)) //
+							.title(GreenRecordFactory.wellKnowTypeFactory().textRecordInstance(titleSmartPoster)) //
+							.build()//
+					);
 
+			break;
+		}
 		default:
 			break;
 		}
@@ -113,8 +160,12 @@ public class GreenWriteActivity //
 	 **/
 
 	@Override
-	public void messageWrite(boolean ok) {
-		tag_content.setText(ok ? R.string.tag_write : R.string.tag_not_write);
+	public void messageWrite(boolean ok, Exception error) {
+		msg_feedback.setText(ok ? R.string.tag_write : R.string.tag_not_write);
+		if (!ok) {
+			msg_feedback_error.setVisibility(View.VISIBLE);
+			msg_feedback_error.setText(error.getMessage());
+		}
 
 	}
 
@@ -134,7 +185,8 @@ public class GreenWriteActivity //
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.rescan_item:
-			tag_content.setText(R.string.wating_tag);
+			msg_feedback.setText(R.string.wating_tag);
+			msg_feedback_error.setVisibility(View.GONE);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
