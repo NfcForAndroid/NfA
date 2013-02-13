@@ -1,4 +1,4 @@
-package com.greennfc.tools.parser.wkt;
+package com.greennfc.tools.parser.ndef.wkt;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
@@ -8,7 +8,7 @@ import java.util.Locale;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.parser.base.NdefParser;
+import com.greennfc.tools.parser.ndef.NdefParser;
 import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 

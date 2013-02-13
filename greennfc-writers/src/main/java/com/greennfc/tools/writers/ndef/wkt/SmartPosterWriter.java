@@ -8,19 +8,11 @@ import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.writers.factory.GreenWriterFactory;
-import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
+import com.greennfc.tools.writers.ndef.NdefWriter;
 
-public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
+public class SmartPosterWriter extends NdefWriter<SmartPosterRecord> {
 
 	protected SmartPosterWriter() {
-	}
-
-	public NdefMessage getNdefMessage() {
-
-		NdefRecord ndefRecord = getNdefRecord();
-		NdefRecord[] records = new NdefRecord[] { ndefRecord };
-		NdefMessage msg = new NdefMessage(records);
-		return msg;
 	}
 
 	public NdefRecord getNdefRecord() {
@@ -60,12 +52,6 @@ public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
 
 		return ndefRecord;
 
-	}
-
-	@Override
-	public int getLength() {
-		super.ndefRecord = getNdefRecord();
-		return super.getLength();
 	}
 
 }

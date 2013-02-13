@@ -1,4 +1,4 @@
-package com.greennfc.tools.parser.wkt;
+package com.greennfc.tools.parser.ndef.wkt;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.parser.base.NdefParser;
+import com.greennfc.tools.parser.ndef.NdefParser;
 import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.UriSchemeEnum;
 

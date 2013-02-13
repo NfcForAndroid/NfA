@@ -1,4 +1,4 @@
-package com.greennfc.tools.parser.wkt;
+package com.greennfc.tools.parser.ndef.wkt;
 
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
@@ -6,8 +6,8 @@ import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.exception.ParserException;
-import com.greennfc.tools.parser.base.NdefParser;
 import com.greennfc.tools.parser.factory.GreenParserFactory;
+import com.greennfc.tools.parser.ndef.NdefParser;
 import com.greennfc.tools.records.factory.GreenRecordFactory;
 import com.greennfc.tools.records.ndef.wkt.SmartPosterRecordDatas;
 import com.greennfc.tools.records.ndef.wkt.SmartPosterRecordDatas.SmartPosterRecordDatasBuilder;
@@ -36,7 +36,7 @@ public final class SmartPosterParser extends NdefParser {
 		SmartPosterRecordDatasBuilder smartPosterRecordDatas = SmartPosterRecordDatas.instance();
 		IGreenRecord record = null;
 		for (NdefRecord ndefRecordTmp : message.getRecords()) {
-			record = GreenParserFactory.baseFactory().ndefParser().parseNdef(ndefRecordTmp);
+			record = GreenParserFactory.ndefFactory().ndefParser().parseNdef(ndefRecordTmp);
 			if (record instanceof UriRecord) {
 				smartPosterRecordDatas.uri((UriRecord) record);
 			} else if (record instanceof TextRecord) {

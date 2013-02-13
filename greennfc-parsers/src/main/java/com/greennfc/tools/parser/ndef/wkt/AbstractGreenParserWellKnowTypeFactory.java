@@ -1,4 +1,4 @@
-package com.greennfc.tools.parser.wkt;
+package com.greennfc.tools.parser.ndef.wkt;
 
 import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.parser.factory.IGreenParserWktFactory;

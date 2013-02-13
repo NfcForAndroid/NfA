@@ -2,24 +2,15 @@ package com.greennfc.tools.writers.ndef.wkt;
 
 import java.io.UnsupportedEncodingException;
 
-import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.records.ndef.wkt.UriSchemeEnum;
-import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
+import com.greennfc.tools.writers.ndef.NdefWriter;
 
-public class UriWriter extends AbstractNdefWriter<UriRecord> {
+public class UriWriter extends NdefWriter<UriRecord> {
 
 	protected UriWriter() {
-	}
-
-	public NdefMessage getNdefMessage() {
-
-		NdefRecord ndefRecord = getNdefRecord();
-		NdefRecord[] records = new NdefRecord[] { ndefRecord };
-		NdefMessage msg = new NdefMessage(records);
-		return msg;
 	}
 
 	public NdefRecord getNdefRecord() {
@@ -63,12 +54,6 @@ public class UriWriter extends AbstractNdefWriter<UriRecord> {
 			}
 		}
 		return abbreviateIndex;
-	}
-
-	@Override
-	public int getLength() {
-		super.ndefRecord = getNdefRecord();
-		return super.getLength();
 	}
 
 }

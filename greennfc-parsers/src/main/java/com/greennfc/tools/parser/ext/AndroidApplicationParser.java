@@ -3,7 +3,7 @@ package com.greennfc.tools.parser.ext;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.parser.base.NdefParser;
+import com.greennfc.tools.parser.ndef.NdefParser;
 
 public final class AndroidApplicationParser extends NdefParser {
 

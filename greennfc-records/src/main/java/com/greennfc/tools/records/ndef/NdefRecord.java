@@ -10,16 +10,16 @@ public class NdefRecord implements IGreenRecord {
 
 	private android.nfc.NdefRecord androidNdefRecord;
 
-	public NdefRecord() {
+	protected NdefRecord() {
 		super();
 	}
 
-	public NdefRecord(String key) {
+	protected NdefRecord(String key) {
 		super();
 		this.id = key.getBytes();
 	}
 
-	public NdefRecord(android.nfc.NdefRecord androidNdefRecord) {
+	protected NdefRecord(android.nfc.NdefRecord androidNdefRecord) {
 		super();
 		this.androidNdefRecord = androidNdefRecord;
 		if (this.androidNdefRecord.getId() != null && this.androidNdefRecord.getId().length > 0) {
@@ -45,6 +45,14 @@ public class NdefRecord implements IGreenRecord {
 
 	public boolean hasKey() {
 		return id != null && id.length > 0;
+	}
+
+	public android.nfc.NdefRecord getAndroidNdefRecord() {
+		return androidNdefRecord;
+	}
+
+	public void setAndroidNdefRecord(android.nfc.NdefRecord androidNdefRecord) {
+		this.androidNdefRecord = androidNdefRecord;
 	}
 
 	@Override

@@ -1,22 +1,13 @@
 package com.greennfc.tools.writers.ndef.wkt;
 
-import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
-import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
+import com.greennfc.tools.writers.ndef.NdefWriter;
 
-public class TextWriter extends AbstractNdefWriter<TextRecord> {
+public class TextWriter extends NdefWriter<TextRecord> {
 
 	protected TextWriter() {
-	}
-
-	public NdefMessage getNdefMessage() {
-
-		NdefRecord ndefRecord = getNdefRecord();
-		NdefRecord[] records = new NdefRecord[] { ndefRecord };
-		NdefMessage msg = new NdefMessage(records);
-		return msg;
 	}
 
 	public NdefRecord getNdefRecord() {
@@ -52,12 +43,6 @@ public class TextWriter extends AbstractNdefWriter<TextRecord> {
 
 		NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, record.getId(), payload);
 		return ndefRecord;
-	}
-
-	@Override
-	public int getLength() {
-		super.ndefRecord = getNdefRecord();
-		return super.getLength();
 	}
 
 }

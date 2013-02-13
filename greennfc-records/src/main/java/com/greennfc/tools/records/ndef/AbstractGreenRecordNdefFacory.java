@@ -7,4 +7,8 @@ public abstract class AbstractGreenRecordNdefFacory implements IGreenRecordNdefF
 	protected AbstractGreenRecordNdefFacory() {
 	}
 
+	public MimeTypeRecord mimeRecordInstance(String mimeType, byte[] datas) {
+		return new MimeTypeRecord(mimeType, datas);
+	}
+
 }
