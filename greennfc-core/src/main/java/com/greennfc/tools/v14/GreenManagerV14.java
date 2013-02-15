@@ -4,9 +4,15 @@ import static com.greennfc.tools.v9.GreenNfcFactory.*;
 import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
+import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.greennfc.tools.api.IGreenBeam;
 import com.greennfc.tools.api.IGreenIntentFilter;
 import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenManager;
@@ -23,14 +29,44 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 	}
 
 	public void register(Activity activity, IGreenIntentFilter... filters) {
-		register(activity, null, filters);
+		register(activity, null, null, filters);
+
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfiguration, final IGreenBeam<Record> beamWriter, IGreenIntentFilter... filters) {
+		GREEN_NFC_MANAGER.register(activity, recieveConfiguration, filters);
+		if (beamWriter != null) {
+			NfcAdapter mAdapter = NfcAdapter.getDefaultAdapter(activity);
+			mAdapter.setOnNdefPushCompleteCallback(new OnNdefPushCompleteCallback() {
+
+				public void onNdefPushComplete(NfcEvent arg0) {
+					beamWriter.beamCallBack();
+
+				}
+			}, activity);
+			mAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
+
+				public NdefMessage createNdefMessage(NfcEvent event) {
+					return beamWriter.getWriter().getNdefMessage();
+				}
+			}, activity);
+		}
+		assert Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH : "You can not use this method with a previous version of android sdk";
+		activity.getApplication().registerActivityLifecycleCallbacks(this);
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, IGreenBeam<Record> beamWriter, IGreenIntentFilter... filters) {
+		register(activity, null, beamWriter, filters);
+
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, IGreenBeam<Record> beamWriter) {
+		register(activity, null, beamWriter);
 
 	}
 
 	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfig, IGreenIntentFilter... greenfilters) {
-		GREEN_NFC_MANAGER.register(activity, recieveConfig, greenfilters);
-		assert Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH : "You can not use this method with a previous version of android sdk";
-		activity.getApplication().registerActivityLifecycleCallbacks(this);
+		register(activity, recieveConfig, null, greenfilters);
 	}
 
 	public void pause(Activity activity) {

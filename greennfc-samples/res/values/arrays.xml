@@ -5,6 +5,7 @@
         <item name="read_override">Read from override</item>
         <item name="write">Write</item>
         <item name="write_override">Write from override</item>
+        <item name="beam">Beam (SNEP)</item>
     </string-array>
     <string-array name="type_tags">
         <item name="empty">Empty</item>

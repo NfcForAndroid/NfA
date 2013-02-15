@@ -2,14 +2,16 @@ package com.greennfc.tools.api.beans;
 
 import android.content.Intent;
 
-import com.greennfc.tools.api.IGreenIntentRecieve;
+import com.greennfc.tools.api.IGreenIntentRecieveMessage;
+import com.greennfc.tools.api.IGreenIntentRecieveRecord;
 import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
 
 public final class GreenRecieveBean<Record extends IGreenRecord> {
 
 	private Intent intent;
-	private IGreenIntentRecieve<Record> greenIntentRecieve;
+	private IGreenIntentRecieveRecord<Record> greenIntentRecieveRecord;
+	private IGreenIntentRecieveMessage greenIntentRecieveMessage;
 	private IGreenParser greenParser;
 
 	private GreenRecieveBean() {
@@ -19,8 +21,12 @@ public final class GreenRecieveBean<Record extends IGreenRecord> {
 		return intent;
 	}
 
-	public IGreenIntentRecieve<Record> getGreenIntentRecieve() {
-		return greenIntentRecieve;
+	public IGreenIntentRecieveRecord<Record> getGreenIntentRecieveRecord() {
+		return greenIntentRecieveRecord;
+	}
+
+	public IGreenIntentRecieveMessage getGreenIntentRecieveMessage() {
+		return greenIntentRecieveMessage;
 	}
 
 	public IGreenParser getGreenParser() {
@@ -44,8 +50,13 @@ public final class GreenRecieveBean<Record extends IGreenRecord> {
 			return this;
 		}
 
-		public GreenRecieveBeanBuilder<Record> intentRecieve(final IGreenIntentRecieve<Record> intentRecieve) {
-			bean.greenIntentRecieve = intentRecieve;
+		public GreenRecieveBeanBuilder<Record> intentRecieveRecord(final IGreenIntentRecieveRecord<Record> intentRecieveRecord) {
+			bean.greenIntentRecieveRecord = intentRecieveRecord;
+			return this;
+		}
+
+		public GreenRecieveBeanBuilder<Record> intentRecieveMessage(final IGreenIntentRecieveMessage intentRecieveMessage) {
+			bean.greenIntentRecieveMessage = intentRecieveMessage;
 			return this;
 		}
 
@@ -56,8 +67,10 @@ public final class GreenRecieveBean<Record extends IGreenRecord> {
 
 		public GreenRecieveBean<Record> build() {
 			assert bean.intent != null : "You don't have put any intent ! ";
-			assert bean.greenIntentRecieve != null : "You don't have put any IGreenIntentRecieve ! ";
 			assert bean.greenParser != null : "You don't have put any IGreenParser ! ";
+
+			assert (bean.greenIntentRecieveMessage != null || bean.greenIntentRecieveRecord != null) : "You have to choose at least one IGreenIntentRecieveRecord or IGreenIntentRecieveMessage";
+			assert !(bean.greenIntentRecieveMessage != null && bean.greenIntentRecieveRecord != null) : "You cannot specify both receptions, you to choose if you catch a single record or a message";
 			return bean;
 		}
 

@@ -12,7 +12,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.greennfc.tools.api.IGreenIntentRecieve;
+import com.greennfc.tools.api.IGreenIntentRecieveRecord;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
@@ -21,7 +21,7 @@ import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.samples.R;
 import com.greennfc.tools.samples.cst.GreenSampleCst;
 
-public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieve<IGreenRecord> {
+public class GreenReadActivity extends SherlockFragmentActivity implements IGreenIntentRecieveRecord<IGreenRecord> {
 
 	TextView tag_content;
 
@@ -35,7 +35,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		GREEN_NFC_MANAGER.register(this //
 				, recieveBeanConfigure() //
 						.intent(getIntent()) //
-						.intentRecieve(this) //
+						.intentRecieveRecord(this) //
 						.parser(NDEF_PARSER) //
 						.build() //
 				, TEXT_FILTER //
@@ -51,7 +51,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 		tag_content.setText(R.string.reading_tag);
 		GREEN_NFC_MANAGER.manageIntent(recieveBeanConfigure() //
 				.intent(intent) //
-				.intentRecieve(this) //
+				.intentRecieveRecord(this) //
 				.parser(NDEF_PARSER) //
 				.build());
 	}
@@ -62,7 +62,7 @@ public class GreenReadActivity extends SherlockFragmentActivity implements IGree
 	 **/
 
 	@Override
-	public void recieveMessage(IGreenRecord record) {
+	public void recieveRecord(IGreenRecord record) {
 		if (record instanceof TextRecord) {
 			String message = ((TextRecord) record).getText();
 			tag_content.setText(getString(R.string.tag_content) + message);

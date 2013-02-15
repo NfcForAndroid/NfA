@@ -1,6 +1,11 @@
 package com.greennfc.tools.exception;
 
-public abstract class GreenNfcRuntimeException extends RuntimeException {
+public class GreenNfcRuntimeException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -317283007209543484L;
 
 	public GreenNfcRuntimeException() {
 		super();

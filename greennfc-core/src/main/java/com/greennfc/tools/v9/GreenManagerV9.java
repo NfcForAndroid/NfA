@@ -19,8 +19,10 @@ import android.os.PatternMatcher;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.greennfc.tools.api.IGreenBeam;
 import com.greennfc.tools.api.IGreenIntentFilter;
-import com.greennfc.tools.api.IGreenIntentRecieve;
+import com.greennfc.tools.api.IGreenIntentRecieveMessage;
+import com.greennfc.tools.api.IGreenIntentRecieveRecord;
 import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenParser;
@@ -71,18 +73,32 @@ class GreenManagerV9 implements IGreenManager {
 	 * INITS METHOD
 	 */
 
-	public void register(Activity activity, IGreenIntentFilter... filters) {
-		register(activity, null, filters);
-
-	}
-
-	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfig, IGreenIntentFilter... greenfilters) {
+	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfig, IGreenBeam<Record> beamWriter, IGreenIntentFilter... greenfilters) {
 		mAdapter = NfcAdapter.getDefaultAdapter(activity);
 
 		initIntent(activity, greenfilters);
 		if (recieveConfig != null) {
 			manageIntent(recieveConfig);
 		}
+		if (beamWriter != null) {
+			mAdapter.enableForegroundNdefPush(activity, beamWriter.getWriter().getNdefMessage());
+		}
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfig, IGreenIntentFilter... greenfilters) {
+		register(activity, recieveConfig, null, greenfilters);
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, IGreenBeam<Record> beamWriter, IGreenIntentFilter... filters) {
+		register(activity, null, beamWriter, filters);
+	}
+
+	public void register(Activity activity, IGreenIntentFilter... filters) {
+		register(activity, null, null, filters);
+	}
+
+	public <Record extends IGreenRecord> void register(Activity activity, IGreenBeam<Record> beamWriter) {
+		register(activity, null, beamWriter);
 	}
 
 	/*
@@ -93,8 +109,12 @@ class GreenManagerV9 implements IGreenManager {
 	@SuppressWarnings("unchecked")
 	public <Record extends IGreenRecord> void manageIntent(GreenRecieveBean<Record> recieveConfig) {
 		final Intent intent = recieveConfig.getIntent();
-		final IGreenIntentRecieve<Record> recieve = recieveConfig.getGreenIntentRecieve();
+		final IGreenIntentRecieveRecord<Record> recieveRecord = recieveConfig.getGreenIntentRecieveRecord();
+		final IGreenIntentRecieveMessage recieveMessage = recieveConfig.getGreenIntentRecieveMessage();
 		final IGreenParser parser = recieveConfig.getGreenParser();
+		final boolean recordCallBack = recieveRecord != null;
+		GreenMessage greenMessage = recordCallBack ? new GreenMessage() : null;
+		Record greenRecord = null;
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
@@ -111,7 +131,12 @@ class GreenManagerV9 implements IGreenManager {
 					messages[i] = (NdefMessage) rawMsgs[i];
 					for (int j = 0; j < messages[i].getRecords().length; j++) {
 						record = messages[i].getRecords()[j];
-						recieve.recieveMessage((Record) parser.parseNdef(record));
+						greenRecord = (Record) parser.parseNdef(record);
+						if (recordCallBack) {
+							recieveRecord.recieveRecord(greenRecord);
+						} else {
+							greenMessage.addRecord(greenRecord);
+						}
 					}
 				}
 			}
@@ -120,8 +145,17 @@ class GreenManagerV9 implements IGreenManager {
 		if (!treat) {
 			Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 			if (tag != null) {
-				recieve.recieveMessage((Record) parser.parseTag(tag));
+				greenRecord = (Record) parser.parseTag(tag);
+				if (recordCallBack) {
+					recieveRecord.recieveRecord(greenRecord);
+				} else {
+					greenMessage.addRecord(greenRecord);
+				}
 			}
+		}
+
+		if (!recordCallBack) {
+			recieveMessage.recieveMessage(greenMessage);
 		}
 
 	}

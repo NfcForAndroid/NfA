@@ -19,6 +19,11 @@ public class NdefRecord implements IGreenRecord {
 		this.id = key.getBytes();
 	}
 
+	protected NdefRecord(short tnf, byte[] id, byte[] type, byte[] payload) {
+		this.id = id;
+		androidNdefRecord = new android.nfc.NdefRecord(tnf, type, id, payload);
+	}
+
 	protected NdefRecord(android.nfc.NdefRecord androidNdefRecord) {
 		super();
 		this.androidNdefRecord = androidNdefRecord;
