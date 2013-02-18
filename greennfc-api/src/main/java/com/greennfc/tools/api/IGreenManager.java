@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.greennfc.tools.api.beans.GreenRecieveBean;
+import com.greennfc.tools.api.beans.GreenWriteBean;
 
 /**
  * @author jefBinomed
@@ -71,6 +72,6 @@ public interface IGreenManager {
 
 	<Record extends IGreenRecord> void manageIntent(GreenRecieveBean<Record> recieveConfiguration);
 
-	<Record extends IGreenRecord> void writeTag(Intent intent, IGreenIntentWrite recieve, IGreenWriter<Record> writer, Record record);
+	<Record extends IGreenRecord> void writeTag(Intent intent, IGreenIntentWrite recieve, GreenWriteBean<Record>... writers);
 
 }

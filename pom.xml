@@ -62,6 +62,9 @@
 	 -->
 
 	<modules>
+		<!-- api library -->
+		<module>greennfc-api</module>
+		
 		<!-- core library -->
 		<module>greennfc-core</module>
 		

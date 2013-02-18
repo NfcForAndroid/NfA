@@ -7,9 +7,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>greennfc-records</artifactId>
-	<name>Green NFC - Records</name>
-	<description>Global nfc records project for nfc tools</description>
+	<artifactId>greennfc-api</artifactId>
+	<name>Green NFC - Apis</name>
+	<description>Apis project for nfc tools</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -22,14 +22,7 @@
 			<artifactId>annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.greennfc.tools</groupId>
-			<artifactId>greennfc-api</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
-	
 	
 
 	<build>

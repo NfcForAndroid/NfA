@@ -27,8 +27,8 @@ import com.greennfc.tools.api.IGreenIntentWrite;
 import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenParser;
 import com.greennfc.tools.api.IGreenRecord;
-import com.greennfc.tools.api.IGreenWriter;
 import com.greennfc.tools.api.beans.GreenRecieveBean;
+import com.greennfc.tools.api.beans.GreenWriteBean;
 import com.greennfc.tools.exception.NoNdefServiceException;
 import com.greennfc.tools.exception.WriteException;
 
@@ -73,6 +73,7 @@ class GreenManagerV9 implements IGreenManager {
 	 * INITS METHOD
 	 */
 
+	@SuppressWarnings("deprecation")
 	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfig, IGreenBeam<Record> beamWriter, IGreenIntentFilter... greenfilters) {
 		mAdapter = NfcAdapter.getDefaultAdapter(activity);
 
@@ -81,7 +82,20 @@ class GreenManagerV9 implements IGreenManager {
 			manageIntent(recieveConfig);
 		}
 		if (beamWriter != null) {
-			mAdapter.enableForegroundNdefPush(activity, beamWriter.getWriter().getNdefMessage());
+			assert beamWriter.getWriters() != null && beamWriter.getWriters().size() > 0 : "You have to specify at least one IGreenWriter if you want to beam messages !";
+			NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size()];
+			int i = 0;
+			for (GreenWriteBean<Record> writer : beamWriter.getWriters()) {
+				if (!writer.getGreenWriter().isInit()) {
+					writer.getGreenWriter().init(writer.getGreenRecord());
+				}
+				recordArray[i] = writer.getGreenWriter().getNdefRecord();
+				if (writer.isForceReinit()) {
+					writer.getGreenWriter().reset();
+				}
+				i++;
+			}
+			mAdapter.enableForegroundNdefPush(activity, new NdefMessage(recordArray));
 		}
 	}
 
@@ -160,10 +174,11 @@ class GreenManagerV9 implements IGreenManager {
 
 	}
 
-	public <Record extends IGreenRecord> void writeTag(final Intent intent, final IGreenIntentWrite recieve, final IGreenWriter<Record> writer, final Record record) {
+	public <Record extends IGreenRecord> void writeTag(final Intent intent, final IGreenIntentWrite recieve, final GreenWriteBean<Record>... writers) {
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 		final Ndef ndef = Ndef.get(tag);
-		RecordAsynkTask<Record> recordTask = new RecordAsynkTask<Record>(ndef, recieve, writer, record);
+		// final IGreenWriter<Record> writer, final Record record
+		RecordAsynkTask<Record> recordTask = new RecordAsynkTask<Record>(ndef, recieve, writers);
 		EmptyAsynkTask<Record> emptyTask = new EmptyAsynkTask<Record>(ndef, recordTask, recieve);
 		emptyTask.execute();
 	}
@@ -275,15 +290,13 @@ class GreenManagerV9 implements IGreenManager {
 
 		private final Ndef ndef;
 		private final IGreenIntentWrite recieve;
-		private final IGreenWriter<Record> writer;
-		private final Record record;
+		private final GreenWriteBean<Record>[] writers;
 
-		public RecordAsynkTask(Ndef ndef, IGreenIntentWrite recieve, IGreenWriter<Record> writer, Record record) {
+		public RecordAsynkTask(Ndef ndef, IGreenIntentWrite recieve, GreenWriteBean<Record>... writers) {
 			super();
 			this.ndef = ndef;
 			this.recieve = recieve;
-			this.writer = writer;
-			this.record = record;
+			this.writers = writers;
 		}
 
 		@Override
@@ -295,8 +308,20 @@ class GreenManagerV9 implements IGreenManager {
 				ndef.connect();
 
 				try {
-					writer.init(record);
-					ndef.writeNdefMessage(writer.getNdefMessage());
+					NdefRecord[] recordArray = new NdefRecord[writers.length];
+					GreenWriteBean<Record> writer = null;
+					for (int i = 0; i < writers.length; i++) {
+						writer = writers[i];
+						if (!writer.getGreenWriter().isInit()) {
+							writer.getGreenWriter().init(writer.getGreenRecord());
+						}
+						recordArray[i] = writer.getGreenWriter().getNdefRecord();
+						if (writer.isForceReinit()) {
+							writer.getGreenWriter().reset();
+						}
+					}
+					NdefMessage ndefMessage = new NdefMessage(recordArray);
+					ndef.writeNdefMessage(ndefMessage);
 				} catch (FormatException e) {
 					Log.e("Error : ", e.getMessage(), e);
 					return new WriteException(e);

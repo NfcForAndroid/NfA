@@ -5,6 +5,10 @@ import android.nfc.NdefRecord;
 
 public interface IGreenWriter<Record extends IGreenRecord> {
 
+	boolean isInit();
+
+	void reset();
+
 	void init(Record record);
 
 	NdefMessage getNdefMessage();

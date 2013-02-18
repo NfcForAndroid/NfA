@@ -64,6 +64,9 @@
         <activity
             android:name=".write.GreenBeamActivity"
              />       
+        <activity
+            android:name=".write.GreenBeamMultiActivity"
+             />       
     </application>
 
 </manifest>

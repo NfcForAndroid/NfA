@@ -11,4 +11,12 @@ public abstract class AbstractWriter<Record extends IGreenRecord> implements IGr
 		this.record = record;
 	}
 
+	public boolean isInit() {
+		return record != null;
+	}
+
+	public void reset() {
+		record = null;
+	}
+
 }

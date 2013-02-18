@@ -22,6 +22,18 @@
 			<artifactId>annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.greennfc.tools</groupId>
+			<artifactId>greennfc-api</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.greennfc.tools</groupId>
+			<artifactId>greennfc-records</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	
 

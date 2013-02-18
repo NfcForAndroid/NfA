@@ -23,4 +23,11 @@ public class EmptyWriter extends AbstractWriter<IGreenRecord> {
 		return new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null);
 	}
 
+	public boolean isInit() {
+		return true;
+	}
+
+	public void reset() {
+	}
+
 }

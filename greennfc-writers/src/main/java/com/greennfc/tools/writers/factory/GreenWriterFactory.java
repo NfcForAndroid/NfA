@@ -68,6 +68,7 @@ public final class GreenWriterFactory {
 		return GreenWriterFactory.getInstance().getNdefFactory();
 	}
 
+	@SuppressWarnings("unchecked")
 	private static class GreenWriterBaseFactory extends AbstractGreenWriterBaseFactory {
 	}
 

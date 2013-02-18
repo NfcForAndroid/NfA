@@ -10,6 +10,8 @@
     <string name="type_tag_write">Type of tag to write </string>
     <string name="tag_content">Tag content :</string>
     <string name="hint_smartposter">SmartPoster title</string>
+    <string name="text_content_1">Text record 1 :</string>
+    <string name="text_content_2">Text record 2 :</string>
     <!-- Types -->
     <string name="type_text">Type text content</string>
     <string name="type_uri">Enter uri adress</string>
