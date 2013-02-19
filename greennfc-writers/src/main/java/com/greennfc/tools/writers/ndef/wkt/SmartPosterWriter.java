@@ -8,9 +8,9 @@ import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.writers.factory.GreenWriterFactory;
-import com.greennfc.tools.writers.ndef.NdefWriter;
+import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
 
-public class SmartPosterWriter extends NdefWriter<SmartPosterRecord> {
+public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
 
 	protected SmartPosterWriter() {
 	}

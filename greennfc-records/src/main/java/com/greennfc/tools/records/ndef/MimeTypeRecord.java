@@ -8,8 +8,9 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 import com.greennfc.tools.exception.GreenNfcRuntimeException;
+import com.greennfc.tools.records.AbstractRecord;
 
-public final class MimeTypeRecord extends NdefRecord {
+public final class MimeTypeRecord extends AbstractRecord implements INdefRecord {
 
 	private String mimeType;
 	private byte[] data;
@@ -46,13 +47,13 @@ public final class MimeTypeRecord extends NdefRecord {
 
 	}
 
-	protected MimeTypeRecord(String mimeType, byte[] data) {
+	MimeTypeRecord(String mimeType, byte[] data) {
 		super();
 		this.mimeType = mimeType;
 		this.data = data;
 	}
 
-	protected MimeTypeRecord(String mimeType, final InputStream is) {
+	MimeTypeRecord(String mimeType, final InputStream is) {
 		super();
 		this.mimeType = mimeType;
 		try {

@@ -10,6 +10,9 @@ import com.greennfc.tools.records.factory.GreenRecordFactory;
 
 public class MimeTypeParser extends NdefParser {
 
+	MimeTypeParser() {
+	}
+
 	@Override
 	public IGreenRecord parseNdef(NdefRecord record) throws ParserException {
 

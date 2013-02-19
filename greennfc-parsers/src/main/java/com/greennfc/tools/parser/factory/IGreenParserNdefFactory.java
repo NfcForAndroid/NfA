@@ -8,4 +8,8 @@ public interface IGreenParserNdefFactory {
 
 	IGreenParser mimeTypeParser();
 
+	IGreenParser unknownParser();
+
+	IGreenParser unsupportedParser();
+
 }

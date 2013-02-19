@@ -16,7 +16,7 @@ import com.greennfc.tools.records.ndef.wkt.UriRecord;
 
 public final class SmartPosterParser extends NdefParser {
 
-	protected SmartPosterParser() {
+	SmartPosterParser() {
 	}
 
 	@Override

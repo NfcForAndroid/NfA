@@ -4,6 +4,8 @@ import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.IGreenWriter;
 import com.greennfc.tools.records.ndef.MimeTypeRecord;
 import com.greennfc.tools.records.ndef.NdefRecord;
+import com.greennfc.tools.records.ndef.UnknownRecord;
+import com.greennfc.tools.records.ndef.UnsupportedRecord;
 import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
@@ -19,6 +21,8 @@ public final class GreenWriterFactory {
 
 	public static final IGreenWriter<NdefRecord> NDEF_WRITER = ndefFactory().ndefWriter();
 	public static final IGreenWriter<MimeTypeRecord> MIME_TYPE_WRITER = ndefFactory().mimeTypeWriter();
+	public static final IGreenWriter<UnknownRecord> UNKNOWN_WRITER = ndefFactory().unknownWriter();
+	public static final IGreenWriter<UnsupportedRecord> UNSUPPORTED_WRITER = ndefFactory().unsupportedWriter();
 
 	public static final IGreenWriter<TextRecord> TEXT_WRITER = wellKnowTypeFactory().textWriter();
 	public static final IGreenWriter<UriRecord> URI_WRITER = wellKnowTypeFactory().uriWriter();

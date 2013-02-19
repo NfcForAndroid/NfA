@@ -4,6 +4,8 @@ import java.io.InputStream;
 
 import com.greennfc.tools.records.ndef.MimeTypeRecord;
 import com.greennfc.tools.records.ndef.NdefRecord;
+import com.greennfc.tools.records.ndef.UnknownRecord;
+import com.greennfc.tools.records.ndef.UnsupportedRecord;
 
 public interface IGreenRecordNdefFactory {
 
@@ -21,5 +23,11 @@ public interface IGreenRecordNdefFactory {
 	 * @return
 	 */
 	MimeTypeRecord mimeRecordInstance(String mimeType, InputStream is);
+
+	UnknownRecord unknownRecordInstance(byte[] payload);
+
+	UnsupportedRecord unsupportedRecord(short tnf, byte[] id, byte[] type, byte[] payload);
+
+	UnsupportedRecord unsupportedRecord(android.nfc.NdefRecord androidNdefRecord);
 
 }

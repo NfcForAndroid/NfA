@@ -6,9 +6,9 @@ import android.nfc.NdefRecord;
 
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.records.ndef.wkt.UriSchemeEnum;
-import com.greennfc.tools.writers.ndef.NdefWriter;
+import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
 
-public class UriWriter extends NdefWriter<UriRecord> {
+public class UriWriter extends AbstractNdefWriter<UriRecord> {
 
 	protected UriWriter() {
 	}

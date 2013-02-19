@@ -4,9 +4,10 @@ import java.nio.charset.Charset;
 
 import android.net.Uri;
 
-import com.greennfc.tools.records.ndef.NdefRecord;
+import com.greennfc.tools.records.AbstractRecord;
+import com.greennfc.tools.records.ndef.INdefRecord;
 
-public class UriRecord extends NdefRecord {
+public class UriRecord extends AbstractRecord implements INdefRecord {
 
 	public static final Charset DEFAULT_URI_CHARSET = Charset.forName("UTF-8");
 

@@ -3,9 +3,10 @@ package com.greennfc.tools.records.ndef.wkt;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-import com.greennfc.tools.records.ndef.NdefRecord;
+import com.greennfc.tools.records.AbstractRecord;
+import com.greennfc.tools.records.ndef.INdefRecord;
 
-public class TextRecord extends NdefRecord {
+public class TextRecord extends AbstractRecord implements INdefRecord {
 
 	public static final byte LANGUAGE_CODE_MASK = 0x1F;
 

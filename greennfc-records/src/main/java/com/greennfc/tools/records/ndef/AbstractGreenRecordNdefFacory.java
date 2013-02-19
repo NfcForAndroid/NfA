@@ -25,4 +25,16 @@ public abstract class AbstractGreenRecordNdefFacory implements IGreenRecordNdefF
 		return new MimeTypeRecord(mimeType, is);
 	}
 
+	public UnknownRecord unknownRecordInstance(byte[] payload) {
+		return new UnknownRecord(payload);
+	}
+
+	public UnsupportedRecord unsupportedRecord(short tnf, byte[] id, byte[] type, byte[] payload) {
+		return new UnsupportedRecord(tnf, id, type, payload);
+	}
+
+	public UnsupportedRecord unsupportedRecord(android.nfc.NdefRecord androidNdefRecord) {
+		return new UnsupportedRecord(androidNdefRecord);
+	}
+
 }

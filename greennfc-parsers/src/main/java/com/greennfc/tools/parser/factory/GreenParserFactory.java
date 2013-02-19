@@ -14,6 +14,8 @@ public final class GreenParserFactory {
 
 	public static final IGreenParser NDEF_PARSER = ndefFactory().ndefParser();
 	public static final IGreenParser MIME_TYPE_PARSER = ndefFactory().mimeTypeParser();
+	public static final IGreenParser UNKNOWN_PARSER = ndefFactory().unknownParser();
+	public static final IGreenParser UNSUPPORTED_PARSER = ndefFactory().unsupportedParser();
 
 	public static final IGreenParser EXTERNAL_PARSER = externalFactory().externalParser();
 	public static final IGreenParser EXTERNAL_TEXT_PARSER = externalFactory().externalTextParser();

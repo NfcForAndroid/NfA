@@ -6,7 +6,7 @@ import android.nfc.NdefRecord;
 
 import com.greennfc.tools.records.ndef.MimeTypeRecord;
 
-public class MimeTypeWriter extends NdefWriter<MimeTypeRecord> {
+public class MimeTypeWriter extends AbstractNdefWriter<MimeTypeRecord> {
 
 	public NdefRecord getNdefRecord() {
 		if (!record.hasMimeType()) {

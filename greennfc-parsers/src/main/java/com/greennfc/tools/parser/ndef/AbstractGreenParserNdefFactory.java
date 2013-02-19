@@ -7,6 +7,8 @@ public abstract class AbstractGreenParserNdefFactory implements IGreenParserNdef
 
 	private NdefParser ndefParser;
 	private MimeTypeParser mimeTypeParser;
+	private UnknownParser unknownParser;
+	private UnsupportedParser unsupportedParser;
 
 	protected AbstractGreenParserNdefFactory() {
 	}
@@ -23,6 +25,20 @@ public abstract class AbstractGreenParserNdefFactory implements IGreenParserNdef
 			mimeTypeParser = new MimeTypeParser();
 		}
 		return mimeTypeParser;
+	}
+
+	public IGreenParser unknownParser() {
+		if (unknownParser == null) {
+			unknownParser = new UnknownParser();
+		}
+		return unknownParser;
+	}
+
+	public IGreenParser unsupportedParser() {
+		if (unsupportedParser == null) {
+			unsupportedParser = new UnsupportedParser();
+		}
+		return unsupportedParser;
 	}
 
 }

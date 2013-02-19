@@ -7,6 +7,8 @@ public abstract class AbstractWriter<Record extends IGreenRecord> implements IGr
 
 	protected Record record;
 
+	protected static final byte[] EMPTY_BYTE = new byte[] {};
+
 	public void init(Record record) {
 		this.record = record;
 	}

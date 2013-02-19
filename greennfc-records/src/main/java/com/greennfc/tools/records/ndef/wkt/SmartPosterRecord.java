@@ -1,8 +1,9 @@
 package com.greennfc.tools.records.ndef.wkt;
 
-import com.greennfc.tools.records.ndef.NdefRecord;
+import com.greennfc.tools.records.AbstractRecord;
+import com.greennfc.tools.records.ndef.INdefRecord;
 
-public class SmartPosterRecord extends NdefRecord {
+public class SmartPosterRecord extends AbstractRecord implements INdefRecord {
 
 	private TextRecord title;
 	private UriRecord uri;

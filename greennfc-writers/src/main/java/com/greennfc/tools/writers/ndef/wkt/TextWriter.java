@@ -3,9 +3,9 @@ package com.greennfc.tools.writers.ndef.wkt;
 import android.nfc.NdefRecord;
 
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
-import com.greennfc.tools.writers.ndef.NdefWriter;
+import com.greennfc.tools.writers.ndef.AbstractNdefWriter;
 
-public class TextWriter extends NdefWriter<TextRecord> {
+public class TextWriter extends AbstractNdefWriter<TextRecord> {
 
 	protected TextWriter() {
 	}
