@@ -13,5 +13,6 @@
         <item name="text">Text</item>
         <item name="uri">Uri</item>
         <item name="smartposter">SmartPoster</item>
+        <item name="image">Image</item>
     </string-array>
 </resources>

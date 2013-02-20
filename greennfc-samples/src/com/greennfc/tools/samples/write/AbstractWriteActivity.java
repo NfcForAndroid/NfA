@@ -2,10 +2,25 @@ package com.greennfc.tools.samples.write;
 
 import static com.greennfc.tools.records.factory.GreenRecordFactory.*;
 import static com.greennfc.tools.writers.factory.GreenWriterFactory.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,11 +39,21 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 	protected TextView msg_feedback, msg_feedback_error;
 	protected Spinner type_tag, uri_prefix;
 	protected EditText tag_content, content_bis;
+	protected ImageView content_img;
 
 	protected static final int TAG_EMPTY = 0;
 	protected static final int TAG_TEXT = 1;
 	protected static final int TAG_URI = 2;
 	protected static final int TAG_SMART_POSTER = 3;
+	protected static final int TAG_IMAGE = 4;
+
+	private static final int MEDIA_TYPE_IMAGE = 1;
+	private static final int CAPTURE_IMAGE_REQUEST_CODE = 100;
+	private static final int IMAGE_CROP_REQUEST_CODE = 200;
+
+	private static SimpleDateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+	private Uri imageFileUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +66,11 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 		uri_prefix = (Spinner) findViewById(R.id.uri_prefix);
 		tag_content = (EditText) findViewById(R.id.tag_content);
 		content_bis = (EditText) findViewById(R.id.content_bis);
+		content_img = (ImageView) findViewById(R.id.content_img);
 		tag_content.setEnabled(false);
 		uri_prefix.setVisibility(View.GONE);
 		content_bis.setVisibility(View.GONE);
+		content_img.setVisibility(View.GONE);
 		msg_feedback_error.setVisibility(View.GONE);
 
 		type_tag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -56,24 +83,35 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 					tag_content.setHint("");
 					content_bis.setVisibility(View.GONE);
 					uri_prefix.setVisibility(View.GONE);
+					content_img.setVisibility(View.GONE);
 					break;
 				case TAG_TEXT:
 					tag_content.setEnabled(true);
 					tag_content.setHint(R.string.type_text);
 					content_bis.setVisibility(View.GONE);
 					uri_prefix.setVisibility(View.GONE);
+					content_img.setVisibility(View.GONE);
 					break;
 				case TAG_URI:
 					tag_content.setEnabled(true);
 					tag_content.setHint(R.string.type_uri);
 					content_bis.setVisibility(View.GONE);
 					uri_prefix.setVisibility(View.VISIBLE);
+					content_img.setVisibility(View.GONE);
 					break;
 				case TAG_SMART_POSTER:
 					tag_content.setEnabled(true);
 					tag_content.setHint(R.string.type_uri);
 					content_bis.setVisibility(View.VISIBLE);
 					uri_prefix.setVisibility(View.VISIBLE);
+					content_img.setVisibility(View.GONE);
+					break;
+				case TAG_IMAGE:
+					tag_content.setEnabled(false);
+					tag_content.setHint(R.string.hint_image);
+					content_bis.setVisibility(View.GONE);
+					uri_prefix.setVisibility(View.GONE);
+					content_img.setVisibility(View.VISIBLE);
 					break;
 
 				default:
@@ -84,6 +122,19 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+
+		content_img.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				imageFileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+
+				intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+
+				startActivityForResult(intentCamera, CAPTURE_IMAGE_REQUEST_CODE);
 			}
 		});
 
@@ -127,6 +178,20 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 
 			break;
 		}
+		case TAG_IMAGE: {
+			writer = (IGreenWriter<Record>) MIME_TYPE_WRITER;
+			Bitmap imageBitmap = ((BitmapDrawable) content_img.getDrawable()).getBitmap();
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			imageBitmap.compress(CompressFormat.JPEG, 40, os);
+			try {
+				os.close();
+				record = (Record) GreenRecordFactory.ndefFactory().mimeRecordInstance("image/jpeg", os.toByteArray());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			}
+
+			break;
+		}
 		default:
 			break;
 		}
@@ -156,6 +221,62 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	/**
+	 * 
+	 * IMAGE Management
+	 * 
+	 **/
+
+	private Uri getOutputMediaFileUri(int type) {
+		return Uri.fromFile(getOutputMediaFile(type));
+	}
+
+	private File getOutputMediaFile(int type) {
+		File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "GreenNfcSample");
+
+		if (!mediaStorageDir.exists()) {
+			if (!mediaStorageDir.mkdirs()) {
+				return null;
+			}
+		}
+
+		String timeStamp = TIME_STAMP_FORMAT.format(new Date());
+		File mediaFile = null;
+		if (type == MEDIA_TYPE_IMAGE) {
+			mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+		} else {
+			return null;
+		}
+
+		return mediaFile;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				Intent intentCrop = new Intent("com.android.camera.action.CROP");
+				intentCrop.setDataAndType(imageFileUri, "image/*");
+				intentCrop.putExtra("crop", true);
+				intentCrop.putExtra("aspectX", 1);
+				intentCrop.putExtra("aspectY", 1);
+				intentCrop.putExtra("outputX", 150);
+				intentCrop.putExtra("outputY", 150);
+				intentCrop.putExtra("scale", 10);
+				intentCrop.putExtra("return-data", true);
+				startActivityForResult(intentCrop, IMAGE_CROP_REQUEST_CODE);
+			}
+		}
+		if (requestCode == IMAGE_CROP_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				Bundle extras = data.getExtras();
+
+				Bitmap picture = extras.getParcelable("data");
+				content_img.setImageBitmap(picture);
+			}
 		}
 	}
 

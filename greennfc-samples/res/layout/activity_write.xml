@@ -51,6 +51,14 @@
         android:layout_below="@+id/tag_content"
         android:hint="@string/hint_smartposter"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+        android:id="@+id/content_img"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/content_bis"
+        android:src="@drawable/ic_launcher"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <TextView
         android:id="@+id/msg_feedback"

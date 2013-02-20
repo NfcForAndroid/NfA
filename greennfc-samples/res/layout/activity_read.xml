@@ -13,5 +13,11 @@
         android:layout_centerVertical="true"
         android:text="@string/wating_tag"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ImageView
+        android:id="@+id/tag_content_img"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>
