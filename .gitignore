@@ -9,6 +9,8 @@
 *.class
 
 # generated files
+greennfc-apklib/bin/
+greennfc-apklib/gen/
 greennfc-samples/bin/
 greennfc-samples/gen/
 
