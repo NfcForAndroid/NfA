@@ -133,6 +133,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 				imageFileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
 
 				intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+				intentCamera.putExtra("android.intent.extras.CAMERA_FACING", 1);
 
 				startActivityForResult(intentCamera, CAPTURE_IMAGE_REQUEST_CODE);
 			}

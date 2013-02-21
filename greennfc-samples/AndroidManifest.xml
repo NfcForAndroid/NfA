@@ -39,12 +39,17 @@
                 <data
                     android:host="ext"
                     android:path="/com.greennfc:ext"
-                    android:scheme="vnd.android.nfc" />
+                    android:scheme="@string/scheme_android_ext" />
             </intent-filter>
              <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data  android:mimeType="text/plain" />
+                <data  android:mimeType="@string/mime_type_text_plain" />
+            </intent-filter>
+             <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data  android:mimeType="@string/mime_type_image" />
             </intent-filter>
             <!-- 
             <intent-filter>

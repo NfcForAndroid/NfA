@@ -16,7 +16,7 @@ public class MimeTypeParser extends NdefParser {
 	@Override
 	public IGreenRecord parseNdef(NdefRecord record) throws ParserException {
 
-		String contentType = new String(record.getType(), Charset.forName("US_ASCIII"));
+		String contentType = new String(record.getType(), Charset.forName("US_ASCII"));
 
 		return GreenRecordFactory.ndefFactory().mimeRecordInstance(contentType, record.getPayload());
 	}
