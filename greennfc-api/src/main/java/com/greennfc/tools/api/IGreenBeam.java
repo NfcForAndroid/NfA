@@ -10,4 +10,6 @@ public interface IGreenBeam<Record extends IGreenRecord> {
 
 	void beamCallBack();
 
+	boolean addAndroidApplicationRecord();
+
 }

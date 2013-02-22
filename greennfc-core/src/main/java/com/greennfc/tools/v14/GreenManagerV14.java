@@ -3,6 +3,7 @@ package com.greennfc.tools.v14;
 import static com.greennfc.tools.v9.GreenNfcFactory.*;
 import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -20,6 +21,8 @@ import com.greennfc.tools.api.IGreenManager;
 import com.greennfc.tools.api.IGreenRecord;
 import com.greennfc.tools.api.beans.GreenRecieveBean;
 import com.greennfc.tools.api.beans.GreenWriteBean;
+import com.greennfc.tools.records.factory.GreenRecordFactory;
+import com.greennfc.tools.writers.factory.GreenWriterFactory;
 
 class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 
@@ -32,7 +35,7 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 
 	}
 
-	public <Record extends IGreenRecord> void register(Activity activity, GreenRecieveBean<Record> recieveConfiguration, final IGreenBeam<Record> beamWriter, IGreenIntentFilter... filters) {
+	public <Record extends IGreenRecord> void register(final Activity activity, GreenRecieveBean<Record> recieveConfiguration, final IGreenBeam<Record> beamWriter, IGreenIntentFilter... filters) {
 		GREEN_NFC_MANAGER.register(activity, recieveConfiguration, filters);
 		if (beamWriter != null) {
 			NfcAdapter mAdapter = NfcAdapter.getDefaultAdapter(activity);
@@ -48,7 +51,7 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 			mAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
 
 				public NdefMessage createNdefMessage(NfcEvent event) {
-					NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size()];
+					NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size() + (beamWriter.addAndroidApplicationRecord() ? 1 : 0)];
 					int i = 0;
 					for (GreenWriteBean<Record> writer : beamWriter.getWriters()) {
 						if (!writer.getGreenWriter().isInit()) {
@@ -59,6 +62,11 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 							writer.getGreenWriter().reset();
 						}
 						i++;
+					}
+					if (beamWriter.addAndroidApplicationRecord()) {
+						GreenWriterFactory.ANDROID_APPLICATION_WRITER.init(GreenRecordFactory.externalFactory().androidApplicationRecordInstance(activity));
+						recordArray[i] = GreenWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
+						GreenWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 					}
 					return new NdefMessage(recordArray);
 				}
@@ -99,8 +107,8 @@ class GreenManagerV14 implements IGreenManager, ActivityLifecycleCallbacks {
 		GREEN_NFC_MANAGER.manageIntent(recieveConfig);
 	}
 
-	public <Record extends IGreenRecord> void writeTag(final Intent intent, final IGreenIntentWrite recieve, final GreenWriteBean<Record>... writers) {
-		GREEN_NFC_MANAGER.writeTag(intent, recieve, writers);
+	public <Record extends IGreenRecord> void writeTag(final Context context, final Intent intent, final IGreenIntentWrite recieve, final boolean addAndroidApplicationRecord, final GreenWriteBean<Record>... writers) {
+		GREEN_NFC_MANAGER.writeTag(context, intent, recieve, addAndroidApplicationRecord, writers);
 	}
 
 	public void onActivityCreated(Activity activity, Bundle bundle) {

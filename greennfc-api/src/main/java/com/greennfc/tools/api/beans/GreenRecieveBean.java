@@ -13,6 +13,7 @@ public final class GreenRecieveBean<Record extends IGreenRecord> {
 	private IGreenIntentRecieveRecord<Record> greenIntentRecieveRecord;
 	private IGreenIntentRecieveMessage greenIntentRecieveMessage;
 	private IGreenParser greenParser;
+	private boolean avoidAndroidApplicationRecord;
 
 	private GreenRecieveBean() {
 	}
@@ -31,6 +32,10 @@ public final class GreenRecieveBean<Record extends IGreenRecord> {
 
 	public IGreenParser getGreenParser() {
 		return greenParser;
+	}
+
+	public boolean isAvoidAndroidApplicationRecord() {
+		return avoidAndroidApplicationRecord;
 	}
 
 	public static <Record extends IGreenRecord> GreenRecieveBeanBuilder<Record> recieveBeanConfigure() {
@@ -62,6 +67,11 @@ public final class GreenRecieveBean<Record extends IGreenRecord> {
 
 		public GreenRecieveBeanBuilder<Record> parser(final IGreenParser parser) {
 			bean.greenParser = parser;
+			return this;
+		}
+
+		public GreenRecieveBeanBuilder<Record> avoidAndroidApplicationRecord(final boolean avoid) {
+			bean.avoidAndroidApplicationRecord = avoid;
 			return this;
 		}
 

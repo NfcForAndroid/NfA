@@ -1,7 +1,9 @@
 package com.greennfc.tools.records.factory;
 
+import android.content.Context;
 import android.net.Uri;
 
+import com.greennfc.tools.records.ndef.ext.AndroidApplicationRecord;
 import com.greennfc.tools.records.ndef.ext.TextExternalRecord;
 import com.greennfc.tools.records.ndef.ext.UriExternalRecord;
 
@@ -18,5 +20,9 @@ public interface IGreenRecordExtFactory {
 	UriExternalRecord uriExternalRecordInstance(Uri uri);
 
 	UriExternalRecord uriExternalRecordInstance(String key, Uri uri);
+
+	AndroidApplicationRecord androidApplicationRecordInstance(String packageName);
+
+	AndroidApplicationRecord androidApplicationRecordInstance(Context context);
 
 }

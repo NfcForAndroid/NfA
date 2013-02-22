@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
@@ -31,6 +32,9 @@ import com.greennfc.tools.api.beans.GreenRecieveBean;
 import com.greennfc.tools.api.beans.GreenWriteBean;
 import com.greennfc.tools.exception.NoNdefServiceException;
 import com.greennfc.tools.exception.WriteException;
+import com.greennfc.tools.records.factory.GreenRecordFactory;
+import com.greennfc.tools.records.ndef.ext.AndroidApplicationRecord;
+import com.greennfc.tools.writers.factory.GreenWriterFactory;
 
 class GreenManagerV9 implements IGreenManager {
 
@@ -83,7 +87,7 @@ class GreenManagerV9 implements IGreenManager {
 		}
 		if (beamWriter != null) {
 			assert beamWriter.getWriters() != null && beamWriter.getWriters().size() > 0 : "You have to specify at least one IGreenWriter if you want to beam messages !";
-			NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size()];
+			NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size() + (beamWriter.addAndroidApplicationRecord() ? 1 : 0)];
 			int i = 0;
 			for (GreenWriteBean<Record> writer : beamWriter.getWriters()) {
 				if (!writer.getGreenWriter().isInit()) {
@@ -94,6 +98,11 @@ class GreenManagerV9 implements IGreenManager {
 					writer.getGreenWriter().reset();
 				}
 				i++;
+				if (beamWriter.addAndroidApplicationRecord()) {
+					GreenWriterFactory.ANDROID_APPLICATION_WRITER.init(GreenRecordFactory.externalFactory().androidApplicationRecordInstance(activity));
+					recordArray[i] = GreenWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
+					GreenWriterFactory.ANDROID_APPLICATION_WRITER.reset();
+				}
 			}
 			mAdapter.enableForegroundNdefPush(activity, new NdefMessage(recordArray));
 		}
@@ -148,7 +157,9 @@ class GreenManagerV9 implements IGreenManager {
 						greenRecord = (Record) parser.parseNdef(record);
 						if (recordCallBack) {
 							recieveRecord.recieveRecord(greenRecord);
-						} else {
+						} else if (!recieveConfig.isAvoidAndroidApplicationRecord() || //
+								!(greenRecord instanceof AndroidApplicationRecord) //
+						) {
 							greenMessage.addRecord(greenRecord);
 						}
 					}
@@ -174,11 +185,11 @@ class GreenManagerV9 implements IGreenManager {
 
 	}
 
-	public <Record extends IGreenRecord> void writeTag(final Intent intent, final IGreenIntentWrite recieve, final GreenWriteBean<Record>... writers) {
+	public <Record extends IGreenRecord> void writeTag(final Context context, final Intent intent, final IGreenIntentWrite recieve, final boolean addAndroidApplicationRecord, final GreenWriteBean<Record>... writers) {
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 		final Ndef ndef = Ndef.get(tag);
 		// final IGreenWriter<Record> writer, final Record record
-		RecordAsynkTask<Record> recordTask = new RecordAsynkTask<Record>(ndef, recieve, writers);
+		RecordAsynkTask<Record> recordTask = new RecordAsynkTask<Record>(ndef, recieve, addAndroidApplicationRecord, context, writers);
 		EmptyAsynkTask<Record> emptyTask = new EmptyAsynkTask<Record>(ndef, recordTask, recieve);
 		emptyTask.execute();
 	}
@@ -291,12 +302,16 @@ class GreenManagerV9 implements IGreenManager {
 		private final Ndef ndef;
 		private final IGreenIntentWrite recieve;
 		private final GreenWriteBean<Record>[] writers;
+		private final boolean addAndroidApplicationRecord;
+		private final Context context;
 
-		public RecordAsynkTask(Ndef ndef, IGreenIntentWrite recieve, GreenWriteBean<Record>... writers) {
+		public RecordAsynkTask(Ndef ndef, IGreenIntentWrite recieve, boolean addAndroidApplicationRecord, Context context, GreenWriteBean<Record>... writers) {
 			super();
 			this.ndef = ndef;
 			this.recieve = recieve;
 			this.writers = writers;
+			this.addAndroidApplicationRecord = addAndroidApplicationRecord;
+			this.context = context;
 		}
 
 		@Override
@@ -308,7 +323,7 @@ class GreenManagerV9 implements IGreenManager {
 				ndef.connect();
 
 				try {
-					NdefRecord[] recordArray = new NdefRecord[writers.length];
+					NdefRecord[] recordArray = new NdefRecord[writers.length + (addAndroidApplicationRecord ? 1 : 0)];
 					GreenWriteBean<Record> writer = null;
 					for (int i = 0; i < writers.length; i++) {
 						writer = writers[i];
@@ -319,6 +334,11 @@ class GreenManagerV9 implements IGreenManager {
 						if (writer.isForceReinit()) {
 							writer.getGreenWriter().reset();
 						}
+					}
+					if (addAndroidApplicationRecord) {
+						GreenWriterFactory.ANDROID_APPLICATION_WRITER.init(GreenRecordFactory.externalFactory().androidApplicationRecordInstance(context));
+						recordArray[writers.length] = GreenWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
+						GreenWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 					}
 					NdefMessage ndefMessage = new NdefMessage(recordArray);
 					ndef.writeNdefMessage(ndefMessage);

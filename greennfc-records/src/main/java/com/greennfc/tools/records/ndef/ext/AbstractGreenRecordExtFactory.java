@@ -1,5 +1,6 @@
 package com.greennfc.tools.records.ndef.ext;
 
+import android.content.Context;
 import android.net.Uri;
 
 import com.greennfc.tools.records.factory.IGreenRecordExtFactory;
@@ -31,6 +32,14 @@ public abstract class AbstractGreenRecordExtFactory implements IGreenRecordExtFa
 
 	public UriExternalRecord uriExternalRecordInstance(String key, Uri uri) {
 		return new UriExternalRecord(key, uri);
+	}
+
+	public AndroidApplicationRecord androidApplicationRecordInstance(String packageName) {
+		return new AndroidApplicationRecord(packageName);
+	}
+
+	public AndroidApplicationRecord androidApplicationRecordInstance(Context context) {
+		return new AndroidApplicationRecord(context);
 	}
 
 }

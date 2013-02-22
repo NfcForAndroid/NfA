@@ -31,7 +31,10 @@ public class GreenWriteActivity //
 		 * Manadatory
 		 */
 		msg_feedback.setText(R.string.writing_tag);
-		GREEN_NFC_MANAGER.writeTag(intent, this, //
+		GREEN_NFC_MANAGER.writeTag(getApplicationContext(), //
+				intent, //
+				this, //
+				true, // addAndroidApplicationRecord
 				GreenWriteBean.writeBeanConfigure() //
 						.writer(writer()) //
 						.build());

@@ -72,6 +72,11 @@ public class GreenBeamMultiActivity extends SherlockFragmentActivity implements 
 
 	}
 
+	@Override
+	public boolean addAndroidApplicationRecord() {
+		return true;
+	}
+
 	/**
 	 * Action Bar management
 	 **/

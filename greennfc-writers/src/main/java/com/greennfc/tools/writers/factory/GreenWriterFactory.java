@@ -6,11 +6,13 @@ import com.greennfc.tools.records.ndef.MimeTypeRecord;
 import com.greennfc.tools.records.ndef.NdefRecord;
 import com.greennfc.tools.records.ndef.UnknownRecord;
 import com.greennfc.tools.records.ndef.UnsupportedRecord;
+import com.greennfc.tools.records.ndef.ext.AndroidApplicationRecord;
 import com.greennfc.tools.records.ndef.wkt.SmartPosterRecord;
 import com.greennfc.tools.records.ndef.wkt.TextRecord;
 import com.greennfc.tools.records.ndef.wkt.UriRecord;
 import com.greennfc.tools.writers.base.AbstractGreenWriterBaseFactory;
 import com.greennfc.tools.writers.ndef.AbstractGreenWriterNdefFactory;
+import com.greennfc.tools.writers.ndef.ext.AbstractGreenWriterExternalFactory;
 import com.greennfc.tools.writers.ndef.wkt.AbstractGreenWriterWktFactory;
 
 public final class GreenWriterFactory {
@@ -28,6 +30,8 @@ public final class GreenWriterFactory {
 	public static final IGreenWriter<UriRecord> URI_WRITER = wellKnowTypeFactory().uriWriter();
 	public static final IGreenWriter<SmartPosterRecord> SMART_POSTER_WRITER = wellKnowTypeFactory().smartPosterWriter();
 
+	public static final IGreenWriter<AndroidApplicationRecord> ANDROID_APPLICATION_WRITER = externalFactory().androidApplicationWriter();
+
 	private static final synchronized GreenWriterFactory getInstance() {
 		if (instance == null) {
 			instance = new GreenWriterFactory();
@@ -38,6 +42,7 @@ public final class GreenWriterFactory {
 	private GreenWriterBaseFactory baseFactory;
 	private GreenWriterNdefFactory ndefFactory;
 	private GreenWriterWktFactory wktFactory;
+	private GreenWriterExternalFactory externalFactory;
 
 	private synchronized GreenWriterBaseFactory getBaseFactory() {
 		if (baseFactory == null) {
@@ -60,6 +65,13 @@ public final class GreenWriterFactory {
 		return wktFactory;
 	}
 
+	private synchronized GreenWriterExternalFactory getExternalFactory() {
+		if (externalFactory == null) {
+			externalFactory = new GreenWriterExternalFactory();
+		}
+		return externalFactory;
+	}
+
 	public static IGreenWriterWktFactory wellKnowTypeFactory() {
 		return GreenWriterFactory.getInstance().getWktFactory();
 	}
@@ -72,6 +84,10 @@ public final class GreenWriterFactory {
 		return GreenWriterFactory.getInstance().getNdefFactory();
 	}
 
+	public static IGreenWriterExternalFactory externalFactory() {
+		return GreenWriterFactory.getInstance().getExternalFactory();
+	}
+
 	@SuppressWarnings("unchecked")
 	private static class GreenWriterBaseFactory extends AbstractGreenWriterBaseFactory {
 	}
@@ -81,6 +97,9 @@ public final class GreenWriterFactory {
 	}
 
 	private static class GreenWriterWktFactory extends AbstractGreenWriterWktFactory {
+	}
+
+	private static class GreenWriterExternalFactory extends AbstractGreenWriterExternalFactory {
 	}
 
 }

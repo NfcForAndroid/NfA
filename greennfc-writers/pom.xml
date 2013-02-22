@@ -30,12 +30,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.greennfc.tools</groupId>
-			<artifactId>greennfc-core</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.greennfc.tools</groupId>
 			<artifactId>greennfc-records</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>

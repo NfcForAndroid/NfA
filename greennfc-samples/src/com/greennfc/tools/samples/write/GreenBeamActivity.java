@@ -44,4 +44,9 @@ public class GreenBeamActivity //
 
 	}
 
+	@Override
+	public boolean addAndroidApplicationRecord() {
+		return true;
+	}
+
 }
