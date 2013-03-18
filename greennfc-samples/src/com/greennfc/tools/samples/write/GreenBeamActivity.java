@@ -35,7 +35,9 @@ public class GreenBeamActivity //
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<GreenWriteBean<IGreenRecord>> getWriters() {
-		return Arrays.asList(GreenWriteBean.writeBeanConfigure().writer(writer()).build());
+		return Arrays.asList(GreenWriteBean.writeBeanConfigure() //
+				.writer(writer()) //
+				.build());
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class GreenBeamActivity //
 
 	@Override
 	public boolean addAndroidApplicationRecord() {
-		return true;
+		return check_android_record.isChecked();
 	}
 
 }

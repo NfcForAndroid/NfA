@@ -83,12 +83,24 @@
 			<version>${actionbarsherlock.version}</version>
 			<type>jar</type>
 			<scope>provided</scope>
+			<exclusions>
+	            <exclusion>
+	                <artifactId>junit</artifactId>
+	                <groupId>junit</groupId>
+	            </exclusion>
+	        </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.actionbarsherlock</groupId>
 			<artifactId>actionbarsherlock</artifactId>
 			<version>${actionbarsherlock.version}</version>
 			<type>apklib</type>
+			<exclusions>
+	            <exclusion>
+	                <artifactId>junit</artifactId>
+	                <groupId>junit</groupId>
+	            </exclusion>
+	        </exclusions>
 		</dependency>
 
 	</dependencies>

@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -40,6 +41,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 	protected Spinner type_tag, uri_prefix;
 	protected EditText tag_content, content_bis;
 	protected ImageView content_img;
+	protected CheckBox check_android_record;
 
 	protected static final int TAG_EMPTY = 0;
 	protected static final int TAG_TEXT = 1;
@@ -67,6 +69,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 		tag_content = (EditText) findViewById(R.id.tag_content);
 		content_bis = (EditText) findViewById(R.id.content_bis);
 		content_img = (ImageView) findViewById(R.id.content_img);
+		check_android_record = (CheckBox) findViewById(R.id.chckAndroidRecord);
 		tag_content.setEnabled(false);
 		uri_prefix.setVisibility(View.GONE);
 		content_bis.setVisibility(View.GONE);

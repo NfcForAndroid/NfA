@@ -13,6 +13,7 @@
     <string name="text_content_1">Text record 1 :</string>
     <string name="text_content_2">Text record 2 :</string>
     <string name="hint_image">click on the image to load your custom image</string>
+    <string name="android_application_record">include android application record</string>
     <!-- Types -->
     <string name="type_text">Type text content</string>
     <string name="type_uri">Enter uri adress</string>
