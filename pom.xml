@@ -7,13 +7,13 @@
 		<version>7</version>
 	</parent>
 	
-	<groupId>com.greennfc.tools</groupId>
-	<artifactId>greennfc</artifactId>
+	<groupId>com.nfa.tools</groupId>
+	<artifactId>nfa</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>Green NFC - Parent</name>
+	<name>NFC For Android - Parent</name>
 	<description>Android Nfc library for an easer management of NFC features</description>
 	<packaging>pom</packaging>
-	<url>https://github.com/binomed/greennfc</url>
+	<url>https://github.com/nfa/nfa</url>
 	<inceptionYear>2013</inceptionYear>
 
 	<!-- 
@@ -63,22 +63,22 @@
 
 	<modules>
 		<!-- api library -->
-		<module>greennfc-api</module>
+		<module>nfa-api</module>
 		
 		<!-- core library -->
-		<module>greennfc-core</module>
+		<module>nfa-core</module>
 		
 		<!-- Base librairies elements -->
-		<module>greennfc-filters</module>
-		<module>greennfc-records</module>
-		<module>greennfc-parsers</module>
-		<module>greennfc-writers</module>
-		<module>greennfc-apklib</module>
+		<module>nfa-filters</module>
+		<module>nfa-records</module>
+		<module>nfa-parsers</module>
+		<module>nfa-writers</module>
+		<module>nfa-apklib</module>
 
 		<!-- extensions -->
 
 		<!-- Demo -->
-		<module>greennfc-samples</module>
+		<module>nfa-samples</module>
 	</modules>
 
 	<properties>

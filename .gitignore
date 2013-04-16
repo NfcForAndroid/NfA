@@ -9,10 +9,10 @@
 *.class
 
 # generated files
-greennfc-apklib/bin/
-greennfc-apklib/gen/
-greennfc-samples/bin/
-greennfc-samples/gen/
+nfa-apklib/bin/
+nfa-apklib/gen/
+nfa-samples/bin/
+nfa-samples/gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
