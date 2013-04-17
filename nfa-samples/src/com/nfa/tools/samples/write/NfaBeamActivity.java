@@ -7,9 +7,9 @@ import java.util.List;
 
 import android.os.Bundle;
 
-import com.nfa.tools.api.INfaBeam;
 import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.api.beans.NfaWriteBean;
+import com.nfa.tools.api.client.INfaBeam;
 import com.nfa.tools.samples.R;
 
 public class NfaBeamActivity

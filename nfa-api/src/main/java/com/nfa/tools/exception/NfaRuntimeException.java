@@ -1,5 +1,11 @@
 package com.nfa.tools.exception;
 
+/**
+ * @author jefBinomed
+ * 
+ *         Runtime exception for Nfa project
+ * 
+ */
 public class NfaRuntimeException extends RuntimeException {
 
 	/**

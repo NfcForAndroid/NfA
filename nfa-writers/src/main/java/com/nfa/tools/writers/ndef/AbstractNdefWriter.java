@@ -17,6 +17,9 @@ public abstract class AbstractNdefWriter<Record extends INdefRecord> extends Abs
 
 	public int getLength() {
 		NdefRecord ndefRecord = getNdefRecord();
+		if (ndefRecord == null) {
+			return -1;
+		}
 
 		short tnf = ndefRecord.getTnf();
 		byte[] type = ndefRecord.getType();

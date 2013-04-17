@@ -1,6 +1,11 @@
 package com.nfa.tools.exception;
 
-
+/**
+ * @author jefBinomed
+ * 
+ *         Parser exception, this exception will be thrown during the conversion of android messages to nfa messages
+ * 
+ */
 public class ParserException extends NfaRuntimeException {
 
 	/**

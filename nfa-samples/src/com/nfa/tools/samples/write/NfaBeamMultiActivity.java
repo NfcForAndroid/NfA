@@ -15,9 +15,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.nfa.tools.api.INfaBeam;
 import com.nfa.tools.api.beans.NfaWriteBean;
-import com.nfa.tools.api.beans.NfaWriteBean.GreenWriteBeanBuilder;
+import com.nfa.tools.api.beans.NfaWriteBean.NfaWriteBeanBuilder;
+import com.nfa.tools.api.client.INfaBeam;
 import com.nfa.tools.records.factory.NfaRecordFactory;
 import com.nfa.tools.records.ndef.wkt.TextRecord;
 import com.nfa.tools.samples.R;
@@ -51,8 +51,8 @@ public class NfaBeamMultiActivity extends SherlockFragmentActivity implements IN
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<NfaWriteBean<TextRecord>> getWriters() {
-		GreenWriteBeanBuilder<TextRecord> builder1 = NfaWriteBean.writeBeanConfigure();
-		GreenWriteBeanBuilder<TextRecord> builder2 = NfaWriteBean.writeBeanConfigure();
+		NfaWriteBeanBuilder<TextRecord> builder1 = NfaWriteBean.writeBeanConfigure();
+		NfaWriteBeanBuilder<TextRecord> builder2 = NfaWriteBean.writeBeanConfigure();
 
 		return Arrays.asList( //
 				builder1 //

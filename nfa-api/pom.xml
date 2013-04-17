@@ -9,7 +9,7 @@
 	
 	<artifactId>nfa-api</artifactId>
 	<name>Nfc For Android - Apis</name>
-	<description>Apis project for nfc tools</description>
+	<description>Apis project for NfA project</description>
 	<packaging>jar</packaging>
 
 	<dependencies>

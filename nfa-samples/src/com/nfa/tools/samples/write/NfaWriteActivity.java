@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.nfa.tools.api.INfaIntentWrite;
 import com.nfa.tools.api.beans.NfaWriteBean;
+import com.nfa.tools.api.client.INfaIntentWrite;
 import com.nfa.tools.samples.R;
 
 public class NfaWriteActivity

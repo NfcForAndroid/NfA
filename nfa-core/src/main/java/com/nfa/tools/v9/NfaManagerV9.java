@@ -20,16 +20,16 @@ import android.os.PatternMatcher;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.nfa.tools.api.INfaBeam;
 import com.nfa.tools.api.INfaIntentFilter;
-import com.nfa.tools.api.INfaIntentRecieveMessage;
-import com.nfa.tools.api.INfaIntentRecieveRecord;
-import com.nfa.tools.api.INfaIntentWrite;
 import com.nfa.tools.api.INfaManager;
 import com.nfa.tools.api.INfaParser;
 import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.api.beans.NfaRecieveBean;
 import com.nfa.tools.api.beans.NfaWriteBean;
+import com.nfa.tools.api.client.INfaBeam;
+import com.nfa.tools.api.client.INfaIntentRecieveMessage;
+import com.nfa.tools.api.client.INfaIntentRecieveRecord;
+import com.nfa.tools.api.client.INfaIntentWrite;
 import com.nfa.tools.exception.NoNdefServiceException;
 import com.nfa.tools.exception.WriteException;
 import com.nfa.tools.records.factory.NfaRecordFactory;
@@ -90,12 +90,12 @@ class NfaManagerV9 implements INfaManager {
 			NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size() + (beamWriter.addAndroidApplicationRecord() ? 1 : 0)];
 			int i = 0;
 			for (NfaWriteBean<Record> writer : beamWriter.getWriters()) {
-				if (!writer.getGreenWriter().isInit()) {
-					writer.getGreenWriter().init(writer.getGreenRecord());
+				if (!writer.getNfaWriter().isInit()) {
+					writer.getNfaWriter().init(writer.getNfaRecord());
 				}
-				recordArray[i] = writer.getGreenWriter().getNdefRecord();
+				recordArray[i] = writer.getNfaWriter().getNdefRecord();
 				if (writer.isForceReinit()) {
-					writer.getGreenWriter().reset();
+					writer.getNfaWriter().reset();
 				}
 				i++;
 				if (beamWriter.addAndroidApplicationRecord()) {
@@ -132,9 +132,9 @@ class NfaManagerV9 implements INfaManager {
 	@SuppressWarnings("unchecked")
 	public <Record extends INfaRecord> void manageIntent(NfaRecieveBean<Record> recieveConfig) {
 		final Intent intent = recieveConfig.getIntent();
-		final INfaIntentRecieveRecord<Record> recieveRecord = recieveConfig.getGreenIntentRecieveRecord();
-		final INfaIntentRecieveMessage recieveMessage = recieveConfig.getGreenIntentRecieveMessage();
-		final INfaParser parser = recieveConfig.getGreenParser();
+		final INfaIntentRecieveRecord<Record> recieveRecord = recieveConfig.getNfaIntentRecieveRecord();
+		final INfaIntentRecieveMessage recieveMessage = recieveConfig.getNfaIntentRecieveMessage();
+		final INfaParser parser = recieveConfig.getNfaParser();
 		final boolean recordCallBack = recieveRecord != null;
 		NfaMessage greenMessage = recordCallBack ? new NfaMessage() : null;
 		Record greenRecord = null;
@@ -327,12 +327,12 @@ class NfaManagerV9 implements INfaManager {
 					NfaWriteBean<Record> writer = null;
 					for (int i = 0; i < writers.length; i++) {
 						writer = writers[i];
-						if (!writer.getGreenWriter().isInit()) {
-							writer.getGreenWriter().init(writer.getGreenRecord());
+						if (!writer.getNfaWriter().isInit()) {
+							writer.getNfaWriter().init(writer.getNfaRecord());
 						}
-						recordArray[i] = writer.getGreenWriter().getNdefRecord();
+						recordArray[i] = writer.getNfaWriter().getNdefRecord();
 						if (writer.isForceReinit()) {
-							writer.getGreenWriter().reset();
+							writer.getNfaWriter().reset();
 						}
 					}
 					if (addAndroidApplicationRecord) {

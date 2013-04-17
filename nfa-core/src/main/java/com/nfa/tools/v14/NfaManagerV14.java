@@ -14,13 +14,13 @@ import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.nfa.tools.api.INfaBeam;
 import com.nfa.tools.api.INfaIntentFilter;
-import com.nfa.tools.api.INfaIntentWrite;
 import com.nfa.tools.api.INfaManager;
 import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.api.beans.NfaRecieveBean;
 import com.nfa.tools.api.beans.NfaWriteBean;
+import com.nfa.tools.api.client.INfaBeam;
+import com.nfa.tools.api.client.INfaIntentWrite;
 import com.nfa.tools.records.factory.NfaRecordFactory;
 import com.nfa.tools.writers.factory.NfaWriterFactory;
 
@@ -43,7 +43,7 @@ class NfaManagerV14 implements INfaManager, ActivityLifecycleCallbacks {
 
 			mAdapter.setOnNdefPushCompleteCallback(new OnNdefPushCompleteCallback() {
 
-				public void onNdefPushComplete(NfcEvent arg0) {
+				public void onNdefPushComplete(NfcEvent event) {
 					beamWriter.beamCallBack();
 
 				}
@@ -54,12 +54,12 @@ class NfaManagerV14 implements INfaManager, ActivityLifecycleCallbacks {
 					NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size() + (beamWriter.addAndroidApplicationRecord() ? 1 : 0)];
 					int i = 0;
 					for (NfaWriteBean<Record> writer : beamWriter.getWriters()) {
-						if (!writer.getGreenWriter().isInit()) {
-							writer.getGreenWriter().init(writer.getGreenRecord());
+						if (!writer.getNfaWriter().isInit()) {
+							writer.getNfaWriter().init(writer.getNfaRecord());
 						}
-						recordArray[i] = writer.getGreenWriter().getNdefRecord();
+						recordArray[i] = writer.getNfaWriter().getNdefRecord();
 						if (writer.isForceReinit()) {
-							writer.getGreenWriter().reset();
+							writer.getNfaWriter().reset();
 						}
 						i++;
 					}

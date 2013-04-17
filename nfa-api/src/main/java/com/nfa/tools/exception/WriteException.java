@@ -1,5 +1,11 @@
 package com.nfa.tools.exception;
 
+/**
+ * @author jefBinomed
+ * 
+ *         Write exception, this exception will be thrown during the conversion of nfa messages to android messages
+ * 
+ */
 public class WriteException extends NfaRuntimeException {
 
 	/**
