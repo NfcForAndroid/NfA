@@ -36,6 +36,12 @@ import com.nfa.tools.records.factory.NfaRecordFactory;
 import com.nfa.tools.records.ndef.ext.AndroidApplicationRecord;
 import com.nfa.tools.writers.factory.NfaWriterFactory;
 
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaManager} implementation for android v9
+ * 
+ */
 class NfaManagerV9 implements INfaManager {
 
 	private NfcAdapter mAdapter;
@@ -54,11 +60,22 @@ class NfaManagerV9 implements INfaManager {
 	 * LIFE CYCLE METHODS
 	 */
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#pause(android.app.Activity)
+	 */
 	public void pause(Activity activity) {
 		mAdapter.disableForegroundDispatch(activity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#resume(android.app.Activity)
+	 */
 	public void resume(Activity activity) {
+		// We have to register us to the intent filters
 		if (filtersArray.indexOfKey(activity.getTaskId()) != -1) {
 			IntentFilter[] filters = filtersArray.get(activity.getTaskId());
 			PendingIntent pendingIntent = pendingIntentArray.get(activity.getTaskId());
@@ -67,7 +84,13 @@ class NfaManagerV9 implements INfaManager {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#stop(android.app.Activity)
+	 */
 	public void stop(Activity activity) {
+		// We removes filters and removes acivities
 		filtersArray.delete(activity.getTaskId());
 		pendingIntentArray.delete(activity.getTaskId());
 	}
@@ -77,16 +100,25 @@ class NfaManagerV9 implements INfaManager {
 	 * INITS METHOD
 	 */
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.beans.NfaRecieveBean, com.nfa.tools.api.client.INfaBeam, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	@SuppressWarnings("deprecation")
 	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaBeam<Record> beamWriter, INfaIntentFilter... greenfilters) {
+		// We register the default Nfc Adapter
 		mAdapter = NfcAdapter.getDefaultAdapter(activity);
 
 		initIntent(activity, greenfilters);
+		// We have to manage the first call
 		if (recieveConfig != null) {
 			manageIntent(recieveConfig);
 		}
+		// We manage beam mecanism
 		if (beamWriter != null) {
-			assert beamWriter.getWriters() != null && beamWriter.getWriters().size() > 0 : "You have to specify at least one IGreenWriter if you want to beam messages !";
+			// We check that we have writers
+			assert beamWriter.getWriters() != null && beamWriter.getWriters().size() > 0 : "You have to specify at least one INfaWriter if you want to beam messages !";
 			NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size() + (beamWriter.addAndroidApplicationRecord() ? 1 : 0)];
 			int i = 0;
 			for (NfaWriteBean<Record> writer : beamWriter.getWriters()) {
@@ -104,22 +136,43 @@ class NfaManagerV9 implements INfaManager {
 					NfaWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 				}
 			}
+			// We register us to the beam mecanism
 			mAdapter.enableForegroundNdefPush(activity, new NdefMessage(recordArray));
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.beans.NfaRecieveBean, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaIntentFilter... greenfilters) {
 		register(activity, recieveConfig, null, greenfilters);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.client.INfaBeam, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public <Record extends INfaRecord> void register(Activity activity, INfaBeam<Record> beamWriter, INfaIntentFilter... filters) {
 		register(activity, null, beamWriter, filters);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public void register(Activity activity, INfaIntentFilter... filters) {
 		register(activity, null, null, filters);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.client.INfaBeam)
+	 */
 	public <Record extends INfaRecord> void register(Activity activity, INfaBeam<Record> beamWriter) {
 		register(activity, null, beamWriter);
 	}
@@ -129,6 +182,11 @@ class NfaManagerV9 implements INfaManager {
 	 * APIS METHODS
 	 */
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#manageIntent(com.nfa.tools.api.beans.NfaRecieveBean)
+	 */
 	@SuppressWarnings("unchecked")
 	public <Record extends INfaRecord> void manageIntent(NfaRecieveBean<Record> recieveConfig) {
 		final Intent intent = recieveConfig.getIntent();
@@ -136,14 +194,16 @@ class NfaManagerV9 implements INfaManager {
 		final INfaIntentRecieveMessage recieveMessage = recieveConfig.getNfaIntentRecieveMessage();
 		final INfaParser parser = recieveConfig.getNfaParser();
 		final boolean recordCallBack = recieveRecord != null;
-		NfaMessage greenMessage = recordCallBack ? new NfaMessage() : null;
-		Record greenRecord = null;
+		NfaMessage nfaMessage = recordCallBack ? new NfaMessage() : null;
+		Record nfaRecord = null;
 		Log.i(TAG, "Recieve Intent NFC ! ");
 
 		String action = intent.getAction();
+		// According to the action, we extract the ndef message or the tag
 		boolean treat = false;
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action) //
 				|| NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+			// We extract ndef message
 			Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 			NdefMessage[] messages;
 			NdefRecord record = null;
@@ -154,13 +214,16 @@ class NfaManagerV9 implements INfaManager {
 					messages[i] = (NdefMessage) rawMsgs[i];
 					for (int j = 0; j < messages[i].getRecords().length; j++) {
 						record = messages[i].getRecords()[j];
-						greenRecord = (Record) parser.parseNdef(record);
+						// We ask to the parser to convert the record
+						nfaRecord = (Record) parser.parseNdef(record);
 						if (recordCallBack) {
-							recieveRecord.recieveRecord(greenRecord);
+							// we ask to the callback to do some stuff with the convert data
+							recieveRecord.recieveRecord(nfaRecord);
 						} else if (!recieveConfig.isAvoidAndroidApplicationRecord() || //
-								!(greenRecord instanceof AndroidApplicationRecord) //
+								!(nfaRecord instanceof AndroidApplicationRecord) //
 						) {
-							greenMessage.addRecord(greenRecord);
+							// We reconstruct the ndefmessage
+							nfaMessage.addRecord(nfaRecord);
 						}
 					}
 				}
@@ -168,33 +231,45 @@ class NfaManagerV9 implements INfaManager {
 		}
 
 		if (!treat) {
+			// If we won't able to parse the data, we analyse it as a tag
 			Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 			if (tag != null) {
-				greenRecord = (Record) parser.parseTag(tag);
+				nfaRecord = (Record) parser.parseTag(tag);
 				if (recordCallBack) {
-					recieveRecord.recieveRecord(greenRecord);
+					recieveRecord.recieveRecord(nfaRecord);
 				} else {
-					greenMessage.addRecord(greenRecord);
+					nfaMessage.addRecord(nfaRecord);
 				}
 			}
 		}
 
+		// We ask to the callback to treat the message
 		if (!recordCallBack) {
-			recieveMessage.recieveMessage(greenMessage);
+			recieveMessage.recieveMessage(nfaMessage);
 		}
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#writeTag(android.content.Context, android.content.Intent, com.nfa.tools.api.client.INfaIntentWrite, boolean, com.nfa.tools.api.beans.NfaWriteBean<Record>[])
+	 */
 	public <Record extends INfaRecord> void writeTag(final Context context, final Intent intent, final INfaIntentWrite recieve, final boolean addAndroidApplicationRecord, final NfaWriteBean<Record>... writers) {
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 		final Ndef ndef = Ndef.get(tag);
-		// final IGreenWriter<Record> writer, final Record record
+		// We use 2 asynktask, the first for cleaning the tag, the second for setting the data
 		RecordAsynkTask<Record> recordTask = new RecordAsynkTask<Record>(ndef, recieve, addAndroidApplicationRecord, context, writers);
 		EmptyAsynkTask<Record> emptyTask = new EmptyAsynkTask<Record>(ndef, recordTask, recieve);
 		emptyTask.execute();
 	}
 
+	/**
+	 * @param activity
+	 * @param filters
+	 */
 	private void initIntent(Activity activity, INfaIntentFilter... filters) {
+		// We register the curent activity to a the filters we wants
 		PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, new Intent(activity, activity.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
 		int length = filters != null && filters.length > 0 ? filters.length : 1;
@@ -242,6 +317,10 @@ class NfaManagerV9 implements INfaManager {
 	 * ASYNTASKS FOR WRITE
 	 */
 
+	/**
+	 * @author jefBinomed Empty task for cleaning the tag
+	 * @param <Record>
+	 */
 	class EmptyAsynkTask<Record extends INfaRecord> extends AsyncTask<Void, Void, Exception> {
 
 		private final Ndef ndef;
@@ -255,6 +334,11 @@ class NfaManagerV9 implements INfaManager {
 			this.recieve = recieve;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.os.AsyncTask#doInBackground(Params[])
+		 */
 		@Override
 		protected Exception doInBackground(Void... arg0) {
 			if (ndef == null) {
@@ -264,6 +348,7 @@ class NfaManagerV9 implements INfaManager {
 				ndef.connect();
 
 				try {
+					// We write an empty message
 					ndef.writeNdefMessage(new NdefMessage(new NdefRecord[] { new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null) }));
 				} catch (FormatException e) {
 					Log.e("Error : ", e.getMessage(), e);
@@ -286,8 +371,14 @@ class NfaManagerV9 implements INfaManager {
 			return null;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+		 */
 		@Override
 		protected void onPostExecute(Exception result) {
+			// If no error was thrown, then we continue
 			if (result == null) {
 				taskWrite.execute();
 			} else {
@@ -297,6 +388,10 @@ class NfaManagerV9 implements INfaManager {
 
 	}
 
+	/**
+	 * @author jefBinomed Asynk task for writing datas
+	 * @param <Record>
+	 */
 	class RecordAsynkTask<Record extends INfaRecord> extends AsyncTask<Void, Void, Exception> {
 
 		private final Ndef ndef;
@@ -314,6 +409,11 @@ class NfaManagerV9 implements INfaManager {
 			this.context = context;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.os.AsyncTask#doInBackground(Params[])
+		 */
 		@Override
 		protected Exception doInBackground(Void... arg0) {
 			if (ndef == null) {
@@ -327,6 +427,7 @@ class NfaManagerV9 implements INfaManager {
 					NfaWriteBean<Record> writer = null;
 					for (int i = 0; i < writers.length; i++) {
 						writer = writers[i];
+						// We prepare the writer
 						if (!writer.getNfaWriter().isInit()) {
 							writer.getNfaWriter().init(writer.getNfaRecord());
 						}
@@ -340,6 +441,7 @@ class NfaManagerV9 implements INfaManager {
 						recordArray[writers.length] = NfaWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
 						NfaWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 					}
+					// We write the datas on the tag
 					NdefMessage ndefMessage = new NdefMessage(recordArray);
 					ndef.writeNdefMessage(ndefMessage);
 				} catch (FormatException e) {
@@ -363,6 +465,11 @@ class NfaManagerV9 implements INfaManager {
 			return null;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+		 */
 		@Override
 		protected void onPostExecute(Exception result) {
 			recieve.messageWrite(result == null, result);

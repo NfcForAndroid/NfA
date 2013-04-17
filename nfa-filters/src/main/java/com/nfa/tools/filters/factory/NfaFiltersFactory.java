@@ -5,12 +5,32 @@ import com.nfa.tools.filters.base.AbstractNfaFilterBaseFactory;
 import com.nfa.tools.filters.ndef.ext.AbstractNfaFilterExtFactory;
 import com.nfa.tools.filters.ndef.wkt.AbstractNfaFilterWktFactory;
 
+/**
+ * @author jefBinomed
+ * 
+ *         Main factory for accessing to filters
+ */
 public final class NfaFiltersFactory {
 
+	/**
+	 * Singleton instance of text filter
+	 */
 	public static INfaIntentFilter TEXT_FILTER = wellKownFilters().textFilter();
+	/**
+	 * Singleton instance of uri filter
+	 */
 	public static INfaIntentFilter URI_FILTER = wellKownFilters().uriFilter();
+	/**
+	 * Singleton instance of ndef filter
+	 */
 	public static INfaIntentFilter NDEF_FILTER = baseFilters().ndefFilter();
+	/**
+	 * Singleton instance of tag filter
+	 */
 	public static INfaIntentFilter TAG_FILTER = baseFilters().tagFilter();
+	/**
+	 * Singleton instance of tech filter
+	 */
 	public static INfaIntentFilter TECH_FILTER = baseFilters().techFilter();
 
 	private static NfaFiltersFactory instance;
@@ -25,51 +45,60 @@ public final class NfaFiltersFactory {
 		return instance;
 	}
 
-	private GreenFilterBaseFactory baseFactory;
-	private GreenFilterWellKnowTypeFactory wktFactory;
-	private GreenFilterExternalNdefFactory extFactory;
+	private NfaFilterBaseFactory baseFactory;
+	private NfaFilterWellKnowTypeFactory wktFactory;
+	private NfaFilterExternalNdefFactory extFactory;
 
-	private synchronized GreenFilterBaseFactory getBaseFactory() {
+	private synchronized NfaFilterBaseFactory getBaseFactory() {
 		if (baseFactory == null) {
-			baseFactory = new GreenFilterBaseFactory();
+			baseFactory = new NfaFilterBaseFactory();
 		}
 		return baseFactory;
 	}
 
-	private synchronized GreenFilterWellKnowTypeFactory getWktFactory() {
+	private synchronized NfaFilterWellKnowTypeFactory getWktFactory() {
 		if (wktFactory == null) {
-			wktFactory = new GreenFilterWellKnowTypeFactory();
+			wktFactory = new NfaFilterWellKnowTypeFactory();
 		}
 		return wktFactory;
 	}
 
-	private synchronized GreenFilterExternalNdefFactory getExtFactory() {
+	private synchronized NfaFilterExternalNdefFactory getExtFactory() {
 		if (extFactory == null) {
-			extFactory = new GreenFilterExternalNdefFactory();
+			extFactory = new NfaFilterExternalNdefFactory();
 		}
 		return extFactory;
 	}
 
+	/**
+	 * @return the Factory that gives access to basic filters
+	 */
 	public static final INfaFilterBaseFactory baseFilters() {
 		return NfaFiltersFactory.getInstance().getBaseFactory();
 	}
 
+	/**
+	 * @return the factory that gives access to well known types filters
+	 */
 	public static final INfaFilterWktFactory wellKownFilters() {
 		return NfaFiltersFactory.getInstance().getWktFactory();
 	}
 
+	/**
+	 * @return the factory that gives access to external filters
+	 */
 	public static final INfaFilterExtFactory externalFilters() {
 		return NfaFiltersFactory.getInstance().getExtFactory();
 	}
 
-	private static class GreenFilterBaseFactory extends AbstractNfaFilterBaseFactory {
+	private static class NfaFilterBaseFactory extends AbstractNfaFilterBaseFactory {
 
 	}
 
-	private static class GreenFilterWellKnowTypeFactory extends AbstractNfaFilterWktFactory {
+	private static class NfaFilterWellKnowTypeFactory extends AbstractNfaFilterWktFactory {
 	}
 
-	private static class GreenFilterExternalNdefFactory extends AbstractNfaFilterExtFactory {
+	private static class NfaFilterExternalNdefFactory extends AbstractNfaFilterExtFactory {
 	}
 
 }

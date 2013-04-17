@@ -43,7 +43,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		tag_content_img = (ImageView) findViewById(R.id.tag_content_img);
 		tag_content_img.setVisibility(View.GONE);
 
-		GREEN_NFC_MANAGER.register(this //
+		NFA_MANAGER.register(this //
 				, recieveBeanConfigure() //
 						.intent(getIntent()) //
 						.intentRecieveRecord(this) //
@@ -61,7 +61,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		 * Manadatory
 		 */
 		tag_content.setText(R.string.reading_tag);
-		GREEN_NFC_MANAGER.manageIntent(recieveBeanConfigure() //
+		NFA_MANAGER.manageIntent(recieveBeanConfigure() //
 				.intent(intent) //
 				.intentRecieveRecord(this) //
 				.parser(NDEF_PARSER) //

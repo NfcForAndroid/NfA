@@ -9,7 +9,7 @@
 	
 	<groupId>com.nfa.tools</groupId>
 	<artifactId>nfa</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>NFC For Android - Parent</name>
 	<description>Android Nfc library for an easer management of NFC features</description>
 	<packaging>pom</packaging>

@@ -18,7 +18,7 @@ public class NfaWriteActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		GREEN_NFC_MANAGER.register(this //
+		NFA_MANAGER.register(this //
 				, NDEF_FILTER //
 				);
 
@@ -31,7 +31,7 @@ public class NfaWriteActivity
 		 * Manadatory
 		 */
 		msg_feedback.setText(R.string.writing_tag);
-		GREEN_NFC_MANAGER.writeTag(getApplicationContext(), //
+		NFA_MANAGER.writeTag(getApplicationContext(), //
 				intent, //
 				this, //
 				check_android_record.isChecked(), // addAndroidApplicationRecord

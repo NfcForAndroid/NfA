@@ -24,33 +24,57 @@ import com.nfa.tools.api.client.INfaIntentWrite;
 import com.nfa.tools.records.factory.NfaRecordFactory;
 import com.nfa.tools.writers.factory.NfaWriterFactory;
 
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaManager} implementation for android v14 or higher
+ */
 class NfaManagerV14 implements INfaManager, ActivityLifecycleCallbacks {
 
 	protected NfaManagerV14() {
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public void register(Activity activity, INfaIntentFilter... filters) {
 		register(activity, null, null, filters);
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.beans.NfaRecieveBean, com.nfa.tools.api.client.INfaBeam, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public <Record extends INfaRecord> void register(final Activity activity, NfaRecieveBean<Record> recieveConfiguration, final INfaBeam<Record> beamWriter, INfaIntentFilter... filters) {
-		GREEN_NFC_MANAGER.register(activity, recieveConfiguration, filters);
+		// We user the v9 as reference because all that is done in v9 could be applicable to higher version
+		NFA_MANAGER.register(activity, recieveConfiguration, filters);
+		// We check if we're searching to do some beam
 		if (beamWriter != null) {
+			// We have to get an instance of the global nfcAdapter
 			NfcAdapter mAdapter = NfcAdapter.getDefaultAdapter(activity);
-			assert beamWriter.getWriters() != null && beamWriter.getWriters().size() > 0 : "You have to specify at least one IGreenWriter if you want to beam messages !";
+			// We check that there is some writers define before trying to write
+			assert beamWriter.getWriters() != null && beamWriter.getWriters().size() > 0 : "You have to specify at least one INfaWriter if you want to beam messages !";
 
+			// We define the beam callback mecanism
 			mAdapter.setOnNdefPushCompleteCallback(new OnNdefPushCompleteCallback() {
 
 				public void onNdefPushComplete(NfcEvent event) {
+					// We call the callback to specify that the beam was well done
 					beamWriter.beamCallBack();
 
 				}
 			}, activity);
+
+			// We register to beam intent
 			mAdapter.setNdefPushMessageCallback(new CreateNdefMessageCallback() {
 
 				public NdefMessage createNdefMessage(NfcEvent event) {
+					// We have to create the NdefMessage
 					NdefRecord[] recordArray = new NdefRecord[beamWriter.getWriters().size() + (beamWriter.addAndroidApplicationRecord() ? 1 : 0)];
 					int i = 0;
 					for (NfaWriteBean<Record> writer : beamWriter.getWriters()) {
@@ -72,73 +96,150 @@ class NfaManagerV14 implements INfaManager, ActivityLifecycleCallbacks {
 				}
 			}, activity);
 		}
+		// We just check the version in order to avoid compatibility problem
 		assert Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH : "You can not use this method with a previous version of android sdk";
+		// We observe the lifecyle of the application in order to manage the call of specifics methods
 		activity.getApplication().registerActivityLifecycleCallbacks(this);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.client.INfaBeam, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public <Record extends INfaRecord> void register(Activity activity, INfaBeam<Record> beamWriter, INfaIntentFilter... filters) {
 		register(activity, null, beamWriter, filters);
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.client.INfaBeam)
+	 */
 	public <Record extends INfaRecord> void register(Activity activity, INfaBeam<Record> beamWriter) {
 		register(activity, null, beamWriter);
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#register(android.app.Activity, com.nfa.tools.api.beans.NfaRecieveBean, com.nfa.tools.api.INfaIntentFilter[])
+	 */
 	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaIntentFilter... greenfilters) {
 		register(activity, recieveConfig, null, greenfilters);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#pause(android.app.Activity)
+	 */
 	public void pause(Activity activity) {
-		GREEN_NFC_MANAGER.pause(activity);
+		NFA_MANAGER.pause(activity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#resume(android.app.Activity)
+	 */
 	public void resume(Activity activity) {
-		GREEN_NFC_MANAGER.resume(activity);
+		NFA_MANAGER.resume(activity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#stop(android.app.Activity)
+	 */
 	public void stop(Activity activity) {
-		GREEN_NFC_MANAGER.stop(activity);
+		NFA_MANAGER.stop(activity);
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#manageIntent(com.nfa.tools.api.beans.NfaRecieveBean)
+	 */
 	public <Record extends INfaRecord> void manageIntent(NfaRecieveBean<Record> recieveConfig) {
-		GREEN_NFC_MANAGER.manageIntent(recieveConfig);
+		NFA_MANAGER.manageIntent(recieveConfig);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaManager#writeTag(android.content.Context, android.content.Intent, com.nfa.tools.api.client.INfaIntentWrite, boolean, com.nfa.tools.api.beans.NfaWriteBean<Record>[])
+	 */
 	public <Record extends INfaRecord> void writeTag(final Context context, final Intent intent, final INfaIntentWrite recieve, final boolean addAndroidApplicationRecord, final NfaWriteBean<Record>... writers) {
-		GREEN_NFC_MANAGER.writeTag(context, intent, recieve, addAndroidApplicationRecord, writers);
+		NFA_MANAGER.writeTag(context, intent, recieve, addAndroidApplicationRecord, writers);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivityCreated(android.app.Activity, android.os.Bundle)
+	 */
 	public void onActivityCreated(Activity activity, Bundle bundle) {
 		// Nothing to do
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivityDestroyed(android.app.Activity)
+	 */
 	public void onActivityDestroyed(Activity activity) {
 		activity.getApplication().unregisterActivityLifecycleCallbacks(this);
 		stop(activity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivityPaused(android.app.Activity)
+	 */
 	public void onActivityPaused(Activity activity) {
 		pause(activity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivityResumed(android.app.Activity)
+	 */
 	public void onActivityResumed(Activity activity) {
 		resume(activity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivitySaveInstanceState(android.app.Activity, android.os.Bundle)
+	 */
 	public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
 		// nothing to do
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivityStarted(android.app.Activity)
+	 */
 	public void onActivityStarted(Activity activity) {
 		// nothing to do
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Application.ActivityLifecycleCallbacks#onActivityStopped(android.app.Activity)
+	 */
 	public void onActivityStopped(Activity activity) {
 		// nothing to do
 

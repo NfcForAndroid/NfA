@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>com.nfa.tools</groupId>
 		<artifactId>nfa</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>nfa-filters</artifactId>
 	<name>Nfc For Android - Filters</name>
-	<description>Intent Filters project for nfc tools</description>
+	<description>Intent Filters project for Nfa</description>
 	<packaging>jar</packaging>
 
 	<dependencies>

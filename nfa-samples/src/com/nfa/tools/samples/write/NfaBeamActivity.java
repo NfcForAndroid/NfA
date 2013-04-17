@@ -21,7 +21,7 @@ public class NfaBeamActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		GREEN_NFC_MANAGER.register(this //
+		NFA_MANAGER.register(this //
 				, this //
 				);
 

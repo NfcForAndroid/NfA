@@ -5,21 +5,26 @@ import com.nfa.tools.api.INfaManager;
 /**
  * @author jefBinomed
  * 
+ *         Core Factory for android 9that gives you access to a {@link INfaManager}
+ * 
  */
 public final class NfaFactory {
 
 	private static NfaFactory instance;
 
-	private NfaManagerV9 greenManager;
+	private NfaManagerV9 nfaManager;
 
-	public static final INfaManager GREEN_NFC_MANAGER = getManager();
+	/**
+	 * A singleton instance of the {@link INfaManager} manager in version 9
+	 */
+	public static final INfaManager NFA_MANAGER = getManager();
 
 	private NfaFactory() {
-		greenManager = new NfaManagerV9();
+		nfaManager = new NfaManagerV9();
 	}
 
-	public NfaManagerV9 getGreenManager() {
-		return greenManager;
+	private NfaManagerV9 getNfaManager() {
+		return nfaManager;
 	}
 
 	private static final synchronized NfaFactory getInstance() {
@@ -29,8 +34,11 @@ public final class NfaFactory {
 		return instance;
 	}
 
+	/**
+	 * @return A singleton instance of the {@link INfaManager} manager in version 14 or higher
+	 */
 	public static INfaManager getManager() {
-		return getInstance().getGreenManager();
+		return getInstance().getNfaManager();
 	}
 
 }

@@ -1,7 +1,8 @@
 package com.nfa.tools.exception;
 
-import com.nfa.tools.exception.NfaRuntimeException;
-
+/**
+ * @author jefBinomed Exception thrown if an error occured during writing tag or communicating with beam
+ */
 public class NoNdefServiceException extends NfaRuntimeException {
 
 	/**
