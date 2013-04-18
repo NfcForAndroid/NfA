@@ -13,17 +13,15 @@
 	<name>NFC For Android - Parent</name>
 	<description>Android Nfc library for an easer management of NFC features</description>
 	<packaging>pom</packaging>
-	<url>https://github.com/nfa/nfa</url>
+	<url>https://github.com/NfcForAndroid/NfA</url>
 	<inceptionYear>2013</inceptionYear>
 
-	<!-- 
 	<scm>
-		<connection>scm:git:ssh://git@github.com/octo-online/robospice.git</connection>
-		<url>git:ssh://git@github.com/octo-online/robospice.git</url>
-		<developerConnection>scm:git:ssh://git@github.com/octo-online/robospice.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com:NfcForAndroid/NfA.git</connection>
+		<url>git:ssh://git@github.com:NfcForAndroid/NfA.git</url>
+		<developerConnection>scm:git:ssh://git@github.com:NfcForAndroid/NfA.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-	 -->
 
 	<licenses>
 		<license>
@@ -34,7 +32,7 @@
 
 	<issueManagement>
 		<system>Github Issue Tracker</system>
-		<url>https://github.com/octo-online/robospice/issues</url>
+		<url>https://github.com/NfcForAndroid/NfA/issues</url>
 	</issueManagement>
 
 	<developers>
