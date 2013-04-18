@@ -2,8 +2,16 @@ package com.nfa.tools.records.ndef.ext;
 
 import android.content.Context;
 
+import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.records.ndef.WrongReccordDatasException;
 
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaRecord} for Android Application Record data.
+ * 
+ *         An {@link WrongReccordDatasException} will be thrown if the package name doesn't respect package name convention
+ */
 public class AndroidApplicationRecord extends ExternalRecord {
 
 	private static final String JAVA_PACKAGE_CONVENSION = "^[a-z]+(\\.[a-zA-Z_][a-zA-Z0-9_]*)*$"; //
@@ -20,10 +28,16 @@ public class AndroidApplicationRecord extends ExternalRecord {
 		setDatas(packageName.getBytes());
 	}
 
+	/**
+	 * @return the package name contained
+	 */
 	public String getPackageName() {
 		return new String(getDatas());
 	}
 
+	/**
+	 * @return <code>true</code> if there is datas, <code>false</code> else
+	 */
 	public boolean hasPackageName() {
 		return hasDatas();
 	}

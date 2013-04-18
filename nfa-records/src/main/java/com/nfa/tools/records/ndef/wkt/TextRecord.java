@@ -3,11 +3,22 @@ package com.nfa.tools.records.ndef.wkt;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.records.AbstractRecord;
 import com.nfa.tools.records.ndef.INdefRecord;
 
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaRecord} for text data.
+ * 
+ *         This class contains a text, an encoding and a locale
+ */
 public class TextRecord extends AbstractRecord implements INdefRecord {
 
+	/**
+	 * The default mask to use for analysing the language code in the ndef message
+	 */
 	public static final byte LANGUAGE_CODE_MASK = 0x1F;
 
 	public static final Charset UTF8 = Charset.forName("UTF-8");
@@ -38,21 +49,35 @@ public class TextRecord extends AbstractRecord implements INdefRecord {
 			throw new IllegalArgumentException("unsupported encoding. only utf8 and utf16 are allowed.");
 	}
 
-	public TextRecord() {
+	protected TextRecord() {
 	}
 
+	/**
+	 * @return the text
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * @return the locale
+	 */
 	public Locale getLocale() {
 		return locale;
 	}
 
+	/**
+	 * @return the encoding
+	 */
 	public Charset getEncoding() {
 		return encoding;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -68,10 +93,18 @@ public class TextRecord extends AbstractRecord implements INdefRecord {
 		return sb.toString();
 	}
 
+	/**
+	 * @param text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/**
+	 * @param encoding
+	 * 
+	 *            A {@link IllegalArgumentException} could be thrown if the encoding type is not {@value #UTF16} or {@value #UTF8}
+	 */
 	public void setEncoding(Charset encoding) {
 		if (!encoding.equals(UTF8) && !encoding.equals(UTF16))
 			throw new IllegalArgumentException("unsupported encoding. only utf8 and utf16 are allowed.");
@@ -79,22 +112,39 @@ public class TextRecord extends AbstractRecord implements INdefRecord {
 		this.encoding = encoding;
 	}
 
+	/**
+	 * @param locale
+	 */
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
 
+	/**
+	 * @return <code>true</code> if there is text, <code>false</code> else
+	 */
 	public boolean hasText() {
 		return text != null;
 	}
 
+	/**
+	 * @return <code>true</code> if there is a locale, <code>false</code> else
+	 */
 	public boolean hasLocale() {
 		return locale != null;
 	}
 
+	/**
+	 * @return <code>true</code> if there is an encoding, <code>false</code> else
+	 */
 	public boolean hasEncoding() {
 		return encoding != null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.records.AbstractRecord#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -105,6 +155,11 @@ public class TextRecord extends AbstractRecord implements INdefRecord {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.records.AbstractRecord#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

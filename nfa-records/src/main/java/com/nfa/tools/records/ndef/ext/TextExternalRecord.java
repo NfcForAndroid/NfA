@@ -1,5 +1,13 @@
 package com.nfa.tools.records.ndef.ext;
 
+import com.nfa.tools.api.INfaRecord;
+
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaRecord} for text external data.
+ * 
+ */
 public class TextExternalRecord extends ExternalRecord {
 
 	protected TextExternalRecord(String key, String text) {
@@ -11,10 +19,18 @@ public class TextExternalRecord extends ExternalRecord {
 		setDatas(text.getBytes());
 	}
 
+	/**
+	 * @return the data contained on the tag
+	 */
 	public String getMessage() {
 		return new String(getDatas());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -29,6 +45,9 @@ public class TextExternalRecord extends ExternalRecord {
 		return sb.toString();
 	}
 
+	/**
+	 * @return <code>true</code> if there is datas, <code>false</code> else
+	 */
 	public boolean hasText() {
 		return hasDatas();
 	}

@@ -29,6 +29,9 @@ import com.nfa.tools.records.ndef.wkt.UriRecord;
 import com.nfa.tools.samples.R;
 import com.nfa.tools.samples.cst.NfaSampleCst;
 
+/**
+ * @author jefBinomed Read activity
+ */
 public class NfaReadActivity extends SherlockFragmentActivity implements INfaIntentRecieveRecord<INfaRecord> {
 
 	TextView tag_content;
@@ -43,6 +46,8 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		tag_content_img = (ImageView) findViewById(R.id.tag_content_img);
 		tag_content_img.setVisibility(View.GONE);
 
+		// We register our activity to the NFA Manager
+		// We give to the manager the orginal
 		NFA_MANAGER.register(this //
 				, recieveBeanConfigure() //
 						.intent(getIntent()) //

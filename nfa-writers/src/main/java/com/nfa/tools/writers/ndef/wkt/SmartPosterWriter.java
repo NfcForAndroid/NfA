@@ -10,11 +10,24 @@ import com.nfa.tools.records.ndef.wkt.UriRecord;
 import com.nfa.tools.writers.factory.NfaWriterFactory;
 import com.nfa.tools.writers.ndef.AbstractNdefWriter;
 
+/**
+ * @author jefBinomed
+ * 
+ * 
+ *         {@link INfaWriter} for android application data.
+ * 
+ *         An {@link IllegalArgumentException} is thrown if the uri is not present
+ */
 public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
 
 	protected SmartPosterWriter() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaWriter#getNdefRecord()
+	 */
 	public NdefRecord getNdefRecord() {
 		if (!(record instanceof SmartPosterRecord)) {
 			throw new IllegalArgumentException("Expected SmartPoster but got : " + record.getClass());

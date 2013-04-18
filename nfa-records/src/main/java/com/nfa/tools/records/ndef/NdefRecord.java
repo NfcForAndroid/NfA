@@ -1,7 +1,13 @@
 package com.nfa.tools.records.ndef;
 
+import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.records.AbstractRecord;
 
+/**
+ * @author jefBinomed {@link INfaRecord} for ndef data.
+ * 
+ *         this class contains an An {@link android.nfc.NdefRecord} record
+ */
 public class NdefRecord extends AbstractRecord implements INdefRecord {
 
 	private android.nfc.NdefRecord androidNdefRecord;
@@ -27,22 +33,37 @@ public class NdefRecord extends AbstractRecord implements INdefRecord {
 		}
 	}
 
+	/**
+	 * @return the kind of the message
+	 */
 	public short getTnf() {
 		return this.androidNdefRecord.getTnf();
 	}
 
+	/**
+	 * @return the type of the message
+	 */
 	public byte[] getType() {
 		return this.androidNdefRecord.getType();
 	}
 
+	/**
+	 * @return the payload of the message
+	 */
 	public byte[] getPayload() {
 		return this.androidNdefRecord.getPayload();
 	}
 
+	/**
+	 * @return the {@link android.nfc.NdefRecord} record
+	 */
 	public android.nfc.NdefRecord getAndroidNdefRecord() {
 		return androidNdefRecord;
 	}
 
+	/**
+	 * @param androidNdefRecord
+	 */
 	public void setAndroidNdefRecord(android.nfc.NdefRecord androidNdefRecord) {
 		this.androidNdefRecord = androidNdefRecord;
 	}

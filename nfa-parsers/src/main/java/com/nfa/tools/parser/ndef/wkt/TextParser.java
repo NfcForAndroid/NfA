@@ -7,16 +7,31 @@ import java.util.Locale;
 
 import android.nfc.NdefRecord;
 
+import com.nfa.tools.api.INfaParser;
 import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.parser.ndef.NdefParser;
 import com.nfa.tools.records.factory.NfaRecordFactory;
 import com.nfa.tools.records.ndef.wkt.TextRecord;
 
+/**
+ * @author jefBinomed
+ * 
+ * 
+ *         {@link INfaParser} for Text data.
+ * 
+ *         The return value is a {@link TextRecord}
+ * 
+ */
 public final class TextParser extends NdefParser {
 
 	protected TextParser() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.parser.ndef.NdefParser#parseNdef(android.nfc.NdefRecord)
+	 */
 	@Override
 	public INfaRecord parseNdef(NdefRecord ndefRecord) {
 

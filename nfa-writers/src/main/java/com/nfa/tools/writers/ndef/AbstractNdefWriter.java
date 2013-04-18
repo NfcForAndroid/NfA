@@ -6,8 +6,19 @@ import android.nfc.NdefRecord;
 import com.nfa.tools.records.ndef.INdefRecord;
 import com.nfa.tools.writers.AbstractWriter;
 
+/**
+ * @author jefBinomed
+ * 
+ *         Abstract class for defining the standard way to calculate the Ndfmessage and the length of a record
+ * @param <Record>
+ */
 public abstract class AbstractNdefWriter<Record extends INdefRecord> extends AbstractWriter<Record> {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaWriter#getNdefMessage()
+	 */
 	public NdefMessage getNdefMessage() {
 		NdefRecord ndefRecord = getNdefRecord();
 		NdefRecord[] records = new NdefRecord[] { ndefRecord };
@@ -15,6 +26,11 @@ public abstract class AbstractNdefWriter<Record extends INdefRecord> extends Abs
 		return msg;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaWriter#getLength()
+	 */
 	public int getLength() {
 		NdefRecord ndefRecord = getNdefRecord();
 		if (ndefRecord == null) {

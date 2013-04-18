@@ -6,16 +6,32 @@ import java.util.Arrays;
 import android.net.Uri;
 import android.nfc.NdefRecord;
 
+import com.nfa.tools.api.INfaParser;
 import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.parser.ndef.NdefParser;
 import com.nfa.tools.records.factory.NfaRecordFactory;
+import com.nfa.tools.records.ndef.wkt.UriRecord;
 import com.nfa.tools.records.ndef.wkt.UriSchemeEnum;
 
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaParser} for Uri data.
+ * 
+ *         The return value is a {@link UriRecord}
+ * 
+ * 
+ */
 public final class UriParser extends NdefParser {
 
 	protected UriParser() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.parser.ndef.NdefParser#parseNdef(android.nfc.NdefRecord)
+	 */
 	@Override
 	public INfaRecord parseNdef(NdefRecord ndefRecord) {
 

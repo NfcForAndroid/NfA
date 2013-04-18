@@ -2,14 +2,28 @@ package com.nfa.tools.writers.ndef.wkt;
 
 import android.nfc.NdefRecord;
 
+import com.nfa.tools.api.INfaWriter;
 import com.nfa.tools.records.ndef.wkt.TextRecord;
 import com.nfa.tools.writers.ndef.AbstractNdefWriter;
 
+/**
+ * @author jefBinomed
+ * 
+ * 
+ *         {@link INfaWriter} for android application data.
+ * 
+ *         An {@link IllegalArgumentException} is thrown if there is no locale, no encoding, no text or if the language data length exceed the expected size
+ */
 public class TextWriter extends AbstractNdefWriter<TextRecord> {
 
 	protected TextWriter() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaWriter#getNdefRecord()
+	 */
 	public NdefRecord getNdefRecord() {
 		if (!(record instanceof TextRecord)) {
 			throw new IllegalArgumentException("Expected TextRecord but got : " + record.getClass());

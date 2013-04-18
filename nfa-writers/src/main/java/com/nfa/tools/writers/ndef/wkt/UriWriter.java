@@ -4,15 +4,28 @@ import java.io.UnsupportedEncodingException;
 
 import android.nfc.NdefRecord;
 
+import com.nfa.tools.api.INfaWriter;
 import com.nfa.tools.records.ndef.wkt.UriRecord;
 import com.nfa.tools.records.ndef.wkt.UriSchemeEnum;
 import com.nfa.tools.writers.ndef.AbstractNdefWriter;
 
+/**
+ * @author jefBinomed
+ * 
+ * 
+ *         {@link INfaWriter} for uri data.
+ * 
+ */
 public class UriWriter extends AbstractNdefWriter<UriRecord> {
 
 	protected UriWriter() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.api.INfaWriter#getNdefRecord()
+	 */
 	public NdefRecord getNdefRecord() {
 		if (!(record instanceof UriRecord)) {
 			throw new IllegalArgumentException("Expected UriRecord but got : " + record.getClass());

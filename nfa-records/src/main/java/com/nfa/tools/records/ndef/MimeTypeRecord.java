@@ -7,26 +7,44 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 
+import com.nfa.tools.api.INfaRecord;
 import com.nfa.tools.exception.NfaRuntimeException;
 import com.nfa.tools.records.AbstractRecord;
 
+/**
+ * @author jefBinomed
+ * 
+ *         {@link INfaRecord} for mime type data.
+ * 
+ *         This class contains a string for the mime type and a byte array for the datas
+ */
 public final class MimeTypeRecord extends AbstractRecord implements INdefRecord {
 
 	private String mimeType;
 	private byte[] data;
 
+	/**
+	 * @return the type of mime datas
+	 */
 	public String getMimeType() {
 		return mimeType;
 	}
 
+	/**
+	 * @return the datas
+	 */
 	public byte[] getData() {
 		return data;
 	}
 
 	/**
+	 * 
+	 * Write the data contained in the record to an {@link OutputStream}
+	 * 
 	 * The outputstream is close during this method
 	 * 
 	 * @param os
+	 *            the destination outputStream
 	 * @throws NfaRuntimeException
 	 *             could throw thoses kind of error if there is error during the write process
 	 */
@@ -78,6 +96,11 @@ public final class MimeTypeRecord extends AbstractRecord implements INdefRecord 
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -93,14 +116,25 @@ public final class MimeTypeRecord extends AbstractRecord implements INdefRecord 
 		return sb.toString();
 	}
 
+	/**
+	 * @return <code>true</code> if there is a mime type, <code>false</code> else
+	 */
 	public boolean hasMimeType() {
 		return mimeType != null;
 	}
 
+	/**
+	 * @return <code>true</code> if there is data, <code>false</code> else
+	 */
 	public boolean hasData() {
 		return data != null && data.length > 0;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.records.AbstractRecord#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,6 +144,11 @@ public final class MimeTypeRecord extends AbstractRecord implements INdefRecord 
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.nfa.tools.records.AbstractRecord#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

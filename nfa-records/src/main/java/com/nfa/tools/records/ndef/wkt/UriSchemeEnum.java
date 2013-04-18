@@ -1,5 +1,8 @@
 package com.nfa.tools.records.ndef.wkt;
 
+/**
+ * @author jefBinomed Enum class that list all the possiblities of Uri scheme manage with the NFC Forum
+ */
 public enum UriSchemeEnum {
 
 	EMPTY("", 0x00), //
@@ -47,10 +50,16 @@ public enum UriSchemeEnum {
 		this.code = code;
 	}
 
+	/**
+	 * @return the scheme of the enum
+	 */
 	public String getScheme() {
 		return scheme;
 	}
 
+	/**
+	 * @return the hexadecimal code
+	 */
 	public int getCode() {
 		return code;
 	}
