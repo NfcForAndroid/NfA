@@ -1,14 +1,158 @@
-# Green NFC
+# Nfa : Nfc For Android
 
 ## Overview
-Green NFC is a group of nfc helper for *android* platform.
+NfA is a group of nfc helper for *android* platform.
 
 The main purpose is to facilitate the creation /  communication with nfc devices in the android platform.
 
 ## Main features
 
+The main features are : 
+
+	* NFC-Forum standards record implementations. You won't have to manage byte array ! You will deal with POJO
+	* Parsers for thoses implementations
+	* Writers for thoses implementations
+	* Filters for thoses implementations
+	* Somes useful constantes likes URI prefix / intent filters action / ...	
+
 
 ## Description of modules
+
+The librairie is devided into maven modules in order to only offer to developper the code he needs.
+
+With this library, you can easly do : 
+	* Read the content of a tag
+	* Write on tag
+	* Use the snep protocol (Beam on android)
+	* Transfert multiples record per ndefMessage
+
+### nfa-api : 
+In this module is defined all the interface and the apis that are exposed with NfA
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-api</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-records ! 
+In this module, you will find the records implementations of NFC-Forum standards. For the moment the manage records are : 
+	* Text
+	* Uri
+	* SmartPoster
+	* MimeType
+	* Ndef
+	* AndroidApplicationRecord
+	* WellKnownType
+	* UnknowType
+	* Unsupported type
+	* Empty
+	* External
+	* Text Extrenal record
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-records</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-writers
+In this module, you will find the classes that will helps you to write thoses records. For the moment, here is the list of manage writers : 
+	* Text
+	* Uri
+	* SmartPoster
+	* MimeType
+	* Ndef
+	* AndroidApplicationRecord
+	* WellKnownType
+	* UnknowType
+	* Unsupported type
+	* Empty
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-writers</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-parsers
+In this module, you will find the classes that will helps you to reads the records. For the moment, here is the list of manage parsers : 
+	* Text
+	* Uri
+	* SmartPoster
+	* MimeType
+	* Ndef
+	* WellKnownType
+	* UnknowType
+	* Unsupported type
+	* Empty
+	* External
+	* Text External record
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-parsers</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-filters
+In this module, you will find the classes that will helps you to define intent filters for your application. Here is the list of manage filters : 
+	* Ndef discover
+	* Tag discover
+	* Tech discover
+	* Text (text/plain)
+	* Uri (http://)
+	* External
+	* Text External
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-filters</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-core
+This module contains an implementation of the api module in order to minimize the code needed to. The module contains a *NFA_MANAGER* that is an equivalent of the NfcAdapter but which provides you other method for working with tags.
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-core</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-apklib
+This module offers you some constants that you could use in the manifest or in your android code. In the future version, somes Abstract activities will be present.
+
+Maven dependency
+	<dependency>
+		<groupId>com.nfa.tools</groupId>
+		<artifactId>nfa-apklib</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</dependency>
+
+### nfa-samples
+This module is a demo application that present you some of the possibilities of the librairies and helps you to understand how to implement it.
+
+## How to use it ?
+
+First you need the choose which project you want to get. 
+
+## In the road map
+
+Here is the list the next plained features : 
+	* Have for each record : a writer / parser / filter
+	* Add Signature Record
+	* Add the possibility for smartPoster to have more than a title
+	* Add Handover records
+	* Add Crypto module for an easier management of data to transfert
+	* Add Abstract Activities for an easer management of methods link to the life cycle
+	* Optimize the code
 
 ## License
 
