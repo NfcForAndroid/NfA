@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.nfa.tools.samples.read.NfaReadActivity"
+            android:name=".read.NfaReadActivity"
             android:launchMode="singleTop"
              >
             <intent-filter>
@@ -65,9 +65,9 @@
             </intent-filter>
              -->
         </activity>
-        <activity android:name="com.nfa.tools.samples.write.GreenWriteActivityte.GreenWriteActivity"/>       
-        <activity android:name="com.nfa.tools.samples.write.GreenBeamActivityite.GreenBeamActivity"/>       
-        <activity android:name="com.nfa.tools.samples.write.GreenBeamMultiActivityreenBeamMultiActivity"/>       
+        <activity android:name=".write.NfaWriteActivity"/>       
+        <activity android:name=".write.NfaBeamActivity"/>       
+        <activity android:name=".write.NfaBeamMultiActivity"/>       
     </application>
 
 </manifest>
