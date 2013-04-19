@@ -32,7 +32,7 @@ In this module is defined all the interface and the apis that are exposed with N
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-api</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
@@ -56,7 +56,7 @@ In this module, you will find the records implementations of NFC-Forum standards
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-records</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
@@ -78,7 +78,7 @@ In this module, you will find the classes that will helps you to write thoses re
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-writers</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
@@ -101,7 +101,7 @@ In this module, you will find the classes that will helps you to reads the recor
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-parsers</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
@@ -120,7 +120,7 @@ In this module, you will find the classes that will helps you to define intent f
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-filters</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
@@ -132,7 +132,7 @@ This module contains an implementation of the api module in order to minimize th
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-core</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
@@ -144,7 +144,7 @@ This module offers you some constants that you could use in the manifest or in y
 Maven dependency
 ```xml
 	<dependency>
-		<groupId>com.nfa.tools</groupId>
+		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-apklib</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</dependency>
