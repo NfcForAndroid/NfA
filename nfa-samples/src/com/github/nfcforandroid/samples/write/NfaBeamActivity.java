@@ -12,8 +12,7 @@ import com.github.nfcforandroid.api.beans.NfaWriteBean;
 import com.github.nfcforandroid.api.client.INfaBeam;
 import com.github.nfcforandroid.samples.R;
 
-public class NfaBeamActivity
-		extends AbstractWriteActivity //
+public class NfaBeamActivity extends AbstractWriteActivity //
 		implements INfaBeam<INfaRecord> //
 {
 
@@ -29,7 +28,7 @@ public class NfaBeamActivity
 
 	/**
 	 * 
-	 * Green NFC methods
+	 * NfA methods
 	 **/
 
 	@SuppressWarnings("unchecked")

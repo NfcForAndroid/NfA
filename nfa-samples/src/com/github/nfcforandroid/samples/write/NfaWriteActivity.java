@@ -10,15 +10,14 @@ import com.github.nfcforandroid.api.beans.NfaWriteBean;
 import com.github.nfcforandroid.api.client.INfaIntentWrite;
 import com.github.nfcforandroid.samples.R;
 
-public class NfaWriteActivity
-		extends AbstractWriteActivity //
+public class NfaWriteActivity extends AbstractWriteActivity //
 		implements INfaIntentWrite //
 {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		NFA_MANAGER.register(this //
+		NFA_MANAGER.register(this // Activity
 				, NDEF_FILTER //
 				);
 
@@ -32,8 +31,8 @@ public class NfaWriteActivity
 		 */
 		msg_feedback.setText(R.string.writing_tag);
 		NFA_MANAGER.writeTag(getApplicationContext(), //
-				intent, //
-				this, //
+				intent, // the intent with the information of the tag to write
+				this, // the callback method : INfaIntentWrite
 				check_android_record.isChecked(), // addAndroidApplicationRecord
 				NfaWriteBean.writeBeanConfigure() //
 						.writer(writer()) //
@@ -42,7 +41,7 @@ public class NfaWriteActivity
 
 	/**
 	 * 
-	 * Green NFC methods
+	 * NfA methods
 	 **/
 
 	@Override

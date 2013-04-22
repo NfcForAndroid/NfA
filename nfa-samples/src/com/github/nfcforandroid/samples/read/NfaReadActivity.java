@@ -51,7 +51,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		NFA_MANAGER.register(this //
 				, recieveBeanConfigure() //
 						.intent(getIntent()) //
-						.intentRecieveRecord(this) //
+						.intentRecieveRecord(this) // INfaIntentRecieveRecord
 						.parser(NDEF_PARSER) //
 						.build() //
 				, NDEF_FILTER //
@@ -68,14 +68,14 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		tag_content.setText(R.string.reading_tag);
 		NFA_MANAGER.manageIntent(recieveBeanConfigure() //
 				.intent(intent) //
-				.intentRecieveRecord(this) //
+				.intentRecieveRecord(this) // INfaIntentRecieveRecord
 				.parser(NDEF_PARSER) //
 				.build());
 	}
 
 	/**
 	 * 
-	 * Green NFC methods
+	 * NfA methods
 	 **/
 
 	@Override

@@ -38,14 +38,14 @@ public class NfaBeamMultiActivity extends SherlockFragmentActivity implements IN
 		text_content_2 = (EditText) findViewById(R.id.text_content_2);
 		msg_feedback_error.setVisibility(View.GONE);
 
-		NFA_MANAGER.register(this //
-				, this //
+		NFA_MANAGER.register(this // Activity
+				, this // INfaBeam
 				);
 	}
 
 	/**
 	 * 
-	 * Green NFC methods
+	 * NFA methods
 	 **/
 
 	@SuppressWarnings("unchecked")

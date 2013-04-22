@@ -106,11 +106,11 @@ class NfaManagerV9 implements INfaManager {
 	 * @see com.github.nfcforandroid.api.INfaManager#register(android.app.Activity, com.github.nfcforandroid.api.beans.NfaRecieveBean, com.github.nfcforandroid.api.client.INfaBeam, com.github.nfcforandroid.api.INfaIntentFilter[])
 	 */
 	@SuppressWarnings("deprecation")
-	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaBeam<Record> beamWriter, INfaIntentFilter... greenfilters) {
+	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaBeam<Record> beamWriter, INfaIntentFilter... nfaFilters) {
 		// We register the default Nfc Adapter
 		mAdapter = NfcAdapter.getDefaultAdapter(activity);
 
-		initIntent(activity, greenfilters);
+		initIntent(activity, nfaFilters);
 		// We have to manage the first call
 		if (recieveConfig != null) {
 			manageIntent(recieveConfig);
