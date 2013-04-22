@@ -155,7 +155,7 @@ This module is a demo application that present you some of the possibilities of 
 
 ## How to use it ?
 
-First you need the choose which project you want to get. 
+See the wiki pages for the developpers installation
 
 ## In the road map
 
