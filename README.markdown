@@ -168,6 +168,14 @@ Here is the list the next plained features :
 * Add Abstract Activities for an easer management of methods link to the life cycle
 * Optimize the code
 
+
+## Source of inspiration
+
+Hudge Thank you to thoses projects who helps me to start NfA : 
+
+* [[RoboSpice | https://github.com/octo-online/robospice]] for the maven structure
+* [[NfcTools | https://github.com/grundid/nfctools]] and [[Ndef tools for Android | http://code.google.com/p/ndef-tools-for-android/]] for the existants records.
+
 ## License
 
 	Licensed under the Apache License, Version 2.0 (the "License");
