@@ -155,7 +155,7 @@ This module is a demo application that present you some of the possibilities of 
 
 ## How to use it ?
 
-See the wiki pages for the developpers installation
+See the [wiki pages](https://github.com/NfcForAndroid/NfA/wiki) for the developpers installation
 
 ## In the road map
 
@@ -173,8 +173,8 @@ Here is the list the next plained features :
 
 Hudge Thank you to thoses projects who helps me to start NfA : 
 
-* [[RoboSpice | https://github.com/octo-online/robospice]] for the maven structure
-* [[NfcTools | https://github.com/grundid/nfctools]] and [[Ndef tools for Android | http://code.google.com/p/ndef-tools-for-android/]] for the existants records.
+* [RoboSpice](https://github.com/octo-online/robospice) for the maven structure
+* [NfcTools](https://github.com/grundid/nfctools) and [Ndef tools for Android](http://code.google.com/p/ndef-tools-for-android/) for the existants records.
 
 ## License
 
