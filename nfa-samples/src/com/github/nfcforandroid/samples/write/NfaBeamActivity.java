@@ -41,7 +41,13 @@ public class NfaBeamActivity extends AbstractWriteActivity //
 
 	@Override
 	public void beamCallBack() {
-		msg_feedback.setText(R.string.tag_write);
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				msg_feedback.setText(R.string.tag_write);
+			}
+		});
 
 	}
 
