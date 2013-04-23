@@ -11,24 +11,14 @@ import com.github.nfcforandroid.api.INfaRecord;
  * 
  * 
  */
-public class UriExternalRecord extends ExternalRecord {
+public final class UriExternalRecord extends ExternalRecord {
 
-	protected UriExternalRecord(String key, Uri uri) {
-		this(uri);
-		setKey(key);
+	protected UriExternalRecord(byte[] type, Uri uri) {
+		super(type, uri.toString().getBytes());
 	}
 
-	protected UriExternalRecord(String key, String uri) {
-		this(uri);
-		setKey(key);
-	}
-
-	protected UriExternalRecord(Uri uri) {
-		setDatas(uri.toString().getBytes());
-	}
-
-	protected UriExternalRecord(String uri) {
-		setDatas(uri.getBytes());
+	protected UriExternalRecord(byte[] type, String uri) {
+		super(type, uri.getBytes());
 	}
 
 	/**

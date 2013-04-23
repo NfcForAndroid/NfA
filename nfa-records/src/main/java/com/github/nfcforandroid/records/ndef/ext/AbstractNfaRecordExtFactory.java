@@ -20,10 +20,10 @@ public abstract class AbstractNfaRecordExtFactory implements INfaRecordExtFactor
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#textExternalRecordInstance(java.lang.String)
+	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#externalRecordInstance(java.lang.String, byte[])
 	 */
-	public TextExternalRecord textExternalRecordInstance(String text) {
-		return new TextExternalRecord(text);
+	public ExternalRecord externalRecordInstance(String type, byte[] datas) {
+		return new ExternalRecord(type.getBytes(), datas);
 	}
 
 	/*
@@ -31,17 +31,8 @@ public abstract class AbstractNfaRecordExtFactory implements INfaRecordExtFactor
 	 * 
 	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#textExternalRecordInstance(java.lang.String, java.lang.String)
 	 */
-	public TextExternalRecord textExternalRecordInstance(String key, String text) {
-		return new TextExternalRecord(key, text);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#uriExternalRecordInstance(java.lang.String)
-	 */
-	public UriExternalRecord uriExternalRecordInstance(String uri) {
-		return new UriExternalRecord(uri);
+	public TextExternalRecord textExternalRecordInstance(String type, String text) {
+		return new TextExternalRecord(type.getBytes(), text);
 	}
 
 	/*
@@ -49,17 +40,8 @@ public abstract class AbstractNfaRecordExtFactory implements INfaRecordExtFactor
 	 * 
 	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#uriExternalRecordInstance(java.lang.String, java.lang.String)
 	 */
-	public UriExternalRecord uriExternalRecordInstance(String key, String uri) {
-		return new UriExternalRecord(key, uri);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#uriExternalRecordInstance(android.net.Uri)
-	 */
-	public UriExternalRecord uriExternalRecordInstance(Uri uri) {
-		return new UriExternalRecord(uri);
+	public UriExternalRecord uriExternalRecordInstance(String type, String uri) {
+		return new UriExternalRecord(type.getBytes(), uri);
 	}
 
 	/*
@@ -67,8 +49,8 @@ public abstract class AbstractNfaRecordExtFactory implements INfaRecordExtFactor
 	 * 
 	 * @see com.github.nfcforandroid.records.factory.INfaRecordExtFactory#uriExternalRecordInstance(java.lang.String, android.net.Uri)
 	 */
-	public UriExternalRecord uriExternalRecordInstance(String key, Uri uri) {
-		return new UriExternalRecord(key, uri);
+	public UriExternalRecord uriExternalRecordInstance(String type, Uri uri) {
+		return new UriExternalRecord(type.getBytes(), uri);
 	}
 
 	/*

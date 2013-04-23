@@ -7,6 +7,9 @@ import com.github.nfcforandroid.records.ndef.NdefRecord;
 import com.github.nfcforandroid.records.ndef.UnknownRecord;
 import com.github.nfcforandroid.records.ndef.UnsupportedRecord;
 import com.github.nfcforandroid.records.ndef.ext.AndroidApplicationRecord;
+import com.github.nfcforandroid.records.ndef.ext.ExternalRecord;
+import com.github.nfcforandroid.records.ndef.ext.TextExternalRecord;
+import com.github.nfcforandroid.records.ndef.ext.UriExternalRecord;
 import com.github.nfcforandroid.records.ndef.wkt.SmartPosterRecord;
 import com.github.nfcforandroid.records.ndef.wkt.TextRecord;
 import com.github.nfcforandroid.records.ndef.wkt.UriRecord;
@@ -64,6 +67,18 @@ public final class NfaWriterFactory {
 	 * A singleton instance of Android application writer
 	 */
 	public static final INfaWriter<AndroidApplicationRecord> ANDROID_APPLICATION_WRITER = externalFactory().androidApplicationWriter();
+	/**
+	 * A singleton instance of external writer
+	 */
+	public static final INfaWriter<ExternalRecord> EXTERNAL_WRITER = externalFactory().externalWriter();
+	/**
+	 * A singleton instance of external text writer
+	 */
+	public static final INfaWriter<TextExternalRecord> EXTERNAL_TEXT_WRITER = externalFactory().externalTextWriter();
+	/**
+	 * A singleton instance of external uri writer
+	 */
+	public static final INfaWriter<UriExternalRecord> EXTERNAL_URI_WRITER = externalFactory().externalUriWriter();
 
 	private static final synchronized NfaWriterFactory getInstance() {
 		if (instance == null) {

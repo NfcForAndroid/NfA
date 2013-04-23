@@ -8,15 +8,10 @@ import com.github.nfcforandroid.api.INfaRecord;
  *         {@link INfaRecord} for text external data.
  * 
  */
-public class TextExternalRecord extends ExternalRecord {
+public final class TextExternalRecord extends ExternalRecord {
 
-	protected TextExternalRecord(String key, String text) {
-		this(text);
-		setKey(key);
-	}
-
-	protected TextExternalRecord(String text) {
-		setDatas(text.getBytes());
+	protected TextExternalRecord(byte[] type, String text) {
+		super(type, text.getBytes());
 	}
 
 	/**

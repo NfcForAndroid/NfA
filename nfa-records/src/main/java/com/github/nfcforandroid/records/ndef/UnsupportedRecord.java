@@ -7,7 +7,7 @@ import com.github.nfcforandroid.api.INfaRecord;
  * 
  *         {@link INfaRecord} for unsupported data.
  */
-public class UnsupportedRecord extends NdefRecord {
+public final class UnsupportedRecord extends NdefRecord {
 
 	UnsupportedRecord(android.nfc.NdefRecord androidNdefRecord) {
 		super(androidNdefRecord);

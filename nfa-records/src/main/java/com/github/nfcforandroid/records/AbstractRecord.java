@@ -22,7 +22,9 @@ public abstract class AbstractRecord implements INfaRecord {
 	 */
 	protected AbstractRecord(String id) {
 		super();
-		this.id = id.getBytes();
+		if (id != null) {
+			this.id = id.getBytes();
+		}
 	}
 
 	/**
@@ -30,7 +32,9 @@ public abstract class AbstractRecord implements INfaRecord {
 	 */
 	protected AbstractRecord(byte[] id) {
 		super();
-		this.id = id;
+		if (id != null) {
+			this.id = id;
+		}
 	}
 
 	/**
@@ -43,15 +47,16 @@ public abstract class AbstractRecord implements INfaRecord {
 	/**
 	 * @param id
 	 */
-	public void setId(byte[] id) {
-		this.id = id;
+	protected void setId(byte[] id) {
+		if (id != null) {
+			this.id = id;
+		}
 	}
 
 	/**
 	 * @return the string representation of the id
 	 */
 	public String getKey() {
-		// TODO manage id == null
 		return new String(id);
 	}
 
@@ -59,9 +64,10 @@ public abstract class AbstractRecord implements INfaRecord {
 	 * @param id
 	 *            the string representation of the id
 	 */
-	public void setKey(String id) {
-		// TODO manage id == null
-		this.id = id.getBytes();
+	protected void setKey(String id) {
+		if (id != null) {
+			this.id = id.getBytes();
+		}
 	}
 
 	/**

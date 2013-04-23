@@ -6,9 +6,29 @@ import com.github.nfcforandroid.records.ndef.INdefRecord;
 /**
  * @author jefBinomed Abstract class for external type. It only contains an array of byte.
  */
-public abstract class ExternalRecord extends AbstractRecord implements INdefRecord {
+public class ExternalRecord extends AbstractRecord implements INdefRecord {
 
 	private byte[] datas;
+
+	private byte[] type;
+
+	protected ExternalRecord(byte[] type) {
+		super();
+		this.type = type;
+	}
+
+	protected ExternalRecord(byte[] type, byte[] datas) {
+		this(type);
+		setDatas(datas);
+	}
+
+	public byte[] getTypeArray() {
+		return type;
+	}
+
+	public String getType() {
+		return new String(type);
+	}
 
 	/**
 	 * @return the contained datas
@@ -20,7 +40,7 @@ public abstract class ExternalRecord extends AbstractRecord implements INdefReco
 	/**
 	 * @param datas
 	 */
-	public void setDatas(byte[] datas) {
+	protected void setDatas(byte[] datas) {
 		this.datas = datas;
 	}
 

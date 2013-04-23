@@ -14,7 +14,7 @@ import com.github.nfcforandroid.records.ndef.INdefRecord;
  * @see SmartPosterRecordDatas
  * 
  */
-public class SmartPosterRecord extends AbstractRecord implements INdefRecord {
+public final class SmartPosterRecord extends AbstractRecord implements INdefRecord {
 
 	private TextRecord title;
 	private UriRecord uri;
@@ -32,24 +32,10 @@ public class SmartPosterRecord extends AbstractRecord implements INdefRecord {
 	}
 
 	/**
-	 * @param title
-	 */
-	public void setTitle(TextRecord title) {
-		this.title = title;
-	}
-
-	/**
 	 * @return the uri record of smart poster
 	 */
 	public UriRecord getUri() {
 		return uri;
-	}
-
-	/**
-	 * @param uri
-	 */
-	public void setUri(UriRecord uri) {
-		this.uri = uri;
 	}
 
 	/*

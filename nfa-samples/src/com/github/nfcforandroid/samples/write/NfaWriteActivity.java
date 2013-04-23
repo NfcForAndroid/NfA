@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.github.nfcforandroid.api.INfaRecord;
+import com.github.nfcforandroid.api.INfaWriter;
 import com.github.nfcforandroid.api.beans.NfaWriteBean;
 import com.github.nfcforandroid.api.client.INfaIntentWrite;
 import com.github.nfcforandroid.samples.R;
@@ -30,12 +32,14 @@ public class NfaWriteActivity extends AbstractWriteActivity //
 		 * Manadatory
 		 */
 		msg_feedback.setText(R.string.writing_tag);
+		INfaWriter<INfaRecord> writer = writer();
+		size.setText(writer.getLength() + " bytes");
 		NFA_MANAGER.writeTag(getApplicationContext(), //
 				intent, // the intent with the information of the tag to write
 				this, // the callback method : INfaIntentWrite
 				check_android_record.isChecked(), // addAndroidApplicationRecord
 				NfaWriteBean.writeBeanConfigure() //
-						.writer(writer()) //
+						.writer(writer) //
 						.build());
 	}
 

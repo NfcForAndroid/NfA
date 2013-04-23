@@ -8,7 +8,7 @@ import com.github.nfcforandroid.filters.cst.NfaFiltersCst;
 /**
  * @author jefBinomed
  * 
- *         Class that represent a {@link INfaIntentFilter} for External Text type
+ *         Class that represent a {@link INfaIntentFilter} for External Uri type
  * 
  *         Action = {@link NfcAdapter#ACTION_NDEF_DISCOVERED}
  * 
@@ -18,9 +18,9 @@ import com.github.nfcforandroid.filters.cst.NfaFiltersCst;
  * 
  *         DataPath = the {@link #path}
  */
-public final class TextExternalNdefFilter extends ExternalNdefFilter {
+public final class UriExternalNdefFilter extends ExternalNdefFilter {
 
-	protected TextExternalNdefFilter(String path) {
+	protected UriExternalNdefFilter(String path) {
 		super(path);
 	}
 

@@ -47,6 +47,14 @@ public final class NfaParserFactory {
 	 * Singleton instance for external textual tag parser
 	 */
 	public static final INfaParser EXTERNAL_TEXT_PARSER = externalFactory().externalTextParser();
+	/**
+	 * Singleton instance for external textual tag parser
+	 */
+	public static final INfaParser EXTERNAL_URI_PARSER = externalFactory().externalUriParser();
+	/**
+	 * Singleton instance for external textual tag parser
+	 */
+	public static final INfaParser ANDROID_APPLICATION_PARSER = externalFactory().androidApplicationParser();
 
 	/**
 	 * Singleton instance for text tag parser

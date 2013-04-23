@@ -14,7 +14,7 @@ import com.github.nfcforandroid.records.ndef.INdefRecord;
  * 
  *         This class contains a text, an encoding and a locale
  */
-public class TextRecord extends AbstractRecord implements INdefRecord {
+public final class TextRecord extends AbstractRecord implements INdefRecord {
 
 	/**
 	 * The default mask to use for analysing the language code in the ndef message
@@ -91,32 +91,6 @@ public class TextRecord extends AbstractRecord implements INdefRecord {
 
 		sb.append("]");
 		return sb.toString();
-	}
-
-	/**
-	 * @param text
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	/**
-	 * @param encoding
-	 * 
-	 *            A {@link IllegalArgumentException} could be thrown if the encoding type is not {@value #UTF16} or {@value #UTF8}
-	 */
-	public void setEncoding(Charset encoding) {
-		if (!encoding.equals(UTF8) && !encoding.equals(UTF16))
-			throw new IllegalArgumentException("unsupported encoding. only utf8 and utf16 are allowed.");
-
-		this.encoding = encoding;
-	}
-
-	/**
-	 * @param locale
-	 */
-	public void setLocale(Locale locale) {
-		this.locale = locale;
 	}
 
 	/**

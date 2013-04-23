@@ -37,7 +37,7 @@
     
     <Spinner
         android:id="@+id/uri_prefix"
-        android:layout_width="wrap_content"
+        android:layout_width="100dip"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/spinnerType"
@@ -76,13 +76,21 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/wating_tag"
+        android:layout_below="@+id/content_img"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/msg_feedback"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/msg_feedback_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/tag_content"
+        android:layout_below="@+id/size"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

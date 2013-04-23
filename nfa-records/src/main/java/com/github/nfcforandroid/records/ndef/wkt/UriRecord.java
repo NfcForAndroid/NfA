@@ -13,7 +13,7 @@ import com.github.nfcforandroid.records.ndef.INdefRecord;
  * 
  *         This class contains an {@link Uri} field
  */
-public class UriRecord extends AbstractRecord implements INdefRecord {
+public final class UriRecord extends AbstractRecord implements INdefRecord {
 
 	/**
 	 * Default uri charset (UTF-8)
@@ -35,13 +35,6 @@ public class UriRecord extends AbstractRecord implements INdefRecord {
 	 */
 	public Uri getUri() {
 		return uri;
-	}
-
-	/**
-	 * @param uri
-	 */
-	public void setUri(Uri uri) {
-		this.uri = uri;
 	}
 
 	/**

@@ -21,8 +21,8 @@ public class NdefRecord extends AbstractRecord implements INdefRecord {
 	}
 
 	NdefRecord(short tnf, byte[] id, byte[] type, byte[] payload) {
+		super(id);
 		androidNdefRecord = new android.nfc.NdefRecord(tnf, type, id, payload);
-		setId(id);
 	}
 
 	NdefRecord(android.nfc.NdefRecord androidNdefRecord) {

@@ -8,7 +8,7 @@ import com.github.nfcforandroid.records.AbstractRecord;
  * 
  *         The class contains a byte of array for the payload of the record
  */
-public class UnknownRecord extends AbstractRecord implements INdefRecord {
+public final class UnknownRecord extends AbstractRecord implements INdefRecord {
 
 	private byte[] payload;
 
@@ -21,13 +21,6 @@ public class UnknownRecord extends AbstractRecord implements INdefRecord {
 	 */
 	public byte[] getPayload() {
 		return payload;
-	}
-
-	/**
-	 * @param payload
-	 */
-	public void setPayload(byte[] payload) {
-		this.payload = payload;
 	}
 
 	/**

@@ -20,4 +20,14 @@ public interface INfaParserExtFactory {
 	 */
 	INfaParser externalTextParser();
 
+	/**
+	 * @return a Singleton instance for external uri parser
+	 */
+	INfaParser externalUriParser();
+
+	/**
+	 * @return a Singleton instance for android application parser
+	 */
+	INfaParser androidApplicationParser();
+
 }

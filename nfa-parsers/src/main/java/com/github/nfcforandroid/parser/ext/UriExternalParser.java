@@ -1,4 +1,4 @@
-package com.github.nfcforandroid.parser.ndef.wkt;
+package com.github.nfcforandroid.parser.ext;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -8,23 +8,20 @@ import android.nfc.NdefRecord;
 
 import com.github.nfcforandroid.api.INfaParser;
 import com.github.nfcforandroid.api.INfaRecord;
-import com.github.nfcforandroid.parser.ndef.NdefParser;
 import com.github.nfcforandroid.records.factory.NfaRecordFactory;
-import com.github.nfcforandroid.records.ndef.wkt.UriRecord;
+import com.github.nfcforandroid.records.ndef.ext.UriExternalRecord;
 import com.github.nfcforandroid.records.ndef.wkt.UriSchemeEnum;
 
 /**
  * @author jefBinomed
  * 
- *         {@link INfaParser} for Uri data.
+ *         {@link INfaParser} for Uri External datas.
  * 
- *         The return value is a {@link UriRecord}
- * 
- * 
+ *         The return value is a {@link UriExternalRecord}
  */
-public final class UriParser extends NdefParser {
+public final class UriExternalParser extends ExternalParser {
 
-	protected UriParser() {
+	protected UriExternalParser() {
 	}
 
 	/*
@@ -35,7 +32,7 @@ public final class UriParser extends NdefParser {
 	@Override
 	public INfaRecord parseNdef(NdefRecord ndefRecord) {
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			return NfaRecordFactory.wellKnowTypeFactory().uriRecordInstance(ndefRecord.toUri());
+			return NfaRecordFactory.externalFactory().uriExternalRecordInstance(verifyType(ndefRecord), ndefRecord.toUri());
 		} else {
 			byte[] payload = ndefRecord.getPayload();
 			if (payload.length < 2) {
@@ -50,9 +47,8 @@ public final class UriParser extends NdefParser {
 			}
 			String prefix = UriSchemeEnum.values()[prefixIndex].getScheme();
 			String suffix = new String(Arrays.copyOfRange(payload, 1, payload.length), Charset.forName("UTF-8"));
-			return NfaRecordFactory.wellKnowTypeFactory().uriRecordInstance(Uri.parse(prefix + suffix));
+			return NfaRecordFactory.externalFactory().uriExternalRecordInstance(verifyType(ndefRecord), Uri.parse(prefix + suffix));
 		}
-
 	}
 
 }

@@ -12,6 +12,11 @@ import com.github.nfcforandroid.parser.factory.NfaParserFactory;
  */
 public abstract class AbstractNfaParserExtFactory implements INfaParserExtFactory {
 
+	private ExternalParser externalParser;
+	private TextExternalParser textExternalParser;
+	private UriExternalParser uriExternalParser;
+	private AndroidApplicationParser androidApplicationParser;
+
 	protected AbstractNfaParserExtFactory() {
 
 	}
@@ -22,7 +27,10 @@ public abstract class AbstractNfaParserExtFactory implements INfaParserExtFactor
 	 * @see com.github.nfcforandroid.parser.factory.INfaParserExtFactory#externalParser()
 	 */
 	public INfaParser externalParser() {
-		return new ExternalParser();
+		if (externalParser == null) {
+			externalParser = new ExternalParser();
+		}
+		return externalParser;
 	}
 
 	/*
@@ -31,7 +39,34 @@ public abstract class AbstractNfaParserExtFactory implements INfaParserExtFactor
 	 * @see com.github.nfcforandroid.parser.factory.INfaParserExtFactory#externalTextParser()
 	 */
 	public INfaParser externalTextParser() {
-		return new TextExternalParser();
+		if (textExternalParser == null) {
+			textExternalParser = new TextExternalParser();
+		}
+		return textExternalParser;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.nfcforandroid.parser.factory.INfaParserExtFactory#externalUriParser()
+	 */
+	public INfaParser externalUriParser() {
+		if (uriExternalParser == null) {
+			uriExternalParser = new UriExternalParser();
+		}
+		return uriExternalParser;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.github.nfcforandroid.parser.factory.INfaParserExtFactory#androidApplicationParser()
+	 */
+	public INfaParser androidApplicationParser() {
+		if (androidApplicationParser == null) {
+			androidApplicationParser = new AndroidApplicationParser();
+		}
+		return androidApplicationParser;
 	}
 
 }

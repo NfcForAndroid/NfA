@@ -3,17 +3,17 @@ package com.github.nfcforandroid.writers.ndef.ext;
 import android.nfc.NdefRecord;
 
 import com.github.nfcforandroid.api.INfaWriter;
-import com.github.nfcforandroid.records.ndef.ext.AndroidApplicationRecord;
+import com.github.nfcforandroid.records.ndef.ext.ExternalRecord;
 import com.github.nfcforandroid.writers.ndef.AbstractNdefWriter;
 
 /**
  * @author jefBinomed
  * 
- *         {@link INfaWriter} for android application data.
+ *         Abstract {@link INfaWriter} for external type.
  * 
- *         An {@link IllegalArgumentException} is thrown if the packagename is empty
+ *         An {@link IllegalArgumentException} is thrown if no type is defined
  */
-public class AndroidApplicationWriter extends AbstractNdefWriter<AndroidApplicationRecord> {
+abstract class AbstractExternalNdefWriter<T extends ExternalRecord> extends AbstractNdefWriter<T> {
 
 	/*
 	 * (non-Javadoc)
@@ -22,13 +22,13 @@ public class AndroidApplicationWriter extends AbstractNdefWriter<AndroidApplicat
 	 */
 	public NdefRecord getNdefRecord() {
 
-		if (record.getPackageName() == null) {
-			throw new IllegalArgumentException("Expected package name");
+		if (record.getType() == null) {
+			throw new IllegalArgumentException("Expected type");
 		}
 
 		short tnf = NdefRecord.TNF_EXTERNAL_TYPE;
-		byte[] type = AndroidApplicationRecord.TYPE.getBytes();
-		byte[] payload = record.getPackageName().getBytes();
+		byte[] type = record.getTypeArray();
+		byte[] payload = record.getDatas();
 		NdefRecord record = new NdefRecord(tnf //
 				, type //
 				, new byte[0] //

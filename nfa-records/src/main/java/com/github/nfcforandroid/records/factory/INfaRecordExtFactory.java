@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.github.nfcforandroid.api.INfaRecord;
 import com.github.nfcforandroid.records.ndef.ext.AndroidApplicationRecord;
+import com.github.nfcforandroid.records.ndef.ext.ExternalRecord;
 import com.github.nfcforandroid.records.ndef.ext.TextExternalRecord;
 import com.github.nfcforandroid.records.ndef.ext.UriExternalRecord;
 
@@ -17,52 +18,40 @@ import com.github.nfcforandroid.records.ndef.ext.UriExternalRecord;
 public interface INfaRecordExtFactory {
 
 	/**
-	 * @param key
-	 *            the tag identifier
+	 * @param type
+	 *            the type of external data
+	 * @param datas
+	 *            the datas of the tag
+	 * @return a new instance of {@link ExternalRecord} on each call
+	 */
+	ExternalRecord externalRecordInstance(String type, byte[] datas);
+
+	/**
+	 * @param type
+	 *            the type of external data
 	 * @param text
 	 *            the text of the tag
 	 * @return a new instance of {@link TextExternalRecord} on each call
 	 */
-	TextExternalRecord textExternalRecordInstance(String key, String text);
+	TextExternalRecord textExternalRecordInstance(String type, String text);
 
 	/**
-	 * @param text
-	 *            the text of the tag
-	 * @return a new instance of {@link TextExternalRecord} on each call
-	 */
-	TextExternalRecord textExternalRecordInstance(String text);
-
-	/**
+	 * @param type
+	 *            the type of external data
 	 * @param uri
 	 *            the uri of the tag
 	 * @return a new instance of {@link UriExternalRecord} on each call
 	 */
-	UriExternalRecord uriExternalRecordInstance(String uri);
+	UriExternalRecord uriExternalRecordInstance(String type, String uri);
 
 	/**
-	 * @param key
-	 *            the tag identifier
+	 * @param type
+	 *            the type of external data
 	 * @param uri
 	 *            the uri of the tag
 	 * @return a new instance of {@link UriExternalRecord} on each call
 	 */
-	UriExternalRecord uriExternalRecordInstance(String key, String uri);
-
-	/**
-	 * @param uri
-	 *            the uri of the tag
-	 * @return a new instance of {@link UriExternalRecord} on each call
-	 */
-	UriExternalRecord uriExternalRecordInstance(Uri uri);
-
-	/**
-	 * @param key
-	 *            the tag identifier
-	 * @param uri
-	 *            the uri of the tag
-	 * @return a new instance of {@link UriExternalRecord} on each call
-	 */
-	UriExternalRecord uriExternalRecordInstance(String key, Uri uri);
+	UriExternalRecord uriExternalRecordInstance(String type, Uri uri);
 
 	/**
 	 * @param packageName

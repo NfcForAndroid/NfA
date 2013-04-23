@@ -19,35 +19,35 @@ public final class NfaRecordFactory {
 		return instance;
 	}
 
-	private GreenRecordBaseFactory baseFactory;
-	private GreenRecordExtFactory extFactory;
-	private GreenRecordWktFactory wktFactory;
-	private GreenRecordNdefFactory ndefFactory;
+	private NfaRecordBaseFactory baseFactory;
+	private NfaRecordExtFactory extFactory;
+	private NfaRecordWktFactory wktFactory;
+	private NfaRecordNdefFactory ndefFactory;
 
-	private synchronized GreenRecordBaseFactory getBaseFactory() {
+	private synchronized NfaRecordBaseFactory getBaseFactory() {
 		if (baseFactory == null) {
-			baseFactory = new GreenRecordBaseFactory();
+			baseFactory = new NfaRecordBaseFactory();
 		}
 		return baseFactory;
 	}
 
-	private synchronized GreenRecordExtFactory getExtFactory() {
+	private synchronized NfaRecordExtFactory getExtFactory() {
 		if (extFactory == null) {
-			extFactory = new GreenRecordExtFactory();
+			extFactory = new NfaRecordExtFactory();
 		}
 		return extFactory;
 	}
 
-	private synchronized GreenRecordWktFactory getWktFactory() {
+	private synchronized NfaRecordWktFactory getWktFactory() {
 		if (wktFactory == null) {
-			wktFactory = new GreenRecordWktFactory();
+			wktFactory = new NfaRecordWktFactory();
 		}
 		return wktFactory;
 	}
 
-	private synchronized GreenRecordNdefFactory getNdefFactory() {
+	private synchronized NfaRecordNdefFactory getNdefFactory() {
 		if (ndefFactory == null) {
-			ndefFactory = new GreenRecordNdefFactory();
+			ndefFactory = new NfaRecordNdefFactory();
 		}
 		return ndefFactory;
 	}
@@ -68,16 +68,16 @@ public final class NfaRecordFactory {
 		return NfaRecordFactory.getInstance().getExtFactory();
 	}
 
-	private static class GreenRecordBaseFactory extends AbstractNfaRecordBaseFactory {
+	private static class NfaRecordBaseFactory extends AbstractNfaRecordBaseFactory {
 	}
 
-	private static class GreenRecordExtFactory extends AbstractNfaRecordExtFactory {
+	private static class NfaRecordExtFactory extends AbstractNfaRecordExtFactory {
 	}
 
-	private static class GreenRecordWktFactory extends AbstractNfaRecordWktFactory {
+	private static class NfaRecordWktFactory extends AbstractNfaRecordWktFactory {
 	}
 
-	private static class GreenRecordNdefFactory extends AbstractNfaRecordNdefFacory {
+	private static class NfaRecordNdefFactory extends AbstractNfaRecordNdefFacory {
 	}
 
 }

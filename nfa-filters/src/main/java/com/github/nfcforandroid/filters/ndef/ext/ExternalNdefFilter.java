@@ -20,7 +20,7 @@ import com.github.nfcforandroid.filters.cst.NfaFiltersCst;
  *         DataPath = the {@link #path}
  * 
  */
-public final class ExternalNdefFilter extends NdefFilter {
+public class ExternalNdefFilter extends NdefFilter {
 
 	/**
 	 * the base path

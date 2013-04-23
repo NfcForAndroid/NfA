@@ -37,7 +37,7 @@ import com.github.nfcforandroid.samples.R;
 
 abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 
-	protected TextView msg_feedback, msg_feedback_error;
+	protected TextView msg_feedback, msg_feedback_error, size;
 	protected Spinner type_tag, uri_prefix;
 	protected EditText tag_content, content_bis;
 	protected ImageView content_img;
@@ -64,6 +64,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 
 		msg_feedback = (TextView) findViewById(R.id.msg_feedback);
 		msg_feedback_error = (TextView) findViewById(R.id.msg_feedback_error);
+		size = (TextView) findViewById(R.id.size);
 		type_tag = (Spinner) findViewById(R.id.spinnerType);
 		uri_prefix = (Spinner) findViewById(R.id.uri_prefix);
 		tag_content = (EditText) findViewById(R.id.tag_content);
