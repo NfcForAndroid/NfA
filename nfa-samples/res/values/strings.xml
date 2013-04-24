@@ -19,5 +19,18 @@
     <string name="type_uri">Enter uri adress</string>
     <!-- ABS items -->
     <string name="item_rescan">Scan new tag</string>
+    <!-- Game -->
+    <string name="skip_button">Skip initialisation, i have tags</string>
+    <string name="next_button">Next</string>
+    <string name="init_button">Init Tags</string>
+    <string name="text_game">Welcome to litle game \nFirst of all you have to init 3 nfc tags before you play. This initialisation is mandatory for the rest of the game. Click on the button "Init Tags" to begin.</string>
+    <string name="game_waiting_tag1">Waiting tag 1 ...</string>
+    <string name="game_waiting_tag2">Waiting tag 2 ...</string>
+    <string name="game_waiting_tag3">Waiting tag 3 ...</string>
+    <string name="game_write_tag1">tag 1 write</string>
+    <string name="game_write_tag2">tag 2 write</string>
+    <string name="game_write_tag3">tag 3 write. please click on next button</string>
+    <string name="find_animal">Find the animal corresponding to this sound</string>
+    
 
 </resources>

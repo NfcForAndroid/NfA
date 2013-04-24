@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.github.nfcforandroid.samples.game.NfaGameWriter;
 import com.github.nfcforandroid.samples.read.NfaReadActivity;
 import com.github.nfcforandroid.samples.write.NfaBeamActivity;
 import com.github.nfcforandroid.samples.write.NfaBeamMultiActivity;
@@ -44,6 +45,9 @@ public class MainFragmentList extends SherlockListFragment {
 			break;
 		case 5:
 			startActivity(new Intent(getActivity(), NfaBeamMultiActivity.class));
+			break;
+		case 6:
+			startActivity(new Intent(getActivity(), NfaGameWriter.class));
 			break;
 
 		default:
