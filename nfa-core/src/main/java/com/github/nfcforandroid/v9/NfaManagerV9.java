@@ -146,8 +146,8 @@ class NfaManagerV9 implements INfaManager {
 	 * 
 	 * @see com.github.nfcforandroid.api.INfaManager#register(android.app.Activity, com.github.nfcforandroid.api.beans.NfaRecieveBean, com.github.nfcforandroid.api.INfaIntentFilter[])
 	 */
-	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaIntentFilter... greenfilters) {
-		register(activity, recieveConfig, null, greenfilters);
+	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaIntentFilter... nfafilters) {
+		register(activity, recieveConfig, null, nfafilters);
 	}
 
 	/*
@@ -216,7 +216,9 @@ class NfaManagerV9 implements INfaManager {
 						record = messages[i].getRecords()[j];
 						// We ask to the parser to convert the record
 						nfaRecord = (Record) parser.parseNdef(record);
-						if (recordCallBack) {
+						if ((!recieveConfig.isAvoidAndroidApplicationRecord() || //
+								!(nfaRecord instanceof AndroidApplicationRecord))//
+								&& recordCallBack) {
 							// we ask to the callback to do some stuff with the convert data
 							recieveRecord.recieveRecord(nfaRecord);
 						} else if (!recieveConfig.isAvoidAndroidApplicationRecord() || //

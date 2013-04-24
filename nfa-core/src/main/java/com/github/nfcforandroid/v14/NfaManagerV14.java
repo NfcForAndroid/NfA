@@ -127,8 +127,8 @@ class NfaManagerV14 implements INfaManager, ActivityLifecycleCallbacks {
 	 * 
 	 * @see com.github.nfcforandroid.api.INfaManager#register(android.app.Activity, com.github.nfcforandroid.api.beans.NfaRecieveBean, com.github.nfcforandroid.api.INfaIntentFilter[])
 	 */
-	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaIntentFilter... greenfilters) {
-		register(activity, recieveConfig, null, greenfilters);
+	public <Record extends INfaRecord> void register(Activity activity, NfaRecieveBean<Record> recieveConfig, INfaIntentFilter... nfafilters) {
+		register(activity, recieveConfig, null, nfafilters);
 	}
 
 	/*

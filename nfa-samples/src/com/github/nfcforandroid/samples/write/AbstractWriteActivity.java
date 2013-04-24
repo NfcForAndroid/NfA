@@ -240,7 +240,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 	}
 
 	private File getOutputMediaFile(int type) {
-		File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "GreenNfcSample");
+		File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "NfASample");
 
 		if (!mediaStorageDir.exists()) {
 			if (!mediaStorageDir.mkdirs()) {

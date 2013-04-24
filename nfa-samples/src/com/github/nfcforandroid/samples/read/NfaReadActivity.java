@@ -53,6 +53,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 						.intent(getIntent()) //
 						.intentRecieveRecord(this) // INfaIntentRecieveRecord
 						.parser(NDEF_PARSER) //
+						.avoidAndroidApplicationRecord(true) //
 						.build() //
 				, NDEF_FILTER //
 				, TEXT_FILTER //
@@ -70,6 +71,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 				.intent(intent) //
 				.intentRecieveRecord(this) // INfaIntentRecieveRecord
 				.parser(NDEF_PARSER) //
+				.avoidAndroidApplicationRecord(true) //
 				.build());
 	}
 

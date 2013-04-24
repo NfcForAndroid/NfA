@@ -7,41 +7,51 @@
 		<version>0.7.0-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>nfa-parsers</artifactId>
-	<name>Nfc For Android - Parsers</name>
-	<description>Nfc parsers</description>
+	<artifactId>nfa-all</artifactId>
+	<name>Nfc For Android - All in one</name>
+	<description>All in one project for NfA project</description>
 	<packaging>jar</packaging>
 
+
+
 	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>annotations</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>com.github.nfcforandroid</groupId>
 			<artifactId>nfa-api</artifactId>
 			<version>${project.version}</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-apklib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-core</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.nfcforandroid</groupId>
 			<artifactId>nfa-filters</artifactId>
 			<version>${project.version}</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-parsers</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.nfcforandroid</groupId>
 			<artifactId>nfa-records</artifactId>
 			<version>${project.version}</version>
-			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-writers</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 	</dependencies>
-	
 	
 
 	<build>
@@ -83,20 +93,30 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- 
 			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>downloads-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-			</plugin>
-			 -->
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-shade-plugin</artifactId>
+		        <version>2.0</version>
+		        <executions>
+		          <execution>
+		            <phase>package</phase>
+		            <goals>
+		              <goal>shade</goal>
+		            </goals>
+		            <configuration>
+		              <filters>
+		                <filter>
+		                  <artifact>com.github.nfcforandroid:**</artifact>
+		                  <includes>
+		                    <include>**</include>
+		                  </includes>
+		                </filter>
+		              </filters>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
+
 		</plugins>
 	</build>
 
