@@ -210,20 +210,20 @@ class NfaManagerV9 implements INfaManager {
 			if (rawMsgs != null) {
 				treat = true;
 				messages = new NdefMessage[rawMsgs.length];
-				for (int i = 0; i < rawMsgs.length; i++) {
+				messageLbl: for (int i = 0; i < rawMsgs.length; i++) {
 					messages[i] = (NdefMessage) rawMsgs[i];
-					for (int j = 0; j < messages[i].getRecords().length; j++) {
+					recordLbl: for (int j = 0; j < messages[i].getRecords().length; j++) {
 						record = messages[i].getRecords()[j];
+						if (recieveConfig.isAvoidAndroidApplicationRecord() //
+								&& AndroidApplicationRecord.isAndroidApplicationRecord(record.getType())) {
+							continue recordLbl;
+						}
 						// We ask to the parser to convert the record
 						nfaRecord = (Record) parser.parseNdef(record);
-						if ((!recieveConfig.isAvoidAndroidApplicationRecord() || //
-								!(nfaRecord instanceof AndroidApplicationRecord))//
-								&& recordCallBack) {
+						if (recordCallBack) {
 							// we ask to the callback to do some stuff with the convert data
 							recieveRecord.recieveRecord(nfaRecord);
-						} else if (!recieveConfig.isAvoidAndroidApplicationRecord() || //
-								!(nfaRecord instanceof AndroidApplicationRecord) //
-						) {
+						} else {
 							// We reconstruct the ndefmessage
 							nfaMessage.addRecord(nfaRecord);
 						}

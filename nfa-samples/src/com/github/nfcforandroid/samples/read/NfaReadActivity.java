@@ -53,7 +53,6 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 						.intent(getIntent()) //
 						.intentRecieveRecord(this) // INfaIntentRecieveRecord
 						.parser(NDEF_PARSER) //
-						.avoidAndroidApplicationRecord(true) //
 						.build() //
 				, NDEF_FILTER //
 				, TEXT_FILTER //
@@ -71,7 +70,6 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 				.intent(intent) //
 				.intentRecieveRecord(this) // INfaIntentRecieveRecord
 				.parser(NDEF_PARSER) //
-				.avoidAndroidApplicationRecord(true) //
 				.build());
 	}
 
@@ -118,6 +116,11 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 	 * Action Bar management
 	 **/
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
@@ -125,6 +128,11 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection

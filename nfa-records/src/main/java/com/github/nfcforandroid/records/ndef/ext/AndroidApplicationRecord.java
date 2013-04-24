@@ -1,5 +1,7 @@
 package com.github.nfcforandroid.records.ndef.ext;
 
+import java.util.Arrays;
+
 import android.content.Context;
 
 import com.github.nfcforandroid.api.INfaRecord;
@@ -16,10 +18,11 @@ public final class AndroidApplicationRecord extends ExternalRecord {
 
 	private static final String JAVA_PACKAGE_CONVENSION = "^[a-z]+(\\.[a-zA-Z_][a-zA-Z0-9_]*)*$"; //
 
-	public static final String NAME_SPACE = "android.com";
-	public static final String TYPE_ID = "pkg";
+	private static final String NAME_SPACE = "android.com";
+	private static final String TYPE_ID = "pkg";
 
 	public static final String TYPE = NAME_SPACE + ":" + TYPE_ID;
+	private static final byte[] TYPE_BYTE_ARRAY = TYPE.getBytes();
 
 	protected AndroidApplicationRecord(Context context) {
 		this(context.getPackageName());
@@ -45,6 +48,15 @@ public final class AndroidApplicationRecord extends ExternalRecord {
 	 */
 	public boolean hasPackageName() {
 		return hasDatas();
+	}
+
+	/**
+	 * @param type
+	 *            the type of the record tag
+	 * @return <code>true</code> if the type is corresponding to an AndroidApplicationRecord
+	 */
+	public static final boolean isAndroidApplicationRecord(byte[] type) {
+		return type != null && type.length > 0 && Arrays.equals(TYPE_BYTE_ARRAY, type);
 	}
 
 }

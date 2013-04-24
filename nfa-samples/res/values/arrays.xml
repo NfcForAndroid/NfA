@@ -8,7 +8,9 @@
         <item name="beam">Beam (SNEP)</item>
         <item name="beam_multi">Beam Multi record</item>
         <item name="game">Game for kids</item>
+        <!-- 
         <item name="fake_market">Fake market use case</item>
+         -->
     </string-array>
     <string-array name="type_tags">
         <item name="empty">Empty</item>

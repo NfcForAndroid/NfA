@@ -24,7 +24,7 @@ import com.github.nfcforandroid.api.client.INfaIntentRecieveRecord;
  *         A {@link INfaParser} for the mecanism to parse the datas
  *         </ul>
  *         <ul>
- *         A boolean that indicates if we want to include in the final message the potential AndroidApplicatioNRecord found.
+ *         A boolean that indicates if we want to include in the final message the potential AndroidApplicatioNRecord found. The default value is true
  *         </ul>
  *         </li>
  * 
@@ -43,7 +43,7 @@ public final class NfaRecieveBean<Record extends INfaRecord> {
 	private INfaIntentRecieveRecord<Record> nfaIntentRecieveRecord;
 	private INfaIntentRecieveMessage nfaIntentRecieveMessage;
 	private INfaParser nfaParser;
-	private boolean avoidAndroidApplicationRecord;
+	private boolean avoidAndroidApplicationRecord = true;
 
 	private NfaRecieveBean() {
 	}
@@ -152,7 +152,7 @@ public final class NfaRecieveBean<Record extends INfaRecord> {
 
 		/**
 		 * @param avoid
-		 *            <code>true</code> if we don't want to return an AndroidApplicationRecord if there is one detected in the original message. If not called, the value will be set to false
+		 *            <code>true</code> if we don't want to return an AndroidApplicationRecord if there is one detected in the original message. If not called, the value will be set to <code>true</code>
 		 * @return the current instance of the builder
 		 */
 		public NfaRecieveBeanBuilder<Record> avoidAndroidApplicationRecord(final boolean avoid) {

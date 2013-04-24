@@ -16,4 +16,7 @@ public class NfaSampleCst {
 	 */
 	public static final String TYPE_EXTERNAL_GAME = "com.nfa:game";
 
+	public static final int VALUE_TIGER = 0;
+	public static final int VALUE_ELEPHANT = 1;
+
 }
