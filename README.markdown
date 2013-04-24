@@ -26,6 +26,18 @@ With this library, you can easly do :
 * Use the snep protocol (Beam on android)
 * Transfert multiples record per ndefMessage
 
+### nfa-all : 
+This module reference all the others module, it is use for generating a single jar
+
+Maven dependency
+```xml
+	<dependency>
+		<groupId>com.github.nfcforandroid</groupId>
+		<artifactId>nfa-api</artifactId>
+		<version>0.7.0-SNAPSHOT</version>
+	</dependency>
+```
+
 ### nfa-api : 
 In this module is defined all the interface and the apis that are exposed with NfA
 
@@ -34,7 +46,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-api</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -58,7 +70,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-records</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -80,7 +92,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-writers</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -103,7 +115,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-parsers</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -122,7 +134,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-filters</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -134,7 +146,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-core</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -146,7 +158,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-apklib</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</dependency>
 ```
 
@@ -160,13 +172,18 @@ See the [wiki pages](https://github.com/NfcForAndroid/NfA/wiki) for the developp
 ## In the road map
 
 Here is the list the next plained features : 
-* Have for each record : a writer / parser / filter
-* Add Signature Record
-* Add the possibility for smartPoster to have more than a title
-* Add Handover records
-* Add Crypto module for an easier management of data to transfert
-* Add Abstract Activities for an easer management of methods link to the life cycle
-* Optimize the code
+* 0.8.0
+ * Have for each record : a writer / parser / filter
+ * Add Signature Record
+ * Add the possibility for smartPoster to have more than a title
+ * Add junit tests
+* 0.9.0
+ * Add Handover records
+ * Add Crypto module for an easier management of data to transfert
+ * Add Abstract Activities for an easer management of methods link to the life cycle
+* 1.0.0
+ * Optimize the code
+ * bug fix
 
 
 ## Source of inspiration
