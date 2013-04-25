@@ -34,6 +34,7 @@ import com.github.nfcforandroid.api.INfaWriter;
 import com.github.nfcforandroid.records.factory.NfaRecordFactory;
 import com.github.nfcforandroid.records.ndef.wkt.SmartPosterRecordDatas;
 import com.github.nfcforandroid.samples.R;
+import com.github.nfcforandroid.samples.cst.NfaSampleCst;
 
 abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 
@@ -48,6 +49,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 	protected static final int TAG_URI = 2;
 	protected static final int TAG_SMART_POSTER = 3;
 	protected static final int TAG_IMAGE = 4;
+	protected static final int TAG_EXTERNAL = 5;
 
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -90,6 +92,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 					content_img.setVisibility(View.GONE);
 					break;
 				case TAG_TEXT:
+				case TAG_EXTERNAL:
 					tag_content.setEnabled(true);
 					tag_content.setHint(R.string.type_text);
 					content_bis.setVisibility(View.GONE);
@@ -157,14 +160,14 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 		}
 		case TAG_TEXT: {
 			writer = (INfaWriter<Record>) TEXT_WRITER;
-			record = (Record) NfaRecordFactory.wellKnowTypeFactory().textRecordInstance(tag_content.getText().toString());
+			record = (Record) NfaRecordFactory.wellKnowTypeRecords().textRecordInstance(tag_content.getText().toString());
 			break;
 		}
 		case TAG_URI: {
 			writer = (INfaWriter<Record>) URI_WRITER;
 			String uriPrefix = this.uri_prefix.getSelectedItem().toString();
 			String uri = uriPrefix.length() > 0 ? uriPrefix + tag_content.getText().toString() : tag_content.getText().toString();
-			record = (Record) NfaRecordFactory.wellKnowTypeFactory().uriRecordInstance(uri);
+			record = (Record) NfaRecordFactory.wellKnowTypeRecords().uriRecordInstance(uri);
 
 			break;
 		}
@@ -174,10 +177,10 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 			String titleSmartPoster = content_bis.getText().toString();
 			String uriPrefix = this.uri_prefix.getSelectedItem().toString();
 			String uri = uriPrefix.length() > 0 ? uriPrefix + uriSmartPoster : uriSmartPoster;
-			record = (Record) NfaRecordFactory.wellKnowTypeFactory().smartPosterRecordInstance( //
+			record = (Record) NfaRecordFactory.wellKnowTypeRecords().smartPosterRecordInstance( //
 					SmartPosterRecordDatas.instance() //
-							.uri(NfaRecordFactory.wellKnowTypeFactory().uriRecordInstance(uri)) //
-							.title(NfaRecordFactory.wellKnowTypeFactory().textRecordInstance(titleSmartPoster)) //
+							.uri(NfaRecordFactory.wellKnowTypeRecords().uriRecordInstance(uri)) //
+							.title(NfaRecordFactory.wellKnowTypeRecords().textRecordInstance(titleSmartPoster)) //
 							.build()//
 					);
 
@@ -190,10 +193,16 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 			imageBitmap.compress(CompressFormat.JPEG, 40, os);
 			try {
 				os.close();
-				record = (Record) NfaRecordFactory.ndefFactory().mimeRecordInstance("image/jpeg", os.toByteArray());
+				record = (Record) NfaRecordFactory.ndefRecords().mimeRecordInstance("image/jpeg", os.toByteArray());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 			}
+
+			break;
+		}
+		case TAG_EXTERNAL: {
+			writer = (INfaWriter<Record>) EXTERNAL_TEXT_WRITER;
+			record = (Record) NfaRecordFactory.externalRecords().textExternalRecordInstance(NfaSampleCst.TYPE_EXTERNAL, tag_content.getText().toString());
 
 			break;
 		}
@@ -223,6 +232,7 @@ abstract class AbstractWriteActivity extends SherlockFragmentActivity {
 		case R.id.rescan_item:
 			msg_feedback.setText(R.string.wating_tag);
 			msg_feedback_error.setVisibility(View.GONE);
+			size.setVisibility(View.GONE);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -40,7 +40,7 @@ public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
 		NdefRecord[] recordsArray = null;
 		if (textRecord == null) {
 
-			INfaWriter<UriRecord> uriWriter = NfaWriterFactory.wellKnowTypeFactory().uriWriter();
+			INfaWriter<UriRecord> uriWriter = NfaWriterFactory.wellKnowTypeWriters().uriWriter();
 			uriWriter.init(uriRecord);
 
 			recordsArray = new NdefRecord[] { //
@@ -48,8 +48,8 @@ public class SmartPosterWriter extends AbstractNdefWriter<SmartPosterRecord> {
 			};
 		} else {
 
-			INfaWriter<TextRecord> textWriter = NfaWriterFactory.wellKnowTypeFactory().textWriter();
-			INfaWriter<UriRecord> uriWriter = NfaWriterFactory.wellKnowTypeFactory().uriWriter();
+			INfaWriter<TextRecord> textWriter = NfaWriterFactory.wellKnowTypeWriters().textWriter();
+			INfaWriter<UriRecord> uriWriter = NfaWriterFactory.wellKnowTypeWriters().uriWriter();
 			textWriter.init(textRecord);
 			uriWriter.init(uriRecord);
 

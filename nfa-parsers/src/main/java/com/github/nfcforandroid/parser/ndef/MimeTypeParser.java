@@ -34,7 +34,7 @@ public class MimeTypeParser extends NdefParser {
 
 		String contentType = new String(record.getType(), Charset.forName("US_ASCII"));
 
-		return NfaRecordFactory.ndefFactory().mimeRecordInstance(contentType, record.getPayload());
+		return NfaRecordFactory.ndefRecords().mimeRecordInstance(contentType, record.getPayload());
 	}
 
 }

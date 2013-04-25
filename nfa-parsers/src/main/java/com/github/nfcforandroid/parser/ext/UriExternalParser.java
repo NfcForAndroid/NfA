@@ -32,7 +32,7 @@ public final class UriExternalParser extends ExternalParser {
 	@Override
 	public INfaRecord parseNdef(NdefRecord ndefRecord) {
 		if (android.os.Build.VERSION.SDK_INT >= 16) {
-			return NfaRecordFactory.externalFactory().uriExternalRecordInstance(verifyType(ndefRecord), ndefRecord.toUri());
+			return NfaRecordFactory.externalRecords().uriExternalRecordInstance(verifyType(ndefRecord), ndefRecord.toUri());
 		} else {
 			byte[] payload = ndefRecord.getPayload();
 			if (payload.length < 2) {
@@ -47,7 +47,7 @@ public final class UriExternalParser extends ExternalParser {
 			}
 			String prefix = UriSchemeEnum.values()[prefixIndex].getScheme();
 			String suffix = new String(Arrays.copyOfRange(payload, 1, payload.length), Charset.forName("UTF-8"));
-			return NfaRecordFactory.externalFactory().uriExternalRecordInstance(verifyType(ndefRecord), Uri.parse(prefix + suffix));
+			return NfaRecordFactory.externalRecords().uriExternalRecordInstance(verifyType(ndefRecord), Uri.parse(prefix + suffix));
 		}
 	}
 

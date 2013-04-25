@@ -121,7 +121,7 @@ public abstract class AbstractNfaGameAndMarketWriter extends SherlockActivity im
 				}, true // Add Android Application Record
 				, writerBuilder //
 						.writer(EXTERNAL_TEXT_WRITER) //
-						.record(NfaRecordFactory.externalFactory().textExternalRecordInstance(getFilterPath(), String.valueOf(curentTag))) //
+						.record(NfaRecordFactory.externalRecords().textExternalRecordInstance(getFilterPath(), String.valueOf(curentTag))) //
 						.build());
 	}
 

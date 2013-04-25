@@ -131,7 +131,7 @@ class NfaManagerV9 implements INfaManager {
 				}
 				i++;
 				if (beamWriter.addAndroidApplicationRecord()) {
-					NfaWriterFactory.ANDROID_APPLICATION_WRITER.init(NfaRecordFactory.externalFactory().androidApplicationRecordInstance(activity));
+					NfaWriterFactory.ANDROID_APPLICATION_WRITER.init(NfaRecordFactory.externalRecords().androidApplicationRecordInstance(activity));
 					recordArray[i] = NfaWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
 					NfaWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 				}
@@ -439,7 +439,7 @@ class NfaManagerV9 implements INfaManager {
 						}
 					}
 					if (addAndroidApplicationRecord) {
-						NfaWriterFactory.ANDROID_APPLICATION_WRITER.init(NfaRecordFactory.externalFactory().androidApplicationRecordInstance(context));
+						NfaWriterFactory.ANDROID_APPLICATION_WRITER.init(NfaRecordFactory.externalRecords().androidApplicationRecordInstance(context));
 						recordArray[writers.length] = NfaWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
 						NfaWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 					}

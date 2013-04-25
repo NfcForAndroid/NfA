@@ -29,7 +29,7 @@ public class ExternalParser extends NdefParser {
 	public INfaRecord parseNdef(android.nfc.NdefRecord ndefRecord) {
 		byte[] payload = ndefRecord.getPayload();
 
-		ExternalRecord textRecord = NfaRecordFactory.externalFactory().externalRecordInstance(verifyType(ndefRecord), payload);
+		ExternalRecord textRecord = NfaRecordFactory.externalRecords().externalRecordInstance(verifyType(ndefRecord), payload);
 		return textRecord;
 	}
 

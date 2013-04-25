@@ -53,7 +53,7 @@ public final class SmartPosterParser extends NdefParser {
 		SmartPosterRecordDatasBuilder smartPosterRecordDatas = SmartPosterRecordDatas.instance();
 		INfaRecord record = null;
 		for (NdefRecord ndefRecordTmp : message.getRecords()) {
-			record = NfaParserFactory.ndefFactory().ndefParser().parseNdef(ndefRecordTmp);
+			record = NfaParserFactory.ndefParsers().ndefParser().parseNdef(ndefRecordTmp);
 			if (record instanceof UriRecord) {
 				smartPosterRecordDatas.uri((UriRecord) record);
 			} else if (record instanceof TextRecord) {
@@ -65,6 +65,6 @@ public final class SmartPosterParser extends NdefParser {
 			else {
 			}
 		}
-		return NfaRecordFactory.wellKnowTypeFactory().smartPosterRecordInstance(smartPosterRecordDatas.build());
+		return NfaRecordFactory.wellKnowTypeRecords().smartPosterRecordInstance(smartPosterRecordDatas.build());
 	}
 }

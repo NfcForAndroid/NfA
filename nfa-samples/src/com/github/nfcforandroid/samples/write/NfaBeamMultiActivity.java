@@ -57,11 +57,11 @@ public class NfaBeamMultiActivity extends SherlockFragmentActivity implements IN
 		return Arrays.asList( //
 				builder1 //
 				.writer(TEXT_WRITER) //
-						.record(NfaRecordFactory.wellKnowTypeFactory().textRecordInstance(text_content_1.getText().toString())) //
+						.record(NfaRecordFactory.wellKnowTypeRecords().textRecordInstance(text_content_1.getText().toString())) //
 						.build() //
 				, builder2 //
 						.writer(TEXT_WRITER) //
-						.record(NfaRecordFactory.wellKnowTypeFactory().textRecordInstance(text_content_2.getText().toString())) //
+						.record(NfaRecordFactory.wellKnowTypeRecords().textRecordInstance(text_content_2.getText().toString())) //
 						.build() //
 				);
 	}

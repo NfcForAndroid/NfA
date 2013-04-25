@@ -20,54 +20,54 @@ public final class NfaParserFactory {
 	/**
 	 * Singleton instance for basic tag
 	 */
-	public static final INfaParser TAG_PARSER = baseFactory().tagParser();
+	public static final INfaParser TAG_PARSER = baseParsers().tagParser();
 
 	/**
 	 * Singleton instance for Ndef tag parser
 	 */
-	public static final INfaParser NDEF_PARSER = ndefFactory().ndefParser();
+	public static final INfaParser NDEF_PARSER = ndefParsers().ndefParser();
 	/**
 	 * Singleton instance for mime tag parser
 	 */
-	public static final INfaParser MIME_TYPE_PARSER = ndefFactory().mimeTypeParser();
+	public static final INfaParser MIME_TYPE_PARSER = ndefParsers().mimeTypeParser();
 	/**
 	 * Singleton instance for unkown tag parser
 	 */
-	public static final INfaParser UNKNOWN_PARSER = ndefFactory().unknownParser();
+	public static final INfaParser UNKNOWN_PARSER = ndefParsers().unknownParser();
 	/**
 	 * Singleton instance for unsupported tag parser
 	 */
-	public static final INfaParser UNSUPPORTED_PARSER = ndefFactory().unsupportedParser();
+	public static final INfaParser UNSUPPORTED_PARSER = ndefParsers().unsupportedParser();
 
 	/**
 	 * Singleton instance for external tag parser
 	 */
-	public static final INfaParser EXTERNAL_PARSER = externalFactory().externalParser();
+	public static final INfaParser EXTERNAL_PARSER = externalParsers().externalParser();
 	/**
 	 * Singleton instance for external textual tag parser
 	 */
-	public static final INfaParser EXTERNAL_TEXT_PARSER = externalFactory().externalTextParser();
+	public static final INfaParser EXTERNAL_TEXT_PARSER = externalParsers().externalTextParser();
 	/**
 	 * Singleton instance for external textual tag parser
 	 */
-	public static final INfaParser EXTERNAL_URI_PARSER = externalFactory().externalUriParser();
+	public static final INfaParser EXTERNAL_URI_PARSER = externalParsers().externalUriParser();
 	/**
 	 * Singleton instance for external textual tag parser
 	 */
-	public static final INfaParser ANDROID_APPLICATION_PARSER = externalFactory().androidApplicationParser();
+	public static final INfaParser ANDROID_APPLICATION_PARSER = externalParsers().androidApplicationParser();
 
 	/**
 	 * Singleton instance for text tag parser
 	 */
-	public static final INfaParser TEXT_PARSER = wellKnowTypeFactory().textParser();
+	public static final INfaParser TEXT_PARSER = wellKnowTypeParsers().textParser();
 	/**
 	 * Singleton instance for uri tag parser
 	 */
-	public static final INfaParser URI_PARSER = wellKnowTypeFactory().uriParser();
+	public static final INfaParser URI_PARSER = wellKnowTypeParsers().uriParser();
 	/**
 	 * Singleton instance for smart poster tag parser
 	 */
-	public static final INfaParser SMART_POSTER_PARSER = wellKnowTypeFactory().smartPosterParser();
+	public static final INfaParser SMART_POSTER_PARSER = wellKnowTypeParsers().smartPosterParser();
 
 	private NfaParserFactory() {
 	}
@@ -115,28 +115,28 @@ public final class NfaParserFactory {
 	/**
 	 * @return Singleton instance for externals tags parser
 	 */
-	public static INfaParserExtFactory externalFactory() {
+	public static INfaParserExtFactory externalParsers() {
 		return NfaParserFactory.getInstance().getExtFactory();
 	}
 
 	/**
 	 * @return Singleton instance for well known types tags parser
 	 */
-	public static INfaParserWktFactory wellKnowTypeFactory() {
+	public static INfaParserWktFactory wellKnowTypeParsers() {
 		return NfaParserFactory.getInstance().getWktFactory();
 	}
 
 	/**
 	 * @return Singleton instance for bases tags parser
 	 */
-	public static INfaParserBaseFactory baseFactory() {
+	public static INfaParserBaseFactory baseParsers() {
 		return NfaParserFactory.getInstance().getBaseFactory();
 	}
 
 	/**
 	 * @return Singleton instance for ndefs tags parser
 	 */
-	public static INfaParserNdefFactory ndefFactory() {
+	public static INfaParserNdefFactory ndefParsers() {
 		return NfaParserFactory.getInstance().getNdefFactory();
 	}
 

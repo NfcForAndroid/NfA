@@ -10,7 +10,7 @@ public final class NfaRecordFactory {
 
 	private static NfaRecordFactory instance;
 
-	public static final EmptyRecord EMPTY_RECORD = baseFactory().emptyRecord();
+	public static final EmptyRecord EMPTY_RECORD = baseRecords().emptyRecord();
 
 	private static final synchronized NfaRecordFactory getInstance() {
 		if (instance == null) {
@@ -52,19 +52,19 @@ public final class NfaRecordFactory {
 		return ndefFactory;
 	}
 
-	public static INfaRecordBaseFactory baseFactory() {
+	public static INfaRecordBaseFactory baseRecords() {
 		return NfaRecordFactory.getInstance().getBaseFactory();
 	}
 
-	public static INfaRecordNdefFactory ndefFactory() {
+	public static INfaRecordNdefFactory ndefRecords() {
 		return NfaRecordFactory.getInstance().getNdefFactory();
 	}
 
-	public static INfaRecordWktFactory wellKnowTypeFactory() {
+	public static INfaRecordWktFactory wellKnowTypeRecords() {
 		return NfaRecordFactory.getInstance().getWktFactory();
 	}
 
-	public static INfaRecordExtFactory externalFactory() {
+	public static INfaRecordExtFactory externalRecords() {
 		return NfaRecordFactory.getInstance().getExtFactory();
 	}
 

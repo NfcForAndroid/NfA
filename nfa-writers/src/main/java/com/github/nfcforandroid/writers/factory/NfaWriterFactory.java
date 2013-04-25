@@ -31,54 +31,54 @@ public final class NfaWriterFactory {
 	/**
 	 * A singleton instance of empty writer
 	 */
-	public static final INfaWriter<INfaRecord> EMPTY_WRITER = baseFactory().emptyWriter();
+	public static final INfaWriter<INfaRecord> EMPTY_WRITER = baseWriters().emptyWriter();
 
 	/**
 	 * A singleton instance of ndef writer
 	 */
-	public static final INfaWriter<NdefRecord> NDEF_WRITER = ndefFactory().ndefWriter();
+	public static final INfaWriter<NdefRecord> NDEF_WRITER = ndefWriters().ndefWriter();
 	/**
 	 * A singleton instance of mime type writer
 	 */
-	public static final INfaWriter<MimeTypeRecord> MIME_TYPE_WRITER = ndefFactory().mimeTypeWriter();
+	public static final INfaWriter<MimeTypeRecord> MIME_TYPE_WRITER = ndefWriters().mimeTypeWriter();
 	/**
 	 * A singleton instance of unknown writer
 	 */
-	public static final INfaWriter<UnknownRecord> UNKNOWN_WRITER = ndefFactory().unknownWriter();
+	public static final INfaWriter<UnknownRecord> UNKNOWN_WRITER = ndefWriters().unknownWriter();
 	/**
 	 * A singleton instance of unspported writer
 	 */
-	public static final INfaWriter<UnsupportedRecord> UNSUPPORTED_WRITER = ndefFactory().unsupportedWriter();
+	public static final INfaWriter<UnsupportedRecord> UNSUPPORTED_WRITER = ndefWriters().unsupportedWriter();
 
 	/**
 	 * A singleton instance of text writer
 	 */
-	public static final INfaWriter<TextRecord> TEXT_WRITER = wellKnowTypeFactory().textWriter();
+	public static final INfaWriter<TextRecord> TEXT_WRITER = wellKnowTypeWriters().textWriter();
 	/**
 	 * A singleton instance of uri writer
 	 */
-	public static final INfaWriter<UriRecord> URI_WRITER = wellKnowTypeFactory().uriWriter();
+	public static final INfaWriter<UriRecord> URI_WRITER = wellKnowTypeWriters().uriWriter();
 	/**
 	 * A singleton instance of smart poster writer
 	 */
-	public static final INfaWriter<SmartPosterRecord> SMART_POSTER_WRITER = wellKnowTypeFactory().smartPosterWriter();
+	public static final INfaWriter<SmartPosterRecord> SMART_POSTER_WRITER = wellKnowTypeWriters().smartPosterWriter();
 
 	/**
 	 * A singleton instance of Android application writer
 	 */
-	public static final INfaWriter<AndroidApplicationRecord> ANDROID_APPLICATION_WRITER = externalFactory().androidApplicationWriter();
+	public static final INfaWriter<AndroidApplicationRecord> ANDROID_APPLICATION_WRITER = externalWriters().androidApplicationWriter();
 	/**
 	 * A singleton instance of external writer
 	 */
-	public static final INfaWriter<ExternalRecord> EXTERNAL_WRITER = externalFactory().externalWriter();
+	public static final INfaWriter<ExternalRecord> EXTERNAL_WRITER = externalWriters().externalWriter();
 	/**
 	 * A singleton instance of external text writer
 	 */
-	public static final INfaWriter<TextExternalRecord> EXTERNAL_TEXT_WRITER = externalFactory().externalTextWriter();
+	public static final INfaWriter<TextExternalRecord> EXTERNAL_TEXT_WRITER = externalWriters().externalTextWriter();
 	/**
 	 * A singleton instance of external uri writer
 	 */
-	public static final INfaWriter<UriExternalRecord> EXTERNAL_URI_WRITER = externalFactory().externalUriWriter();
+	public static final INfaWriter<UriExternalRecord> EXTERNAL_URI_WRITER = externalWriters().externalUriWriter();
 
 	private static final synchronized NfaWriterFactory getInstance() {
 		if (instance == null) {
@@ -123,28 +123,28 @@ public final class NfaWriterFactory {
 	/**
 	 * @return a singleton instance of {@link INfaWriterWktFactory}
 	 */
-	public static INfaWriterWktFactory wellKnowTypeFactory() {
+	public static INfaWriterWktFactory wellKnowTypeWriters() {
 		return NfaWriterFactory.getInstance().getWktFactory();
 	}
 
 	/**
 	 * @return a singleton instance of {@link INfaWriterBaseFactory}
 	 */
-	public static INfaWriterBaseFactory baseFactory() {
+	public static INfaWriterBaseFactory baseWriters() {
 		return NfaWriterFactory.getInstance().getBaseFactory();
 	}
 
 	/**
 	 * @return a singleton instance of {@link INfaWriterNdefFactory}
 	 */
-	public static INfaWriterNdefFactory ndefFactory() {
+	public static INfaWriterNdefFactory ndefWriters() {
 		return NfaWriterFactory.getInstance().getNdefFactory();
 	}
 
 	/**
 	 * @return a singleton instance of {@link INfaWriterExternalFactory}
 	 */
-	public static INfaWriterExternalFactory externalFactory() {
+	public static INfaWriterExternalFactory externalWriters() {
 		return NfaWriterFactory.getInstance().getExternalFactory();
 	}
 

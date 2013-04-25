@@ -40,7 +40,7 @@ public final class TextExternalParser extends ExternalParser {
 			throw new RuntimeException(e);
 		}
 
-		TextExternalRecord textRecord = NfaRecordFactory.externalFactory().textExternalRecordInstance(verifyType(ndefRecord), message);
+		TextExternalRecord textRecord = NfaRecordFactory.externalRecords().textExternalRecordInstance(verifyType(ndefRecord), message);
 		return textRecord;
 	}
 

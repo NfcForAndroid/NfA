@@ -55,7 +55,7 @@ public final class TextParser extends NdefParser {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
-		TextRecord textRecord = NfaRecordFactory.wellKnowTypeFactory().textRecordInstance(message, textEncoding, new Locale(languageCode));
+		TextRecord textRecord = NfaRecordFactory.wellKnowTypeRecords().textRecordInstance(message, textEncoding, new Locale(languageCode));
 		return textRecord;
 	}
 

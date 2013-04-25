@@ -88,7 +88,7 @@ class NfaManagerV14 implements INfaManager, ActivityLifecycleCallbacks {
 						i++;
 					}
 					if (beamWriter.addAndroidApplicationRecord()) {
-						NfaWriterFactory.ANDROID_APPLICATION_WRITER.init(NfaRecordFactory.externalFactory().androidApplicationRecordInstance(activity));
+						NfaWriterFactory.ANDROID_APPLICATION_WRITER.init(NfaRecordFactory.externalRecords().androidApplicationRecordInstance(activity));
 						recordArray[i] = NfaWriterFactory.ANDROID_APPLICATION_WRITER.getNdefRecord();
 						NfaWriterFactory.ANDROID_APPLICATION_WRITER.reset();
 					}

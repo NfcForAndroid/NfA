@@ -41,7 +41,7 @@ public final class AndroidApplicationParser extends NdefParser {
 
 		}
 
-		return NfaRecordFactory.externalFactory().androidApplicationRecordInstance(new String(packageNameArray));
+		return NfaRecordFactory.externalRecords().androidApplicationRecordInstance(new String(packageNameArray));
 	}
 
 }
