@@ -42,7 +42,7 @@ public class EmptyWriter extends AbstractWriter<INfaRecord> {
 	 * @see com.github.nfcforandroid.api.INfaWriter#getNdefRecord()
 	 */
 	public NdefRecord getNdefRecord() {
-		return new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null);
+		return new NdefRecord(NdefRecord.TNF_EMPTY, EMPTY_BYTE, new byte[0], EMPTY_BYTE);
 	}
 
 	/*

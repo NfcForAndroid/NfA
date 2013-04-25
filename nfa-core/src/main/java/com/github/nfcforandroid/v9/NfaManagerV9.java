@@ -351,7 +351,7 @@ class NfaManagerV9 implements INfaManager {
 
 				try {
 					// We write an empty message
-					ndef.writeNdefMessage(new NdefMessage(new NdefRecord[] { new NdefRecord(NdefRecord.TNF_EMPTY, null, new byte[0], null) }));
+					ndef.writeNdefMessage(new NdefMessage(new NdefRecord[] { NfaWriterFactory.EMPTY_WRITER.getNdefRecord() }));
 				} catch (FormatException e) {
 					Log.e("Error : ", e.getMessage(), e);
 					return new WriteException(e);

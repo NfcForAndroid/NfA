@@ -161,10 +161,10 @@ public class NfaGame extends SherlockActivity implements INfaIntentRecieveRecord
 		case DragEvent.ACTION_DRAG_STARTED:
 			break;
 		case DragEvent.ACTION_DRAG_ENTERED:
-			v.setBackground(enterShape);
+			v.setBackgroundDrawable(enterShape);
 			break;
 		case DragEvent.ACTION_DRAG_EXITED:
-			v.setBackground(normalShape);
+			v.setBackgroundDrawable(normalShape);
 
 			break;
 		case DragEvent.ACTION_DROP:
@@ -181,7 +181,7 @@ public class NfaGame extends SherlockActivity implements INfaIntentRecieveRecord
 			break;
 		case DragEvent.ACTION_DRAG_ENDED:
 
-			v.setBackground(curentTagScan == NfaSampleCst.VALUE_TIGER ? tigerView.getBackground() : elephantView.getBackground());
+			v.setBackgroundDrawable(curentTagScan == NfaSampleCst.VALUE_TIGER ? tigerView.getBackground() : elephantView.getBackground());
 
 		default:
 			break;
@@ -217,6 +217,6 @@ public class NfaGame extends SherlockActivity implements INfaIntentRecieveRecord
 		feedBack.setText("");
 		tigerView.setVisibility(View.VISIBLE);
 		elephantView.setVisibility(View.VISIBLE);
-		targetView.setBackground(normalShape);
+		targetView.setBackgroundDrawable(normalShape);
 	}
 }
