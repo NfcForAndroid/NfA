@@ -3,6 +3,7 @@ package com.github.nfcforandroid.parser.base;
 import android.nfc.NdefRecord;
 import android.nfc.Tag;
 
+import com.github.nfcforandroid.api.INfaIntentFilter;
 import com.github.nfcforandroid.api.INfaParser;
 import com.github.nfcforandroid.api.INfaRecord;
 
@@ -14,6 +15,14 @@ import com.github.nfcforandroid.api.INfaRecord;
  *         The two methods returns <code>null</code>
  */
 public abstract class NfaParserAdapter implements INfaParser {
+
+	protected INfaIntentFilter[] filters = new INfaIntentFilter[] {};
+
+	public void setFilters(INfaIntentFilter... filters) {
+		if (filters != null) {
+			this.filters = filters;
+		}
+	}
 
 	/*
 	 * (non-Javadoc)

@@ -47,6 +47,7 @@ class NfaManagerV9 implements INfaManager {
 	private NfcAdapter mAdapter;
 
 	private static final String TAG = "NfcManager";
+	private SparseArray<INfaIntentFilter[]> nfaFiltersArray = new SparseArray<INfaIntentFilter[]>();
 	private SparseArray<IntentFilter[]> filtersArray = new SparseArray<IntentFilter[]>();
 	private SparseArray<PendingIntent> pendingIntentArray = new SparseArray<PendingIntent>();
 	private static final String[][] techs = { { Ndef.class.getName() } };
@@ -194,6 +195,10 @@ class NfaManagerV9 implements INfaManager {
 		final INfaIntentRecieveMessage recieveMessage = recieveConfig.getNfaIntentRecieveMessage();
 		final INfaParser parser = recieveConfig.getNfaParser();
 		final boolean recordCallBack = recieveRecord != null;
+		final INfaIntentFilter[] filters = nfaFiltersArray.get(recieveConfig.getActivity().getTaskId());
+		if (filters != null) {
+			parser.setFilters(filters);
+		}
 		NfaMessage nfaMessage = recordCallBack ? new NfaMessage() : null;
 		Record nfaRecord = null;
 		Log.i(TAG, "Recieve Intent NFC ! ");
@@ -310,6 +315,9 @@ class NfaManagerV9 implements INfaManager {
 			intentFilters[0] = ndefFilter;
 		}
 
+		if (filters != null) {
+			nfaFiltersArray.put(activity.getTaskId(), filters);
+		}
 		filtersArray.put(activity.getTaskId(), intentFilters);
 		pendingIntentArray.put(activity.getTaskId(), pendingIntent);
 	}

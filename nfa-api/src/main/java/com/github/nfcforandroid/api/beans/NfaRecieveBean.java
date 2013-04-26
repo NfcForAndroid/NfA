@@ -1,5 +1,6 @@
 package com.github.nfcforandroid.api.beans;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.github.nfcforandroid.api.INfaParser;
@@ -11,6 +12,9 @@ import com.github.nfcforandroid.api.client.INfaIntentRecieveRecord;
  * @author jefBinomed
  * 
  *         Configuration bean that gives mandatory information about how to read data on a tag : <li>
+ *         <ul>
+ *         A {@link Activity} for the activity that recieve the intent
+ *         </ul>
  *         <ul>
  *         A {@link Intent} for the information transfer by the system
  *         </ul>
@@ -31,7 +35,7 @@ import com.github.nfcforandroid.api.client.INfaIntentRecieveRecord;
  *         To create a such instance, you have to use the builder
  * 
  *         <code>
- *          NfaRecieveBean.recieveBeanConfigure().intent(theIntent).intentRecieveMessage(callBackMessage).parser(YourParser).build();
+ *          NfaRecieveBean.recieveBeanConfigure().activity(theActivity).intent(theIntent).intentRecieveMessage(callBackMessage).parser(YourParser).build();
  *         </code>
  * 
  * @param <Record>
@@ -39,6 +43,7 @@ import com.github.nfcforandroid.api.client.INfaIntentRecieveRecord;
  */
 public final class NfaRecieveBean<Record extends INfaRecord> {
 
+	private Activity activity;
 	private Intent intent;
 	private INfaIntentRecieveRecord<Record> nfaIntentRecieveRecord;
 	private INfaIntentRecieveMessage nfaIntentRecieveMessage;
@@ -46,6 +51,13 @@ public final class NfaRecieveBean<Record extends INfaRecord> {
 	private boolean avoidAndroidApplicationRecord = true;
 
 	private NfaRecieveBean() {
+	}
+
+	/**
+	 * @return the activty corresponding to the event
+	 */
+	public Activity getActivity() {
+		return activity;
 	}
 
 	/**
@@ -103,6 +115,18 @@ public final class NfaRecieveBean<Record extends INfaRecord> {
 
 		private NfaRecieveBeanBuilder() {
 			bean = new NfaRecieveBean<Record>();
+		}
+
+		/**
+		 * set the original activity
+		 * 
+		 * @param activity
+		 *            the activity at the origin of the call
+		 * @return the current instance of the builder
+		 */
+		public NfaRecieveBeanBuilder<Record> activity(final Activity activity) {
+			bean.activity = activity;
+			return this;
 		}
 
 		/**
@@ -165,9 +189,10 @@ public final class NfaRecieveBean<Record extends INfaRecord> {
 		 * 
 		 * @return the instance of the bean to give to the librairy for reading the datas
 		 * @throws AssertionError
-		 *             if the intent is not set, if the parser is not set, if there is no callback or if there is two callback defined
+		 *             if the activity is not set, if the intent is not set, if the parser is not set, if there is no callback or if there is two callback defined
 		 */
 		public NfaRecieveBean<Record> build() {
+			assert bean.activity != null : "You don't have put any activity! ";
 			assert bean.intent != null : "You don't have put any intent ! ";
 			assert bean.nfaParser != null : "You don't have put any INfaParser ! ";
 

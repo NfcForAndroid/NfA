@@ -19,6 +19,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.github.nfcforandroid.api.INfaParser;
 import com.github.nfcforandroid.api.INfaRecord;
 import com.github.nfcforandroid.api.client.INfaIntentRecieveRecord;
 import com.github.nfcforandroid.records.ndef.MimeTypeRecord;
@@ -36,6 +37,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 
 	TextView tag_content;
 	ImageView tag_content_img;
+	INfaParser parser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		// We give to the manager the orginal
 		NFA_MANAGER.register(this //
 				, recieveBeanConfigure() //
+						.activity(this)//
 						.intent(getIntent()) //
 						.intentRecieveRecord(this) // INfaIntentRecieveRecord
 						.parser(NDEF_PARSER) //
@@ -67,6 +70,7 @@ public class NfaReadActivity extends SherlockFragmentActivity implements INfaInt
 		 */
 		tag_content.setText(R.string.reading_tag);
 		NFA_MANAGER.manageIntent(recieveBeanConfigure() //
+				.activity(this)//
 				.intent(intent) //
 				.intentRecieveRecord(this) // INfaIntentRecieveRecord
 				.parser(NDEF_PARSER) //

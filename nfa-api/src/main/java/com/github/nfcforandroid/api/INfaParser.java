@@ -18,6 +18,14 @@ import com.github.nfcforandroid.exception.ParserException;
 public interface INfaParser {
 
 	/**
+	 * This methods gives to the parser the list of filters identify by the client side for the information about the tag to parse
+	 * 
+	 * @param filters
+	 *            the list of filters identify. Could be null;
+	 */
+	void setFilters(INfaIntentFilter... filters);
+
+	/**
 	 * Transform a {@link NdefRecord} to the expected output
 	 * 
 	 * @param record

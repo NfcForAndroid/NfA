@@ -71,6 +71,7 @@ public class NfaGame extends SherlockActivity implements INfaIntentRecieveRecord
 		NfaRecieveBeanBuilder<TextExternalRecord> recieverBuilder = NfaRecieveBean.recieveBeanConfigure();
 		NFA_MANAGER.register(this // Activity
 				, recieverBuilder //
+						.activity(this)//
 						.intent(getIntent())//
 						.intentRecieveRecord(this)//
 						.parser(EXTERNAL_TEXT_PARSER)//
@@ -87,6 +88,7 @@ public class NfaGame extends SherlockActivity implements INfaIntentRecieveRecord
 		NfaRecieveBeanBuilder<TextExternalRecord> recieverBuilder = NfaRecieveBean.recieveBeanConfigure();
 		// We manage the record
 		NFA_MANAGER.manageIntent(recieverBuilder //
+				.activity(this)//
 				.intent(intent)//
 				.intentRecieveRecord(this)//
 				.parser(EXTERNAL_TEXT_PARSER)//

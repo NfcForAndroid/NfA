@@ -1,6 +1,5 @@
 package com.github.nfcforandroid.parser.ndef;
 
-import com.github.nfcforandroid.api.INfaIntentFilter;
 import com.github.nfcforandroid.api.INfaParser;
 import com.github.nfcforandroid.parser.factory.INfaParserNdefFactory;
 import com.github.nfcforandroid.parser.factory.NfaParserFactory;
@@ -26,10 +25,8 @@ public abstract class AbstractNfaParserNdefFactory implements INfaParserNdefFact
 	 * 
 	 * @see com.github.nfcforandroid.parser.factory.INfaParserNdefFactory#ndefParser(com.github.nfcforandroid.api.INfaIntentFilter[])
 	 */
-	public INfaParser ndefParser(INfaIntentFilter... filters) {
-		if (filters == null || filters.length == 0) {
-			return new NdefParser(filters);
-		} else if (ndefParser == null) {
+	public INfaParser ndefParser() {
+		if (ndefParser == null) {
 			ndefParser = new NdefParser();
 		}
 		return ndefParser;
