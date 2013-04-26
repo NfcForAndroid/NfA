@@ -1,8 +1,6 @@
-com.actionbarsherlock
 com.github.nfcforandroid.api
 com.github.nfcforandroid.api.beans
 com.github.nfcforandroid.api.client
-com.github.nfcforandroid.apklib
 com.github.nfcforandroid.exception
 com.github.nfcforandroid.filters
 com.github.nfcforandroid.filters.base
@@ -22,10 +20,6 @@ com.github.nfcforandroid.records.factory
 com.github.nfcforandroid.records.ndef
 com.github.nfcforandroid.records.ndef.ext
 com.github.nfcforandroid.records.ndef.wkt
-com.github.nfcforandroid.samples
-com.github.nfcforandroid.samples.cst
-com.github.nfcforandroid.samples.read
-com.github.nfcforandroid.samples.write
 com.github.nfcforandroid.v14
 com.github.nfcforandroid.v9
 com.github.nfcforandroid.writers
@@ -34,4 +28,3 @@ com.github.nfcforandroid.writers.factory
 com.github.nfcforandroid.writers.ndef
 com.github.nfcforandroid.writers.ndef.ext
 com.github.nfcforandroid.writers.ndef.wkt
-com.greennfc.tools.apklib

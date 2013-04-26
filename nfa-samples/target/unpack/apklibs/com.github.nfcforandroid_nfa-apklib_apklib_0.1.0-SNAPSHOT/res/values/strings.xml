@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mime_type_text_plain">text/plain</string>
+    <string name="mime_type_image">image/jpg</string>
+    
+    <string name="scheme_android_ext">vnd.android.nfc</string>
+    
+</resources>

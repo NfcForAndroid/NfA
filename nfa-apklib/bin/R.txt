@@ -1,0 +1,5 @@
+int array uri_types 0x7f030000
+int string mime_type_image 0x7f040001
+int string mime_type_text_plain 0x7f040000
+int string scheme_android_ext 0x7f040002
+int xml filter_nfc 0x7f020000
