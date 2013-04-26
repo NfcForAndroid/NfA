@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <string-array name="uri_types">
+        <item name="EMPTY"></item>
+        <item name="HTTP_WWW">http://www.</item>
+        <item name="HTTPS_WWW">https://www.</item>
+        <item name="HTTP">http://</item>
+        <item name="HTTPS">https://</item>
+        <item name="TEL">tel:</item>
+        <item name="MAILTO">mailto:</item>
+        <item name="FTP_ANONYMOUS">ftp://anonymous:anonymous@</item>
+        <item name="FTP_FTP">ftp://ftp.</item>
+        <item name="FTPS">ftps://</item>
+        <item name="SFTP">sftp://</item>
+        <item name="SMB">smb://</item>
+        <item name="NFS">nfs://</item>
+        <item name="FTP">ftp://</item>
+        <item name="DAV">dav://</item>
+        <item name="NEWS">news:</item>
+        <item name="TELNET">telnet://</item>
+        <item name="IMAP">imap:</item>
+        <item name="RTSP">rtsp://</item>
+        <item name="URN">urn:</item>
+        <item name="POP">pop:</item>
+        <item name="SIP">sip:</item>
+        <item name="SIPS">sips:</item>
+        <item name="TFTP">tftp:</item>
+        <item name="BTSPP">btspp://</item>
+        <item name="BTL2CAP">btl2cap://</item>
+        <item name="BTOEP">btgoep://</item>
+        <item name="TCPOBEX">tcpobex://</item>
+        <item name="IRDAOBEX">irdaobex://</item>
+        <item name="FILE">file://</item>
+        <item name="URN_EPC_ID">urn:epc:id:</item>
+        <item name="URN_EPC_TAG">urn:epc:tag:</item>
+        <item name="URN_EPC_PAT">urn:epc:pat:</item>
+        <item name="URN_EPC_RAW">urn:epc:raw:</item>
+        <item name="URN_EPC">urn:epc:</item>
+    </string-array>
+
+</resources>

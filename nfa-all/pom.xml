@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.nfcforandroid</groupId>
+		<artifactId>nfa</artifactId>
+		<version>0.7.0</version>
+	</parent>
+	
+	<artifactId>nfa-all</artifactId>
+	<name>Nfc For Android - All in one</name>
+	<description>All in one project for NfA project</description>
+	<packaging>jar</packaging>
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-apklib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-filters</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-parsers</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-records</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-writers</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+	</dependencies>
+	
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadoc</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<links>
+								<link>http://commons.apache.org/lang/api</link>
+								<link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+							</links>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-source</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-shade-plugin</artifactId>
+		        <version>2.0</version>
+		        <executions>
+		          <execution>
+		            <phase>package</phase>
+		            <goals>
+		              <goal>shade</goal>
+		            </goals>
+		            <configuration>
+		              <filters>
+		                <filter>
+		                  <artifact>com.github.nfcforandroid:**</artifact>
+		                  <includes>
+		                    <include>**</include>
+		                  </includes>
+		                </filter>
+		              </filters>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
+
+		</plugins>
+	</build>
+
+</project>

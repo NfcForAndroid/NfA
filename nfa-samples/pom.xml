@@ -1,0 +1,136 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.nfcforandroid</groupId>
+		<artifactId>nfa</artifactId>
+		<version>0.7.0</version>
+	</parent>
+
+	<artifactId>nfa-samples</artifactId>
+	<packaging>apk</packaging>
+	<name>Nfc For Android - Samples</name>
+	<properties>
+		<notificationcompat2.version>1.1.2</notificationcompat2.version>
+		<actionbarsherlock.version>4.2.0</actionbarsherlock.version>
+		<roboguice.version>2.0</roboguice.version>
+		<robosherlock.version>1.4</robosherlock.version>
+		<google.http.client.version>1.12.0-beta</google.http.client.version>
+		<simplexmlserializer.version>2.6.6</simplexmlserializer.version>
+		<jackson.version>1.9.9</jackson.version>
+		<dagger.version>0.9.1</dagger.version>
+	</properties>
+
+	<dependencies>
+		<!-- NfA dependencies -->
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-api</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-records</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-filters</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-parsers</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-writers</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-apklib</artifactId>
+			<version>${project.version}</version>
+			<type>apklib</type>
+		</dependency>
+		<dependency>
+			<groupId>com.github.nfcforandroid</groupId>
+			<artifactId>nfa-apklib</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Other libs -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- ABS -->
+		<dependency>
+			<groupId>com.actionbarsherlock</groupId>
+			<artifactId>actionbarsherlock</artifactId>
+			<version>${actionbarsherlock.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+			<exclusions>
+	            <exclusion>
+	                <artifactId>junit</artifactId>
+	                <groupId>junit</groupId>
+	            </exclusion>
+	        </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.actionbarsherlock</groupId>
+			<artifactId>actionbarsherlock</artifactId>
+			<version>${actionbarsherlock.version}</version>
+			<type>apklib</type>
+			<exclusions>
+	            <exclusion>
+	                <artifactId>junit</artifactId>
+	                <groupId>junit</groupId>
+	            </exclusion>
+	        </exclusions>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<sourceDirectory>src/</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<configuration>
+					<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
+					<resourceDirectory>${project.basedir}/res</resourceDirectory>
+					<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+					<sdk>
+						<platform>${android-platform.version}</platform>
+					</sdk>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+				</configuration>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

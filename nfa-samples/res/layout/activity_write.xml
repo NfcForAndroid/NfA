@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <CheckBox
+        android:id="@+id/chckAndroidRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:text="@string/android_application_record"
+         />
+    <TextView
+        android:id="@+id/lblType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/chckAndroidRecord"
+        android:layout_gravity="left"
+        android:text="@string/type_tag_write"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/lblType"
+        android:entries="@array/type_tags"
+        android:prompt="@array/type_tags"
+        tools:listitem="@android:layout/simple_spinner_item" />
+    
+    <Spinner
+        android:id="@+id/uri_prefix"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spinnerType"
+        android:entries="@array/uri_types"
+        android:prompt="@array/uri_types"
+        tools:listitem="@android:layout/simple_spinner_item"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/tag_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/uri_prefix"
+        android:layout_below="@+id/spinnerType"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <EditText
+        android:id="@+id/content_bis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tag_content"
+        android:hint="@string/hint_smartposter"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+        android:id="@+id/content_img"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/content_bis"
+        android:src="@drawable/ic_launcher"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
+        android:id="@+id/msg_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/wating_tag"
+        android:layout_below="@+id/content_img"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/msg_feedback"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/msg_feedback_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/size"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

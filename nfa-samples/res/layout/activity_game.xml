@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alignmentMode="alignBounds"
+    android:columnOrderPreserved="false"
+    android:useDefaultMargins="true"
+    android:columnCount="5" >
+
+    <TextView
+        android:id="@+id/tagMsg"
+        android:layout_columnSpan="5"
+        android:layout_gravity="center_horizontal|top"
+        android:text="@string/wating_tag"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <Space 
+        android:layout_column="0"
+        android:layout_columnSpan="1"
+        android:layout_width="50dip"
+        android:layout_gravity="left"
+        />
+    
+    <ImageView
+        android:id="@+id/tiger"
+        android:layout_width="92dp"
+        android:layout_height="118dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="left|top"
+        android:src="@drawable/tiger" />
+
+    <ImageView
+        android:layout_column="3"
+        android:id="@+id/elephant"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_columnSpan="2"
+        android:layout_gravity="right|top"
+        android:src="@drawable/elephant" />
+    
+    <!-- 
+     <Space 
+        android:layout_column="4"
+        android:layout_columnSpan="1"
+        android:layout_width="50dip"
+        android:layout_gravity="right"
+        />
+     -->
+    
+    <ImageView
+        android:layout_row="2"
+        android:layout_column="2"
+        android:id="@+id/target"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_columnSpan="3"
+        android:layout_gravity="center_horizontal|top"
+        android:src="@drawable/shape" />
+
+    <TextView
+        android:layout_row="3"
+        android:id="@+id/feedback_message"
+        android:layout_columnSpan="5"
+        android:layout_gravity="center_horizontal|top"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:layout_row="4"
+        android:id="@+id/textView1"
+        android:layout_columnSpan="5"
+        android:layout_gravity="center_horizontal|top"
+        android:text="@string/find_animal"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</GridLayout>

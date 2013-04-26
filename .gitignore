@@ -9,12 +9,21 @@
 *.class
 
 # generated files
-bin/
-gen/
+nfa-apklib/bin/
+nfa-apklib/gen/
+nfa-samples/bin/
+nfa-samples/gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
 
 # Eclipse project files
-.classpath
-.project
+*.classpath
+*.project
+*.settings/
+
+# Maven project files
+*/target/
+
+# Maven APK Libs dependancies
+com.actionbarsherlock-actionbarsherlock-4.2.0/
