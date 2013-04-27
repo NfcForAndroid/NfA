@@ -238,6 +238,7 @@
 				</plugin>
 
 				<!-- deploy javadoc and maven site to github -->
+				<!--
 				<plugin>
 					<groupId>com.github.github</groupId>
 					<artifactId>site-maven-plugin</artifactId>
@@ -304,7 +305,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+<!--
 	<profiles>
 		<profile>
 			<id>sign</id>
@@ -327,5 +328,5 @@
 			</build>
 		</profile>
 	</profiles>
-
+-->
 </project>

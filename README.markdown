@@ -34,7 +34,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-api</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -46,7 +46,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-api</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -70,7 +70,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-records</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -92,7 +92,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-writers</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -115,7 +115,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-parsers</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -134,7 +134,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-filters</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -146,7 +146,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-core</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
@@ -158,7 +158,7 @@ Maven dependency
 	<dependency>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa-apklib</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</dependency>
 ```
 
