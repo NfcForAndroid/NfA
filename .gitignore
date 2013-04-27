@@ -25,7 +25,7 @@ local.properties
 
 
 # Maven project files
-*/target/
+*target/
 
 # Maven APK Libs dependancies
 com.actionbarsherlock-actionbarsherlock-4.2.0/
