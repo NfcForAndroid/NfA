@@ -84,7 +84,7 @@
 
 	<properties>
 		<android.version>4.1.1.4</android.version>
-		<android-platform.version>14</android-platform.version>
+		<android-platform.version>17</android-platform.version>
 		<android-annotations.version>4.1.1.4</android-annotations.version>
 		<android-support.version>r7</android-support.version>
 		<android-maven-plugin.version>3.6.0</android-maven-plugin.version>
@@ -188,6 +188,11 @@
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
 					<version>${android-maven-plugin.version}</version>
+					<configuration>
+						<sdk>
+							<platform>${android-platform.version}</platform>
+						</sdk>
+					</configuration>
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
