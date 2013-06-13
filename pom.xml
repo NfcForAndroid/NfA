@@ -17,9 +17,9 @@
 	<inceptionYear>2013</inceptionYear>
 
 	<scm>
-		<connection>scm:git:ssh://git@github.com:NfcForAndroid/NfA.git</connection>
-		<url>git:ssh://git@github.com:NfcForAndroid/NfA.git</url>
-		<developerConnection>scm:git:ssh://git@github.com:NfcForAndroid/NfA.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/NfcForAndroid/NfA.git</connection>
+		<url>git:ssh://git@github.com/NfcForAndroid/NfA.git</url>
+		<developerConnection>scm:git:ssh://git@github.com/NfcForAndroid/NfA.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
