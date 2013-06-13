@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.nfcforandroid</groupId>
 		<artifactId>nfa</artifactId>
-		<version>0.7.0</version>
+		<version>0.8.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>nfa-api</artifactId>
